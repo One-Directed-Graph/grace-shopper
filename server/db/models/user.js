@@ -2,11 +2,17 @@ const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
 
+//ASSIGNED TO: Katt
+
+//TODO: define properties
+//TODO: Add ID
+//ADD associations to models/index.js
 const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false
+    //TODO: Validation
   },
   password: {
     type: Sequelize.STRING,
