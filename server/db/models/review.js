@@ -1,18 +1,31 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-//ASSIGNED TO: Katt
-
-//TODO: define properties
-//TODO: Add ID
+//associations are in models/index.js
 const Review = db.define('review', {
-  rating: {},
-  comments: {}
+  id: {
+    type: Sequelize.UUID,
+    primaryKey: true,
+    defaultValue: Sequelize.UUIDV4,
+  },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: [4, 1000],
+      notEmpty: true,
+    },
+  },
+  rating: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validate: {
+      min: 1,
+      max: 5,
+      notEmpty: true,
+    },
+  },
 })
-
-//ADD associations to models/index.js
-//TODO: Belongs to product
-//TODO: Belongs to user
 
 module.exports = Review
 
