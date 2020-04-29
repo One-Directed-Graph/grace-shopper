@@ -1,17 +1,38 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const {UUID, UUIDV4, STRING, DECIMAL} = Sequelize
 
 //ASSIGNED TO: Aleks
 
 //TODO: define properties
 //TODO: Add ID
 const Product = db.define('product', {
-  title: {},
-  description: {},
-  price: {},
-  quantity: {},
-  category: {},
-  image: {}
+  id: {
+    type: UUID,
+    primaryKey: true,
+    defaultValue: UUIDV4,
+  },
+  title: {
+    type: STRING,
+    allowNull: false,
+    unique: true,
+  },
+  description: {
+    type: STRING,
+    allowNull: false,
+  },
+  price: {
+    type: DECIMAL,
+    allowNull: false,
+  },
+  quantity: {
+    type: DECIMAL,
+  },
+
+  img: {
+    type: STRING,
+    defaultValue: '/a.jpg',
+  },
 })
 
 //ADD associations to models/index.js
