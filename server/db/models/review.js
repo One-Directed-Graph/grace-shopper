@@ -15,10 +15,10 @@ const Review = db.define('review', {
       len: [4, 1000],
       notEmpty: true,
     },
-    rating: {
-      type: Sequelize.ENUM(1, 2, 3, 4, 5),
-      allowNull: false,
-    },
+  },
+  rating: {
+    type: Sequelize.ENUM(1, 2, 3, 4, 5),
+    allowNull: false,
   },
 })
 
