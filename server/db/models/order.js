@@ -8,7 +8,7 @@ const db = require('../db')
 const Order = db.define('order', {
   id: { 
       type: Sequelize.UUIDV4,
-      defaultValue: UUIDV4,
+      defaultValue: Sequelize.UUIDV4,
       primaryKey: true
   },
   status: {
