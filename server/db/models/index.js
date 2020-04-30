@@ -15,6 +15,12 @@ User.hasMany(Review)
 Review.belongsTo(User)
 // Review.belongsTo(Product)
 
+//User to Order relationship  
+//Order to Product relationship should be managed in FrontEnd
+User.hasMany(Order)
+Order.belongsTo(User)
+
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
@@ -24,4 +30,5 @@ Review.belongsTo(User)
 module.exports = {
   User,
   Review,
+  Order,
 }
