@@ -17,6 +17,7 @@ const defaultUser = {}
  * ACTION CREATORS
  */
 const _getProducts = (products) => ({type: GET_PRODUCTS, products})
+const _getProduct = (product) => ({type: GET_PRODUCT, product})
 
 const removeProducts = () => ({type: REMOVE_USER})
 
@@ -30,6 +31,7 @@ export const getProducts = () => {
     dispatch(_getProducts(products.data))
   }
 }
+
 /**
  * REDUCER
  */
