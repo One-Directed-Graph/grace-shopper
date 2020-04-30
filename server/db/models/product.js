@@ -31,7 +31,7 @@ const Product = db.define('product', {
 
   img: {
     type: STRING,
-    defaultValue: '/a.jpg',
+    defaultValue: './images/ireland.jpg',
   },
 })
 

@@ -22,14 +22,14 @@ async function seed() {
       description: 'be stylish and protected',
       price: 1.5,
       quantity: 10000,
-      img: '/a.jpg',
+      img: './images/ireland.jpg',
     }),
     Product.create({
       title: 'sexyMask',
       description: 'sexy is good, do not forget social distancing',
       price: 1.9,
       quantity: 10000,
-      img: '../public/images/stylish2.jpg',
+      img: './images/ireland.jpg',
     }),
     Product.create({
       title: 'scaryMask',
@@ -37,7 +37,7 @@ async function seed() {
         'best for being protetcted and people will be scare to walk up to you',
       price: 1.25,
       quantity: 10000,
-      img: '../public/images/scary.jpg',
+      img: './images/ireland.jpg',
     }),
   ])
   console.log('seeded Products successfully')

@@ -21,7 +21,7 @@ class Products extends Component {
             <div className="oneProduct">
               <h3>{prod.title}</h3>
               <p>{prod.description}</p>
-              <img src="./ireland.jpg"></img>
+              <img src={prod.img} alt="image loading" />
             </div>
           )
         })}
