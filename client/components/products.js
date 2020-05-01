@@ -6,6 +6,7 @@ import {getProducts} from '../store/products'
 import {getProduct} from '../store/product'
 import Product from './product'
 import Search from './Search'
+import {getCategories} from '../store/categories'
 
 //ASSIGNED TO: Aleks
 
@@ -14,12 +15,20 @@ class Products extends Component {
     this.props.load()
   }
   render() {
-    const {products, loadProduct} = this.props
+    const {products, loadProduct, categories} = this.props
     //console.log(products)
     return (
       <div className="outsideOfContainer">
         <Search history={this.props.history} />
         <div className="container">
+          <div className="sortBlock">
+            <h4>sort option</h4>
+            <option>
+              {categories.map((catigory) => {
+                return <option>{category.name}</option>
+              })}
+            </option>
+          </div>
           {products.map((prod) => {
             //console.log(prod)
             return (
@@ -47,16 +56,19 @@ class Products extends Component {
   }
 }
 
-const mapState = ({products}) => {
+const mapState = ({products, categories}) => {
   return {
     products,
+    categories,
   }
 }
 const mapDispatch = (dispatch) => {
   return {
     load: () => {
       dispatch(getProducts())
+      dispatch(getCategories())
     },
+
     loadProduct: (id, push) => {
       dispatch(getProduct(id, push))
     },

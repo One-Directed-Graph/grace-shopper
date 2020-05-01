@@ -33,6 +33,11 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route exact path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/" component={Products} />
+
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route exact path="/products" component={Products} />
+
           <Route path="/products/:id" component={Product} />
           {isLoggedIn && (
             <Switch>
