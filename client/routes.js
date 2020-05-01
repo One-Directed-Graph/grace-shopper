@@ -9,6 +9,7 @@ import {
   AdminHome,
   Products,
   Product,
+  DisplaySearch,
 } from './components'
 import {me} from './store'
 
@@ -25,29 +26,25 @@ class Routes extends Component {
 
     return (
       <div>
-        <HashRouter>
-          <Route path="/api/products/:id" component={Product} />
+        <Switch>
+          {/* Routes placed here are available to all visitors */}
 
-          <Switch>
-            {/* Routes placed here are available to all visitors */}
-            <Route path="/:id" component={Product} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/:id" component={Product} />
-            <Route path="/" component={Products} />
-            <Route path="/:id" component={Product} />
-            {isLoggedIn && (
-              <Switch>
-                {/* Routes placed here are only available after logging in */}
-                <Route path="/:id" component={Product} />
-                <Route path="/home" component={UserHome} />
-                <Route path="/home" component={AdminHome} />
-              </Switch>
-            )}
-            {/* Displays our Login component as a fallback */}
-            <Route component={Login} />
-          </Switch>
-        </HashRouter>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route exact path="/displaysearch" component={DisplaySearch} />
+          <Route exact path="/" component={Products} />
+          <Route path="/products/:id" component={Product} />
+          {isLoggedIn && (
+            <Switch>
+              {/* Routes placed here are only available after logging in */}
+
+              <Route path="/home" component={UserHome} />
+              <Route path="/home" component={AdminHome} />
+            </Switch>
+          )}
+          {/* Displays our Login component as a fallback */}
+          <Route component={Login} />
+        </Switch>
       </div>
     )
   }

@@ -194,7 +194,7 @@ async function seed() {
         'Best seller best protection, mask with nosel and carbon filter',
       price: 4,
       quantity: 10000,
-      img: '/image/N95yes.jpg',
+      img: '/images/N95yes.jpeg',
       categoryId: medical.id,
     }),
     Product.create({
