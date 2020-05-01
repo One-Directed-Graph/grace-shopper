@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link, HashRouter, Route} from 'react-router-dom'
+import {Link, HashRouter, Route, Switch} from 'react-router-dom'
 
 //ASSIGNED TO: Katt
 
@@ -10,12 +10,12 @@ import {Link, HashRouter, Route} from 'react-router-dom'
  */
 export const UserHome = (props) => {
   const {email} = props
-  const greetName = email.split('@')
+  const greetName = email.split('@')[0]
 
   return (
     <div id="user-home-container">
       <h2>My Account</h2>
-      <h3>Welcome back, {greetName}</h3>
+      <h3>Welcome back, {greetName}!</h3>
       <hr />
       <div id="user-home-acct">
         <nav id="user-home-acct-nav">
@@ -24,10 +24,10 @@ export const UserHome = (props) => {
           <Link to="home/addresses">Addresses</Link>
           <Link to="home/payment-info">Payment Info</Link>
         </nav>
-        <HashRouter>
+        <Switch>
           <Route path="home/orders" />
           <Route path="home/reviews" />
-        </HashRouter>
+        </Switch>
       </div>
     </div>
   )
