@@ -22,12 +22,11 @@ class Products extends Component {
         <Search history={this.props.history} />
         <div className="container">
           <div className="sortBlock">
-            <h4>sort option</h4>
-            <option>
-              {categories.map((catigory) => {
-                return <option>{category.name}</option>
-              })}
-            </option>
+            <select>
+              <option>Sort By</option>
+              <option>By categories</option>
+              <option>By Price</option>
+            </select>
           </div>
           {products.map((prod) => {
             //console.log(prod)
