@@ -19,7 +19,7 @@ class Product extends Component {
           <div>price:${product.price}</div>
           <div>avalible amount:{product.quantity}</div>
           <img src={product.img}></img>
-          {/* <div>category:{product.category.name}</div> */}
+          <div>category:{product.category ? product.category.name : ''}</div>
         </div>
       )
     }

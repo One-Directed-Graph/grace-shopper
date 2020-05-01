@@ -9,6 +9,7 @@ import {
   AdminHome,
   Products,
   Product,
+  DisplaySearch,
 } from './components'
 import {me} from './store'
 
@@ -27,9 +28,11 @@ class Routes extends Component {
       <div>
         <Switch>
           {/* Routes placed here are available to all visitors */}
+
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route exact path="/products" component={Products} />
+          <Route exact path="/displaysearch" component={DisplaySearch} />
+          <Route exact path="/" component={Products} />
           <Route path="/products/:id" component={Product} />
           {isLoggedIn && (
             <Switch>
