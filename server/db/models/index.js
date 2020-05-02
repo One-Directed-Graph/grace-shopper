@@ -13,10 +13,9 @@ const Category = require('./category')
 //Category.belongsTo(Product)
 
 Product.belongsTo(Category)
-//User.hasMany(Review)
-// // User.hasMany(Order)
-// Review.belongsTo(User)
-// // Review.belongsTo(Product)
+User.hasMany(Review)
+Review.belongsTo(User)
+Review.belongsTo(Product)
 
 // /**
 //  * We'll export all of our models here, so that any time a module needs a model,

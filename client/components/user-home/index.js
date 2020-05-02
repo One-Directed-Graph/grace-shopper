@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {Link, HashRouter, Route, Switch} from 'react-router-dom'
 import Reviews from './reviews'
 import Orders from './orders'
+import UserList from './userList'
 
 //ASSIGNED TO: Katt
 
@@ -11,7 +12,8 @@ import Orders from './orders'
  * COMPONENT
  */
 export const UserHome = (props) => {
-  const {email} = props
+  console.log('in userHome', props)
+  const {email, admin} = props
   const greetName = email.split('@')[0]
 
   return (
@@ -21,12 +23,22 @@ export const UserHome = (props) => {
       <hr />
       <div id="user-home-acct">
         <nav id="user-home-acct-nav">
-          <Link to="/home/orders">Orders</Link>
-          <Link to="/home/reviews">Reviews</Link>
+          {admin ? (
+            <div id="user-home-admin-links">
+              <Link to="/home/orders">Orders</Link>
+              <Link to="/home/user-list">User List</Link>
+            </div>
+          ) : (
+            <div id="user-home-nonadmin-links">
+              <Link to="/home/orders">Orders</Link>
+              <Link to="/home/reviews">Reviews</Link>
+            </div>
+          )}
         </nav>
         <Switch>
           <Route path="/home/orders" component={Orders} />
           <Route path="/home/reviews" component={Reviews} />
+          <Route path="/home/user-list" component={UserList} />
         </Switch>
       </div>
     </div>
@@ -39,6 +51,7 @@ export const UserHome = (props) => {
 const mapState = (state) => {
   return {
     email: state.user.email,
+    admin: state.user.admin,
   }
 }
 
