@@ -16,3 +16,19 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/home/user-list', async (req, res, next) => {
+  console.log('getting user list for admin')
+  try {
+    const user = User.findByPk(req.body.id)
+    if (user.admin) {
+      const users = await User.findAll()
+      res.json(users)
+    } else {
+      throw Error('Unauthorized')
+    }
+  } catch (err) {
+    err.status(401)
+    next(err)
+  }
+})
