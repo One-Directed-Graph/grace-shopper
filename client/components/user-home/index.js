@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, HashRouter, Route, Switch} from 'react-router-dom'
+import Reviews from './reviews'
+import Orders from './orders'
 
 //ASSIGNED TO: Katt
 
@@ -19,14 +21,12 @@ export const UserHome = (props) => {
       <hr />
       <div id="user-home-acct">
         <nav id="user-home-acct-nav">
-          <Link to="home/orders">Orders</Link>
-          <Link to="home/reviews">Reviews</Link>
-          <Link to="home/addresses">Addresses</Link>
-          <Link to="home/payment-info">Payment Info</Link>
+          <Link to="/home/orders">Orders</Link>
+          <Link to="/home/reviews">Reviews</Link>
         </nav>
         <Switch>
-          <Route path="home/orders" />
-          <Route path="home/reviews" />
+          <Route path="/home/orders" component={Orders} />
+          <Route path="/home/reviews" component={Reviews} />
         </Switch>
       </div>
     </div>
