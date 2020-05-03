@@ -17,18 +17,22 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/home/user-list', async (req, res, next) => {
+router.get('/user-list', async (req, res, next) => {
   console.log('getting user list for admin')
+  console.log(req.body.id)
   try {
-    const user = User.findByPk(req.body.id)
+    const user = await User.findOne({where: {id: req.body.id}})
     if (user.admin) {
-      const users = await User.findAll()
+      const users = await User.findAll({
+        where: {admin: false},
+        attributes: ['id', 'email', 'admin'],
+      })
       res.json(users)
     } else {
-      throw Error('Unauthorized')
+      throw Error('Unauthorized User: Request Denied')
     }
   } catch (err) {
-    err.status(401)
+    // err.statusCode(401)
     next(err)
   }
 })
