@@ -7,24 +7,26 @@ import {getProduct} from '../store/product'
 import Product from './product'
 import Search from './Search'
 import {getCategories} from '../store/categories'
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+import Container from 'react-bootstrap/Container'
 
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
   constructor(props) {
     let products = []
+    console.log('from products in constructor', props)
+    //props.products.length > 0 ? (products = props.products) : ''
 
-    if (props.products) {
-      console.log('vwvwvwvwvwvwvwvwvwwvwvwvwvvw', props)
-      products = props.products
-    }
     super()
     this.state = {
       products: products,
     }
   }
   componentDidMount() {
-    this.props.load()
+    //this.props.load()
+    this.setState({products: this.props.products})
   }
   sort(sortBy, products) {
     console.log('hello', sortBy, products, this.props.categories)
@@ -58,46 +60,69 @@ class Products extends Component {
   render() {
     const {products, loadProduct, categories} = this.props
     //console.log('vwvwvwvwvwvwvwvwvwwvwvwvwvvw', this.state.props)
-    //console.log(products)
+    console.log('products from component products', products)
     return (
       <div className="outsideOfContainer">
-        <Search history={this.props.history} />
-        <div className="sortBlock">
-          <select
-            onChange={(ev) => {
-              this.sort(ev.target.value, products)
-            }}
-          >
-            <option>Sort By</option>
-            <option>Categories</option>
-            <option>LowToHigh</option>
-            <option>HighToLow</option>
-          </select>
-        </div>
-        <div className="container">
-          {this.state.products.map((prod) => {
-            //console.log(prod)
-            return (
-              <div className="oneProduct" key={prod.id}>
-                {/* <Link to={`/products/${prod.id}`}> */}
-                <h3>{prod.title}</h3>
-                <button
-                  onClick={() => {
-                    console.log('hello', prod.id)
-                    this.props.loadProduct(prod.id, this.props.history.push)
-                  }}
+        <Container>
+          <div className="sortBlock">
+            <select
+              onChange={(ev) => {
+                this.sort(ev.target.value, products)
+              }}
+            >
+              <option>Sort By</option>
+              <option>Categories</option>
+              <option>LowToHigh</option>
+              <option>HighToLow</option>
+            </select>
+          </div>
+          <div className="container">
+            {this.props.products.map((prod) => {
+              console.log(prod)
+              return (
+                <Card
+                  className="text-center"
+                  style={{width: '18rem', margin: '10px'}}
                 >
-                  select product
-                </button>
-                {/* </Link> */}
-                <p>{prod.description}</p>
-                <img src={prod.img} alt="image loading" />
-                <div>{prod.price}</div>
-              </div>
-            )
-          })}
-          <br />
-        </div>
+                  <Card.Img variant="top" src={prod.img} />
+                  <Card.Body>
+                    <Card.Title>{prod.title}</Card.Title>
+                    <Card.Text>{prod.description}</Card.Text>
+                    <Button
+                      variant="success"
+                      onClick={() => {
+                        console.log('hello', prod.id)
+                        this.props.loadProduct(prod.id, this.props.history.push)
+                      }}
+                    >
+                      Select Product
+                    </Button>
+                  </Card.Body>
+                </Card>
+
+                // <div className="oneProduct" key={prod.id}>
+                //   {/* <Link to={`/products/${prod.id}`}> */}
+                //   <h3>{prod.title}</h3>
+
+                //   {/* </Link> */}
+                //   <p>{prod.description}</p>
+                //   <img src={prod.img} alt="image loading" />
+                //   <div>{prod.price}</div>
+                //   <Button
+                //     variant="success"
+                //     onClick={() => {
+                //       console.log('hello', prod.id)
+                //       this.props.loadProduct(prod.id, this.props.history.push)
+                //     }}
+                //   >
+                //     select product    holder.js/100px180"
+                //   </Button>
+                // </div>
+              )
+            })}
+            <br />
+          </div>
+        </Container>
       </div>
     )
   }

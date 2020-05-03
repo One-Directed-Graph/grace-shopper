@@ -11,12 +11,16 @@ import {
   Product,
   DisplaySearch,
 } from './components'
-import {me} from './store'
+import {me, getCategories} from './store'
+import {getProducts} from './store/products'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
+  constructor(props) {
+    super(props)
+  }
   componentDidMount() {
     this.props.loadInitialData()
   }
@@ -31,10 +35,10 @@ class Routes extends Component {
 
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route exact path="/displaysearch" component={DisplaySearch} />
+          <Route path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/products" component={Products} />
 
-          <Route path="/products/:id" component={Product} />
+          <Route exact path="/products/:id" component={Product} />
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
@@ -64,6 +68,8 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(getProducts())
+      dispatch(getCategories())
     },
   }
 }
