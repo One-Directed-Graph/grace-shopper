@@ -2,36 +2,40 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, HashRouter, Route, Switch} from 'react-router-dom'
-import {getUserList} from '../../../store/users'
+
+/**
+ * COMPONENT
+ */
 
 class UserList extends Component {
-  async componentDidMount() {
-    //NOT WORKING
-    console.log('id?', this.props.user.id)
-    const id = this.props.user.id
-    await this.props.load(id)
-  }
-
-  async componentDidUpdate(prevProps) {
-    if (prevProps.user.id !== this.props.user.id) {
-      const id = this.props.user.id
-      await this.props.load(id)
-    }
-  }
-
   render() {
-    return <h3>User List</h3>
+    console.log('in userlist', this.props)
+    const users = this.props.users ? this.props.users : []
+    return (
+      <div>
+        <h3>User List</h3>
+        <div>
+          {users.map((user) => (
+            <div key={user.id}>
+              <p>{user.email}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
   }
 }
 
-const mapState = (state) => {
-  console.log('in mapState', state)
-  return state
-}
-const mapDispatch = (dispatch) => {
-  return {
-    load: (id) => dispatch(getUserList(id)),
-  }
-}
+/**
+ * CONTAINER
+ */
+const mapState = ({users}) => ({users})
 
-export default connect(mapState, mapDispatch)(UserList)
+export default connect(mapState)(UserList)
+
+/**
+ * PROP TYPES
+ */
+UserList.propTypes = {
+  users: PropTypes.array,
+}

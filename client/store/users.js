@@ -22,8 +22,8 @@ const gotUserList = (users) => ({type: GOT_USER_LIST, users})
 /**
  * THUNK CREATORS
  */
-export const getUserList = (id) => async (dispatch) => {
-  const users = (await axios.get('/api/users/user-list', {id})).data
+export const getUserList = () => async (dispatch) => {
+  const users = (await axios.get('/api/users/user-list')).data
   dispatch(gotUserList(users))
 }
 
