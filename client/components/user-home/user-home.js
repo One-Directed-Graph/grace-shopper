@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, HashRouter, Route, Switch} from 'react-router-dom'
-import {Reviews, Orders, UserList} from './'
+import {Reviews, Orders, UserList, ProductList} from './'
 
 //ASSIGNED TO: Katt
 
@@ -11,7 +11,7 @@ import {Reviews, Orders, UserList} from './'
  */
 export const UserHome = (props) => {
   //   console.log('in userHome', props)
-  const {email, admin} = props
+  const {email, admin, id} = props
   const greetName = email.split('@')[0]
 
   return (
@@ -25,6 +25,7 @@ export const UserHome = (props) => {
             <div id="user-home-admin-links">
               <Link to="/home/orders">Orders</Link>
               <Link to="/home/user-list">User List</Link>
+              <Link to="/home/product-list">Product List</Link>
             </div>
           ) : (
             <div id="user-home-nonadmin-links">
@@ -37,6 +38,7 @@ export const UserHome = (props) => {
           <Route path="/home/orders" component={Orders} />
           <Route path="/home/reviews" component={Reviews} />
           <Route path="/home/user-list" component={UserList} />
+          <Route path="/home/product-list" component={ProductList} />
         </Switch>
       </div>
     </div>
