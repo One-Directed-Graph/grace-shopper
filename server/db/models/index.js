@@ -5,17 +5,21 @@ const Product = require('./product')
 const Order = require('./order')
 const OrderItem = require('./orderitem')
 
-/**
- * If we had any associations to make, this would be a great place to put them!
- * ex. if we had another model called BlogPost, we might say:
- *
- *    BlogPost.belongsTo(User)
- */
 
+
+// /**
+//  * If we had any associations to make, this would be a great place to put them!
+//  * ex. if we had another model called BlogPost, we might say:
+//  *
+//  *    BlogPost.belongsTo(User)
+//  */
+//Category.belongsTo(Product)
+
+Product.belongsTo(Category)
 User.hasMany(Review)
-// User.hasMany(Order)
 Review.belongsTo(User)
 Review.belongsTo(Product)
+
 
 //User to Order relationship
 Order.belongsTo(User, {

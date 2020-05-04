@@ -16,3 +16,16 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/user-list', async (req, res, next) => {
+  console.log('getting user list for admin')
+  try {
+    const users = await User.findAll({
+      where: {admin: false},
+      attributes: ['id', 'email', 'admin'],
+    })
+    res.json(users)
+  } catch (err) {
+    next(err)
+  }
+})

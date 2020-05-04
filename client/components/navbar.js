@@ -1,56 +1,131 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {logout, getProducts} from '../store'
+import Search from './Search'
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
+import Form from 'react-bootstrap/Form'
+import Image from 'react-bootstrap/Image'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>BOILERMAKER</h1>
-    <nav>
-      {isLoggedIn ? (
+// import {render} from 'enzyme' - REMOVE?
+
+class Navbarclass extends Component {
+  constructor(props) {
+    if (props.products.length > 0) {
+      console.log('props from nav bar in constructor', props)
+    }
+    super()
+  }
+  componentDidMount() {
+    this.props.load()
+  }
+
+  render() {
+    const {handleClick, isLoggedIn, products} = this.props
+    console.log('navbar', products)
+    return (
+      <div>
+        <Navbar bg="dark" variant="dark">
+          <img
+            src="/images/backgroundAmblem.jpg"
+            width="50"
+            height="50"
+            className="d-inline-block align-top"
+            alt="React Bootstrap logo"
+          />
+          <Navbar.Brand href="/home">Maskerade</Navbar.Brand>
+          {isLoggedIn ? (
+            <div>
+              {/* The navbar will show these links after you log in */}
+              <Nav.Link href="/home">Home</Nav.Link>
+              <NavLink
+                href="#"
+                onClick={() => {
+                  handleClick()
+                }}
+              >
+                Logout
+              </NavLink>
+              <Nav.Link to="/products">Products</Nav.Link>
+            </div>
+          ) : (
+            <div>
+              {/* The navbar will show these links before you log in */}
+              <Nav className="mr-auto">
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/signup">Sign Up</Nav.Link>
+                <Nav.Link href="/products">Products</Nav.Link>
+                <Navbar.Collapse className="justify-content-left">
+                  <Container>
+                    <Search className="" />
+                  </Container>
+                </Navbar.Collapse>
+              </Nav>
+            </div>
+          )}
+        </Navbar>
         <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
+          <Container>
+            <Row class="mx-auto">
+              <Col>
+                <Link to="/products">
+                  <Image src="/images/manuPic3.jpeg" roundedCircle />
+                </Link>
+              </Col>
+              <Col md="auto">
+                <Link>
+                  <Image src="/images/manuHMpic1.jpg" roundedCircle />
+                </Link>
+              </Col>
+              <Col md="auto">
+                <Link>
+                  <Image src="/images/menuMed.jpeg" roundedCircle />
+                </Link>
+              </Col>
+            </Row>
+          </Container>
         </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)
+        <hr />
+      </div>
+    )
+  }
+}
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
+  const {products} = state
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    products,
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    handleClick() {
+    handleClick: () => {
       dispatch(logout())
-    }
+    },
+    load: () => {
+      console.log('loading data')
+      dispatch(getProducts())
+    },
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbarclass)
 
 /**
  * PROP TYPES
  */
 Navbar.propTypes = {
+  load: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
 }
