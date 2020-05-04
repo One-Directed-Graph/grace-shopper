@@ -1,8 +1,14 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
-const Product = require('../server/db/models/product')
+const {
+  User,
+  Product,
+  Category,
+  Order,
+  OrderItem,
+  Review,
+} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -15,6 +21,12 @@ async function seed() {
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
+
+  const categories = await Promise.all([
+    Category.create({name: 'Fashion Mask', description: 'Fashion Mask'}),
+    Category.create({name: 'Plain Mask', description: 'Plain Mask'}),
+  ])
+  console.log('seeded Categories successfully')
 
   const products = await Promise.all([
     Product.create({
@@ -34,15 +46,47 @@ async function seed() {
     Product.create({
       title: 'scaryMask',
       description:
-        'best for being protetcted and people will be scare to walk up to you',
+        'best for being protected and people will be scare to walk up to you',
       price: 1.25,
       quantity: 10000,
       img: '../public/images/scary.jpg',
     }),
   ])
   console.log('seeded Products successfully')
-}
 
+  const orders = await Promise.all([
+    Order.create({
+      dateOfPurchase: '05/01/2020',
+      status: 'Completed',
+      subtotal: 14.0,
+      userId: users[0].id,
+    }),
+  ])
+
+  const orderItems = await Promise.all([
+    OrderItem.create({
+      orderId: orders[0].id,
+      productId: products[2].id,
+      quantity: 4,
+      price: 1.25,
+    }),
+    OrderItem.create({
+      orderId: orders[0].id,
+      productId: products[1].id,
+      quantity: 10,
+      price: 1.9,
+    }),
+  ])
+
+  const reviews = await Promise.all([
+    Review.create({
+      userId: users[0].id,
+      productId: products[2].id,
+      rating: 5,
+      description: 'Excellent mask',
+    }),
+  ])
+}
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.
 // The `seed` function is concerned only with modifying the database.
