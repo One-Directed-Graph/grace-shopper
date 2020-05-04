@@ -25,7 +25,6 @@ form div {
   flex-flow: row;
   justify-content: space-around;
   flex-wrap: wrap;
-  border: solid black 1px;
 }
 .oneProduct {
   display: flex;
@@ -35,4 +34,13 @@ form div {
   width: 200px;
   padding: 1rem;
   margin: 1rem;
+}
+#buttonProduct {
+  margin-top: 100px;
+}
+.hello {
+  float: 'right';
+}
+.custom-class {
+  border: black solid 1px;
 }

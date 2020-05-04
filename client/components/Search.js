@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import DisplaySearch from './DisplaySearch'
-import {Route} from 'react-router-dom'
+import {Route, Link} from 'react-router-dom'
 import {getSearchProducts} from '../store/searchItem'
+import Form from 'react-bootstrap/Form'
+import FormControl from 'react-bootstrap/FormControl'
+import Button from 'react-bootstrap/Button'
 
 class Search extends Component {
   constructor(props) {
@@ -28,10 +31,10 @@ class Search extends Component {
   render() {
     const {searchInput, searchOutput} = this.state
     const {history} = this.props
-    console.log('hfhfhdfhjdf', this.props.history)
+    console.log('hfrom search history', this.props.history)
     return (
-      <div>
-        <input
+      <Form inline>
+        <FormControl
           value={searchInput}
           type="text"
           placeholder="search"
@@ -39,21 +42,18 @@ class Search extends Component {
             this.setState({searchInput: ev.target.value})
           }}
         />
-        <button
-          onClick={() => {
-            let searchResults = this.search()
-            //console.log(history)
-            this.props.sendSearch(searchResults, this.props.history.push)
-          }}
-        >
-          search
-        </button>
-        <select>
-          {searchOutput.map((prod) => {
-            return <option key={prod.id}>{prod.title}</option>
-          })}
-        </select>
-      </div>
+        <Link to="/displaysearch">
+          <Button
+            onClick={() => {
+              let searchResults = this.search()
+              //console.log(history)
+              this.props.sendSearch(searchResults)
+            }}
+          >
+            search
+          </Button>
+        </Link>
+      </Form>
     )
   }
 }
@@ -65,8 +65,8 @@ const mapState = ({products}) => {
 }
 const mapDispatch = (dispatch) => {
   return {
-    sendSearch: (searchResults, push) => {
-      dispatch(getSearchProducts(searchResults, push))
+    sendSearch: (searchResults) => {
+      dispatch(getSearchProducts(searchResults))
     },
   }
 }
