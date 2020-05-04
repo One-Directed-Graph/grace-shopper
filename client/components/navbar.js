@@ -6,7 +6,7 @@ import {logout, getProducts} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import Form from 'react-bootstrap/Form'
+// import Form from 'react-bootstrap/Form' -REMOVE?
 import Image from 'react-bootstrap/Image'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -38,25 +38,27 @@ class Navbarclass extends Component {
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
           />
-          <Navbar.Brand href="/home">Maskerade</Navbar.Brand>
+          <Navbar.Brand href="/">Maskerade</Navbar.Brand>
           {isLoggedIn ? (
             <div>
-              {/* The navbar will show these links after you log in */}
-              <Nav.Link href="/home">Home</Nav.Link>
-              <NavLink
-                href="#"
-                onClick={() => {
-                  handleClick()
-                }}
-              >
-                Logout
-              </NavLink>
-              <Nav.Link to="/products">Products</Nav.Link>
+              <Navbar className="mr-auto">
+                {/* The navbar will show these links after you log in */}
+                <Nav.Link href="/home">Home</Nav.Link>
+                <Nav.Link
+                  href="#"
+                  onClick={() => {
+                    handleClick()
+                  }}
+                >
+                  Logout
+                </Nav.Link>
+                <Nav.Link to="/products">Products</Nav.Link>
+              </Navbar>
             </div>
           ) : (
             <div>
               {/* The navbar will show these links before you log in */}
-              <Nav className="mr-auto">
+              <Navbar className="mr-auto">
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/signup">Sign Up</Nav.Link>
                 <Nav.Link href="/products">Products</Nav.Link>
@@ -65,7 +67,7 @@ class Navbarclass extends Component {
                     <Search className="" />
                   </Container>
                 </Navbar.Collapse>
-              </Nav>
+              </Navbar>
             </div>
           )}
         </Navbar>
@@ -113,7 +115,7 @@ const mapDispatch = (dispatch) => {
       dispatch(logout())
     },
     load: () => {
-      console.log('loading data')
+      console.log('loading product data')
       dispatch(getProducts())
     },
   }
