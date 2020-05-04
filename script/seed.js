@@ -18,6 +18,8 @@ async function seed() {
   const users = await Promise.all([
     User.create({email: 'cody@email.com', password: '123', admin: true}),
     User.create({email: 'murphy@email.com', password: '123'}),
+    User.create({email: 'jeff@email.com', password: '123'}),
+    User.create({email: 'taylor@email.com', password: '123', admin: true}),
   ])
 
   console.log(`seeded ${users.length} users`)
@@ -37,7 +39,7 @@ async function seed() {
       description: 'hand made masks for everyday',
     }),
   ])
-  
+
   const products = await Promise.all([
     Product.create({
       title: 'Cool Mask',
