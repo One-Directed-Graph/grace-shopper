@@ -43,14 +43,14 @@ class Navbarclass extends Component {
             <div>
               {/* The navbar will show these links after you log in */}
               <Nav.Link href="/home">Home</Nav.Link>
-              <NavLink
+              <Nav.Link
                 href="#"
                 onClick={() => {
                   handleClick()
                 }}
               >
                 Logout
-              </NavLink>
+              </Nav.Link>
               <Nav.Link to="/products">Products</Nav.Link>
             </div>
           ) : (
