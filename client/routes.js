@@ -13,7 +13,7 @@ import {
   DisplayByCategory,
 } from './components'
 import {me, getCategories} from './store'
-import {getProducts} from './store/products'
+import {getProducts, loadPage} from './store/products'
 
 /**
  * COMPONENT
@@ -38,6 +38,7 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/products" component={Products} />
+          <Route path="/:category" component={DisplayByCategory} />
           <Route exact path="/products/:id" component={Product} />
           {isLoggedIn && (
             <Switch>
@@ -64,10 +65,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData() {
-      dispatch(me())
-      dispatch(getProducts())
-      dispatch(getCategories())
+    loadInitialData: async () => {
+      await dispatch(me())
+      await dispatch(getProducts())
+      await dispatch(getCategories())
+      await dispatch(loadPage())
     },
   }
 }

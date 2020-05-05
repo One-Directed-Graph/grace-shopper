@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-
+const LOAD_PAGE = 'LOAD_PAGE'
 /**
  * ACTION TYPES
  */
@@ -17,6 +17,7 @@ const defaultUser = {}
  * ACTION CREATORS
  */
 const _getProducts = (products) => ({type: GET_PRODUCTS, products})
+const _loadPage = () => ({type: LOAD_PAGE})
 
 /**
  * THUNK CREATORS
@@ -29,13 +30,42 @@ export const getProducts = () => {
   }
 }
 
+export const loadPage = () => {
+  console.log('from thunk for getProducts')
+  return async (dispatch) => {
+    dispatch(_loadPage())
+  }
+}
 /**
  * REDUCER
  */
-export default function (state = [], action) {
+export default function (state = {}, action) {
   if (action.type === GET_PRODUCTS) {
-    return action.products
+    return {
+      products: [...action.products],
+      count: action.products.length,
+    }
   }
-  console.log('state from thunk for products', state)
+  if (action.type === LOAD_PAGE) {
+    return {
+      ...state,
+      divided: [...getPages(state)],
+    }
+  }
   return state
+}
+
+let getPages = (state) => {
+  let count = state.count
+  console.log('count count count count', state)
+  let perPage = 5
+  let totalPages = Math.ceil(count / perPage)
+  console.log('count count count count', totalPages)
+  let piecedArray = []
+  let i = 0
+  while (i < count) {
+    piecedArray.push(state.products.slice(i, (i += perPage)))
+  }
+  console.log('ststststststststs', piecedArray)
+  return piecedArray
 }
