@@ -18,6 +18,9 @@ const defaultUsers = []
  * ACTION CREATORS
  */
 const gotUserList = (users) => ({type: GOT_USER_LIST, users})
+const addedUser = (user) => ({type: ADDED_USER, user})
+const removedUser = (id) => ({type: REMOVED_USER, id})
+const updatedUser = (user) => ({type: UPDATED_USER, user})
 
 /**
  * THUNK CREATORS
@@ -25,6 +28,23 @@ const gotUserList = (users) => ({type: GOT_USER_LIST, users})
 export const getUserList = () => async (dispatch) => {
   const users = (await axios.get('/api/users/user-list')).data
   dispatch(gotUserList(users))
+}
+
+export const addUser = (user) => async (dispatch) => {
+  const _addedUser = (await axios.put(`/api/users/user-list`, user)).data
+  dispatch(addedUser(_addedUser))
+}
+
+export const updateUser = (user) => async (dispatch) => {
+  const _updatedUser = (await axios.put(`/api/users/user-list`, user)).data
+  dispatch(updatedUser(_updatedUser))
+}
+
+export const removeUser = (id) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/users/user-list/${id}`)
+    dispatch(removedUser(id))
+  }
 }
 
 /**

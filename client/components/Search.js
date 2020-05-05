@@ -6,6 +6,7 @@ import {getSearchProducts} from '../store/searchItem'
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
+import {Container, Row, Col} from 'react-bootstrap'
 
 class Search extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class Search extends Component {
     return (
       <Form inline>
         <FormControl
+          className="mr-sm-2"
           value={searchInput}
           type="text"
           placeholder="search"
@@ -42,6 +44,7 @@ class Search extends Component {
             this.setState({searchInput: ev.target.value})
           }}
         />
+
         <Link to="/displaysearch">
           <Button
             onClick={() => {
