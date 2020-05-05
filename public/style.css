@@ -57,6 +57,7 @@ form div {
   justify-content: space-around;
   flex-wrap: wrap;
 }
+
 .colpic {
   display: inline-flex;
   flex-flow: row;
