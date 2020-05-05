@@ -66,7 +66,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData: async () => {
-      dispatch(me())
+      await dispatch(me())
       await dispatch(getProducts())
       await dispatch(getCategories())
       await dispatch(loadPage())
