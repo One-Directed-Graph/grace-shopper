@@ -51,15 +51,29 @@ form div {
 .navbarMain {
   background-color: rgb(41, 75, 67);
 }
+
 .outsideOfContainer {
   display: inline-flex;
   flex-flow: row;
   justify-content: space-around;
   flex-wrap: wrap;
 }
+
 .colpic {
   display: inline-flex;
   flex-flow: row;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+#auth-form-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#auth-form {
+  padding: 0.5rem;
+  margin: 1rem;
+  width: 30%;
 }

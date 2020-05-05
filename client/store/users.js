@@ -54,6 +54,14 @@ export default function (state = defaultUsers, action) {
   switch (action.type) {
     case GOT_USER_LIST:
       return action.users
+    case ADDED_USER:
+      return [...state, action.user]
+    case UPDATED_USER:
+      return [...state].map((user) =>
+        user.id === action.user.id ? action.user : user
+      )
+    case REMOVED_USER:
+      return [...state].filter((user) => user.id !== action.user.id)
     default:
       return state
   }
