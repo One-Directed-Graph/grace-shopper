@@ -11,6 +11,8 @@ import Image from 'react-bootstrap/Image'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import FormControl from 'react-bootstrap/FormControl'
+import Button from 'react-bootstrap/Button'
 
 // import {render} from 'enzyme' - REMOVE?
 
@@ -30,68 +32,86 @@ class Navbarclass extends Component {
     console.log('navbar', products)
     return (
       <div>
-        <Navbar bg="dark" variant="dark">
-          <img
-            src="/images/backgroundAmblem.jpg"
-            width="50"
-            height="50"
-            className="d-inline-block align-top"
-            alt="React Bootstrap logo"
-          />
-          <Navbar.Brand href="/">Maskerade</Navbar.Brand>
+        <Navbar variant="dark" className="navbarMain">
+          <Navbar.Brand href="/home">
+            <img
+              src="/images/backgroundAmblem.jpg"
+              width="50"
+              height="50"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+          </Navbar.Brand>
+          <Navbar.Brand href="/home">Maskerade</Navbar.Brand>
+
           {isLoggedIn ? (
-            <div>
-              <Navbar className="mr-auto">
-                {/* The navbar will show these links after you log in */}
-                <Nav.Link href="/home">Home</Nav.Link>
-                <Nav.Link
-                  href="#"
-                  onClick={() => {
-                    handleClick()
-                  }}
-                >
-                  Logout
-                </Nav.Link>
-                <Nav.Link to="/products">Products</Nav.Link>
-              </Navbar>
-            </div>
+            <Nav className="mr-auto">
+              {/* The navbar will show these links after you log in */}
+              <Nav.Link href="/home">Home</Nav.Link>
+              <Nav.Link
+                href="#"
+                onClick={() => {
+                  handleClick()
+                }}
+              >
+                Logout
+              </Nav.Link>
+              <Nav.Link to="/products">Products</Nav.Link>
+            </Nav>
           ) : (
-            <div>
-              {/* The navbar will show these links before you log in */}
-              <Navbar className="mr-auto">
-                <Nav.Link href="/login">Login</Nav.Link>
-                <Nav.Link href="/signup">Sign Up</Nav.Link>
-                <Nav.Link href="/products">Products</Nav.Link>
-                <Navbar.Collapse className="justify-content-left">
-                  <Container>
-                    <Search className="" />
-                  </Container>
-                </Navbar.Collapse>
-              </Navbar>
-            </div>
+            <Nav className="mr-auto">
+              <Nav.Link href="/login">Login</Nav.Link>
+              <Nav.Link href="/signup">Signup</Nav.Link>
+              <Nav.Link href="products">Products</Nav.Link>
+            </Nav>
           )}
+          <Form inline>
+            <Search />
+          </Form>
+          <Navbar.Brand href="/cart">
+            <img
+              src="/images/shop.png"
+              width="40px"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+          </Navbar.Brand>
         </Navbar>
-        <div>
-          <Container>
-            <Row class="mx-auto">
-              <Col>
-                <Link to="/products">
-                  <Image src="/images/manuPic3.jpeg" roundedCircle />
-                </Link>
-              </Col>
-              <Col md="auto">
-                <Link>
-                  <Image src="/images/manuHMpic1.jpg" roundedCircle />
-                </Link>
-              </Col>
-              <Col md="auto">
-                <Link>
-                  <Image src="/images/menuMed.jpeg" roundedCircle />
-                </Link>
-              </Col>
-            </Row>
-          </Container>
+        <div className="hello2">
+          <Image src="/images/long3.jpg" fluid style={{width: '100%'}} />
         </div>
+        <hr />
+        <Container>
+          <Row className="hello">
+            <Col>
+              <Link>
+                <Image
+                  src="/images/manuPic3.jpeg"
+                  roundedCircle
+                  className="roundImages"
+                />
+              </Link>
+            </Col>
+            <Col>
+              <Link to="/products">
+                <Image
+                  src="/images/manuHMpic1.jpg"
+                  roundedCircle
+                  className="roundImages"
+                />
+              </Link>
+            </Col>
+            <Col>
+              <Link to="/products">
+                <Image
+                  src="/images/menuMed.jpeg"
+                  roundedCircle
+                  className="roundImages"
+                />
+              </Link>
+            </Col>
+          </Row>
+        </Container>
         <hr />
       </div>
     )

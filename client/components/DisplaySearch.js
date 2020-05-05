@@ -8,26 +8,30 @@ class DisplaySearch extends React.Component {
     console.log('searchitem from display page', searchItem)
     return (
       <div className="container">
-        {searchItem.map((prod) => {
-          //console.log(prod)
-          return (
-            <div className="oneProduct" key={prod.id}>
-              {/* <Link to={`/products/${prod.id}`}> */}
-              <h3>{prod.title}</h3>
-              <button
-                onClick={() => {
-                  //console.log('hello', prod.id, this.props.history.push)
-                  this.props.loadProduct(prod.id, this.props.history.push)
-                }}
-              >
-                select product
-              </button>
-              {/* </Link> */}
-              <p>{prod.description}</p>
-              <img src={prod.img} alt="image loading" />
-            </div>
-          )
-        })}
+        {searchItem > 0 ? (
+          searchItem.map((prod) => {
+            //console.log(prod)
+            return (
+              <div className="oneProduct" key={prod.id}>
+                {/* <Link to={`/products/${prod.id}`}> */}
+                <h3>{prod.title}</h3>
+                <button
+                  onClick={() => {
+                    //console.log('hello', prod.id, this.props.history.push)
+                    this.props.loadProduct(prod.id, this.props.history.push)
+                  }}
+                >
+                  select product
+                </button>
+                {/* </Link> */}
+                <p>{prod.description}</p>
+                <img src={prod.img} alt="image loading" />
+              </div>
+            )
+          })
+        ) : (
+          <h3>'No Results'</h3>
+        )}
       </div>
     )
   }
