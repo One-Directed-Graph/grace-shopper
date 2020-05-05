@@ -92,7 +92,7 @@ class Navbarclass extends Component {
         <Container fluid>
           <Row className="hello">
             <Col md={4} className="colpic">
-              <Link to="/categories/fashion">
+              <Link to="/fashion">
                 <Image
                   src="/images/manuPic3.jpeg"
                   roundedCircle
@@ -101,7 +101,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/categories/handMade">
+              <Link to="/handMade">
                 <Image
                   src="/images/manuHMpic1.jpg"
                   roundedCircle
@@ -110,7 +110,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/categories/medical">
+              <Link to="/medical">
                 <Image
                   src="/images/menuMed.jpeg"
                   roundedCircle

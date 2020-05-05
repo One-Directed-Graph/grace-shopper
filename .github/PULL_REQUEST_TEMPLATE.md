@@ -1,7 +1,12 @@
+### Description of changes
+
+Please enter description below...
+
 ### Areas being affected
 
 - [ ] client
 - [ ] client/components
+- [ ] client/routes
 - [ ] client/store
 - [ ] public
 - [ ] public/images
@@ -12,7 +17,3 @@
 - [ ] server/db/models
 - [ ] server/socket
 - [ ] other
-
-### Description of changes
-
--

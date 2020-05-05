@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import {logout} from '../store'
-import {getProducts} from '../store/products'
+import {getProducts, loadPage} from '../store/products'
 import {getProduct} from '../store/product'
 import Product from './product'
 import Search from './Search'
@@ -16,16 +16,16 @@ import Pagination from 'react-bootstrap/Pagination'
 
 class Products extends Component {
   constructor(props) {
-    let products = []
+    //let products = []
     // if (props.products.length > 0) {
     //   console.log('from products in constructor', props)
     //   props.products.length > 0 ? (products = props.products) : ''
     // }
     super()
-    this.state = {
-      products: products,
-    }
-    this.sort = this.sort.bind(this)
+    //   this.state = {
+    //     products: products,
+    //   }
+    //   this.sort = this.sort.bind(this)
   }
   componentDidMount() {
     //this.props.load()
@@ -37,19 +37,19 @@ class Products extends Component {
   sort(sortBy, products) {
     console.log('hello', sortBy, products, this.props.categories)
     if (sortBy === 'LowToHigh') {
-      products.sort((a, b) => {
+      products.products.sort((a, b) => {
         return a.price - b.price
       })
     }
     if (sortBy === 'HighToLow') {
-      products.sort((a, b) => {
+      products.products.sort((a, b) => {
         return b.price - a.price
       })
     }
     if (sortBy === 'Categories') {
       let returnArray = []
       for (let i = 0; i < this.props.categories.length; i++) {
-        products.filter((prod) => {
+        products.products.filter((prod) => {
           //console.log('hello2', this.props.categories[i].id, i)
           if (prod.categoryId === this.props.categories[i].id) {
             //console.log('prod', prod)
@@ -66,7 +66,7 @@ class Products extends Component {
 
   render() {
     const {products, loadProduct, categories} = this.props
-    //console.log('vwvwvwvwvwvwvwvwvwwvwvwvwvvw', this.state.props)
+    console.log('vwvwvwvwvwvwvwvwvwwvwvwvwvvw', this.props)
     console.log('products from component products', products)
 
     return (
@@ -85,7 +85,7 @@ class Products extends Component {
             </select>
           </div>
           <div className="container">
-            {this.state.products.map((prod, ind) => {
+            {products.map((prod, ind) => {
               //console.log(prod)
               return (
                 <Card
@@ -133,9 +133,8 @@ class Products extends Component {
           </div>
           <Pagination>
             <Pagination.First
-              href="/products/0"
               onClick={() => {
-                console.log('this.props.histot', this.props.history)
+                this.props.loadPages()
                 //this.props.loadPage(0,this.props.)
               }}
             />
@@ -160,10 +159,9 @@ class Products extends Component {
   }
 }
 
-const mapState = ({products, categories}) => {
+const mapState = (state) => {
   return {
-    products,
-    categories,
+    state,
   }
 }
 const mapDispatch = (dispatch) => {
@@ -176,8 +174,8 @@ const mapDispatch = (dispatch) => {
     loadProduct: (id, push) => {
       dispatch(getProduct(id, push))
     },
-    loadPage: () => {
-      console.log('hellooooooooooooooooooooooooo')
+    loadPages: () => {
+      dispatch(loadPage())
     },
   }
 }

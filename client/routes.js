@@ -13,7 +13,7 @@ import {
   DisplayByCategory,
 } from './components'
 import {me, getCategories} from './store'
-import {getProducts} from './store/products'
+import {getProducts, loadPage} from './store/products'
 
 /**
  * COMPONENT
@@ -38,7 +38,9 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/products" component={Products} />
-          <Route path="/categories/:category" component={DisplayByCategory} />
+
+          <Route path="/:category" component={DisplayByCategory} />
+
           <Route exact path="/products/:id" component={Product} />
           {isLoggedIn && (
             <Switch>
@@ -46,8 +48,6 @@ class Routes extends Component {
               <Route path="/home" component={UserHome} />
             </Switch>
           )}
-          {/* Displays our Login component as a fallback */}
-          <Route component={Login} />
         </Switch>
       </div>
     )
@@ -67,10 +67,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData() {
+    loadInitialData: async () => {
       dispatch(me())
-      dispatch(getProducts())
-      dispatch(getCategories())
+      await dispatch(getProducts())
+      await dispatch(getCategories())
+      await dispatch(loadPage())
     },
   }
 }
