@@ -10,6 +10,7 @@ import {
   Products,
   Product,
   DisplaySearch,
+  DisplayByCategory,
 } from './components'
 import {me, getCategories} from './store'
 import {getProducts} from './store/products'
@@ -18,8 +19,8 @@ import {getProducts} from './store/products'
  * COMPONENT
  */
 class Routes extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
   }
   componentDidMount() {
     this.props.loadInitialData()
@@ -37,7 +38,7 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/products" component={Products} />
-
+          <Route path="/categories/:category" component={DisplayByCategory} />
           <Route exact path="/products/:id" component={Product} />
           {isLoggedIn && (
             <Switch>

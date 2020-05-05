@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+
 import {logout} from '../store'
 import {getProducts} from '../store/products'
 import {getProduct} from '../store/product'
@@ -10,23 +10,29 @@ import {getCategories} from '../store/categories'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
+import Pagination from 'react-bootstrap/Pagination'
 
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
   constructor(props) {
     let products = []
-    console.log('from products in constructor', props)
-    //props.products.length > 0 ? (products = props.products) : ''
-
+    // if (props.products.length > 0) {
+    //   console.log('from products in constructor', props)
+    //   props.products.length > 0 ? (products = props.products) : ''
+    // }
     super()
     this.state = {
       products: products,
     }
+    this.sort = this.sort.bind(this)
   }
   componentDidMount() {
     //this.props.load()
-    this.setState({products: this.props.products})
+    if (this.props.products.length > 0) {
+      this.setState({products: this.props.products})
+      console.log('<><><><><><><><><><><>', this.state.products)
+    }
   }
   sort(sortBy, products) {
     console.log('hello', sortBy, products, this.props.categories)
@@ -44,9 +50,9 @@ class Products extends Component {
       let returnArray = []
       for (let i = 0; i < this.props.categories.length; i++) {
         products.filter((prod) => {
-          console.log('hello2', this.props.categories[i].id, i)
+          //console.log('hello2', this.props.categories[i].id, i)
           if (prod.categoryId === this.props.categories[i].id) {
-            console.log('prod', prod)
+            //console.log('prod', prod)
             returnArray.push(prod)
           }
         })
@@ -57,10 +63,12 @@ class Products extends Component {
     this.setState({products: products})
     console.log('hello', products)
   }
+
   render() {
     const {products, loadProduct, categories} = this.props
     //console.log('vwvwvwvwvwvwvwvwvwwvwvwvwvvw', this.state.props)
     console.log('products from component products', products)
+
     return (
       <div className="outsideOfContainer">
         <Container>
@@ -77,10 +85,11 @@ class Products extends Component {
             </select>
           </div>
           <div className="container">
-            {this.props.products.map((prod) => {
-              console.log(prod)
+            {this.state.products.map((prod, ind) => {
+              //console.log(prod)
               return (
                 <Card
+                  key={prod.id}
                   className="text-center"
                   style={{width: '18rem', margin: '10px'}}
                 >
@@ -122,6 +131,29 @@ class Products extends Component {
             })}
             <br />
           </div>
+          <Pagination>
+            <Pagination.First
+              href="/products/0"
+              onClick={() => {
+                console.log('this.props.histot', this.props.history)
+                //this.props.loadPage(0,this.props.)
+              }}
+            />
+            <Pagination.Prev />
+            <Pagination.Item>{1}</Pagination.Item>
+            <Pagination.Ellipsis />
+
+            <Pagination.Item>{10}</Pagination.Item>
+            <Pagination.Item>{11}</Pagination.Item>
+            <Pagination.Item active>{12}</Pagination.Item>
+            <Pagination.Item>{13}</Pagination.Item>
+            <Pagination.Item disabled>{14}</Pagination.Item>
+
+            <Pagination.Ellipsis />
+            <Pagination.Item>{20}</Pagination.Item>
+            <Pagination.Next />
+            <Pagination.Last />
+          </Pagination>
         </Container>
       </div>
     )
@@ -136,13 +168,16 @@ const mapState = ({products, categories}) => {
 }
 const mapDispatch = (dispatch) => {
   return {
-    load: () => {
-      dispatch(getProducts())
-      dispatch(getCategories())
-    },
+    // load: () => {
+    //   dispatch(getProducts())
+    //   dispatch(getCategories())
+    // },
 
     loadProduct: (id, push) => {
       dispatch(getProduct(id, push))
+    },
+    loadPage: () => {
+      console.log('hellooooooooooooooooooooooooo')
     },
   }
 }

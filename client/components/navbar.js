@@ -25,7 +25,7 @@ class Navbarclass extends Component {
     super()
   }
   componentDidMount() {
-    this.props.load()
+    // this.props.load()
   }
 
   render() {
@@ -71,9 +71,8 @@ class Navbarclass extends Component {
                 <Nav.Link href="/signup">Signup</Nav.Link>
                 <Nav.Link href="products">Products</Nav.Link>
               </Nav>
-              <Form inline>
-                <Search />
-              </Form>
+
+              <Search />
             </Navbar.Collapse>
           )}
 
@@ -90,10 +89,10 @@ class Navbarclass extends Component {
           <Image src="/images/long3.jpg" fluid style={{width: '100%'}} />
         </div>
         <hr />
-        <Container>
+        <Container fluid>
           <Row className="hello">
-            <Col>
-              <Link>
+            <Col md={4} className="colpic">
+              <Link to="/categories/fashion">
                 <Image
                   src="/images/manuPic3.jpeg"
                   roundedCircle
@@ -101,8 +100,8 @@ class Navbarclass extends Component {
                 />
               </Link>
             </Col>
-            <Col>
-              <Link to="/products">
+            <Col md={4} className="colpic">
+              <Link to="/categories/handMade">
                 <Image
                   src="/images/manuHMpic1.jpg"
                   roundedCircle
@@ -110,8 +109,8 @@ class Navbarclass extends Component {
                 />
               </Link>
             </Col>
-            <Col>
-              <Link to="/products">
+            <Col md={4} className="colpic">
+              <Link to="/categories/medical">
                 <Image
                   src="/images/menuMed.jpeg"
                   roundedCircle
@@ -143,10 +142,10 @@ const mapDispatch = (dispatch) => {
     handleClick: () => {
       dispatch(logout())
     },
-    load: () => {
-      console.log('loading product data')
-      dispatch(getProducts())
-    },
+    // load: () => {
+    //   console.log('loading product data')
+    //   dispatch(getProducts())
+    // },
   }
 }
 
@@ -155,8 +154,8 @@ export default connect(mapState, mapDispatch)(Navbarclass)
 /**
  * PROP TYPES
  */
-Navbarclass.propTypes = {
-  load: PropTypes.func.isRequired,
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-}
+// Navbarclass.propTypes = {
+//   load: PropTypes.func.isRequired,
+//   handleClick: PropTypes.func.isRequired,
+//   isLoggedIn: PropTypes.bool.isRequired,
+// }
