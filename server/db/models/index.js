@@ -5,8 +5,6 @@ const Product = require('./product')
 const Order = require('./order')
 const OrderItem = require('./orderitem')
 
-
-
 // /**
 //  * If we had any associations to make, this would be a great place to put them!
 //  * ex. if we had another model called BlogPost, we might say:
@@ -16,10 +14,10 @@ const OrderItem = require('./orderitem')
 //Category.belongsTo(Product)
 
 Product.belongsTo(Category)
+Category.hasMany(Product)
 User.hasMany(Review)
 Review.belongsTo(User)
 Review.belongsTo(Product)
-
 
 //User to Order relationship
 Order.belongsTo(User, {
@@ -40,8 +38,6 @@ OrderItem.belongsTo(Product, {
     allowNull: false,
   },
 })
-
-Product.belongsTo(Category)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,

@@ -5,7 +5,7 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_PRODUCTS = 'GET_PRODUCTS'
-const GET_PRODUCT = 'GET_PRODUCT'
+
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 
 /**
@@ -17,9 +17,6 @@ const defaultUser = {}
  * ACTION CREATORS
  */
 const _getProducts = (products) => ({type: GET_PRODUCTS, products})
-const _getProduct = (product) => ({type: GET_PRODUCT, product})
-
-const removeProducts = () => ({type: REMOVE_USER})
 
 /**
  * THUNK CREATORS
@@ -36,11 +33,9 @@ export const getProducts = () => {
  * REDUCER
  */
 export default function (state = [], action) {
-  switch (action.type) {
-    case GET_PRODUCTS:
-      return action.products
-
-    default:
-      return state
+  if (action.type === GET_PRODUCTS) {
+    return action.products
   }
+  console.log('state from thunk for products', state)
+  return state
 }
