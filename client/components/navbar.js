@@ -13,6 +13,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/form'
 
 // import {render} from 'enzyme' - REMOVE?
 
@@ -32,7 +33,12 @@ class Navbarclass extends Component {
     console.log('navbar', products)
     return (
       <div>
-        <Navbar variant="dark" className="navbarMain">
+        <Navbar
+          collapseOnSelect
+          expand="lg"
+          variant="dark"
+          className="navbarMain"
+        >
           <Navbar.Brand href="/home">
             <img
               src="/images/backgroundAmblem.jpg"
@@ -43,7 +49,7 @@ class Navbarclass extends Component {
             />
           </Navbar.Brand>
           <Navbar.Brand href="/home">Maskerade</Navbar.Brand>
-
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           {isLoggedIn ? (
             <Nav className="mr-auto">
               {/* The navbar will show these links after you log in */}
@@ -59,15 +65,18 @@ class Navbarclass extends Component {
               <Nav.Link to="/products">Products</Nav.Link>
             </Nav>
           ) : (
-            <Nav className="mr-auto">
-              <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/signup">Signup</Nav.Link>
-              <Nav.Link href="products">Products</Nav.Link>
-            </Nav>
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="mr-auto">
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/signup">Signup</Nav.Link>
+                <Nav.Link href="products">Products</Nav.Link>
+              </Nav>
+              <Form inline>
+                <Search />
+              </Form>
+            </Navbar.Collapse>
           )}
-          <Form inline>
-            <Search />
-          </Form>
+
           <Navbar.Brand href="/cart">
             <img
               src="/images/shop.png"
@@ -146,7 +155,7 @@ export default connect(mapState, mapDispatch)(Navbarclass)
 /**
  * PROP TYPES
  */
-Navbar.propTypes = {
+Navbarclass.propTypes = {
   load: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
