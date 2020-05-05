@@ -1,4 +1,4 @@
-body {
+/* body {
   font-family: sans-serif;
 }
 
@@ -43,4 +43,19 @@ form div {
 }
 .custom-class {
   border: black solid 1px;
+} */
+
+.hello {
+  background-color: rgb(250, 231, 248);
+  display: flex;
+  flex-flow: row;
+  justify-content: space-evenly;
+  border: solid orange 1px;
+  width: auto;
+  padding-left: 100px;
+}
+.roundImages {
+}
+.navbarMain {
+  background-color: rgb(41, 75, 67);
 }
