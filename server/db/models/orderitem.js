@@ -5,21 +5,17 @@ const db = require('../db')
 
 //TODO: define properties
 //TODO: Add ID
-const Order = db.define('order', {
+const OrderItem = db.define('orderitem', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true,
   },
-  status: {
-    type: Sequelize.ENUM('Created', 'Processing', 'Completed'),
+  quantity: {
+    type: Sequelize.INTEGER,
   },
-  dateOfPurchase: {
-    type: Sequelize.DATE,
-    defaultValue: Date.now,
-  },
-  subTotal: {
-    type: Sequelize.DECIMAL,
+  price: {
+    type: Sequelize.DECIMAL(10, 2),
   },
 })
 
@@ -27,7 +23,7 @@ const Order = db.define('order', {
 //TODO: Belongs to user
 //TODO: Has many products
 
-module.exports = Order
+module.exports = OrderItem
 
 /**
  * instanceMethods

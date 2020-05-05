@@ -6,7 +6,7 @@ import {logout, getProducts} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import Form from 'react-bootstrap/Form'
+// import Form from 'react-bootstrap/Form' -REMOVE?
 import Image from 'react-bootstrap/Image'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -135,7 +135,7 @@ const mapDispatch = (dispatch) => {
       dispatch(logout())
     },
     load: () => {
-      console.log('loading data')
+      console.log('loading product data')
       dispatch(getProducts())
     },
   }

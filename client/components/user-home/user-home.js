@@ -12,26 +12,26 @@ import {getProducts} from '../../store'
 /**
  * COMPONENT
  */
-class UserHome extends Component {
+export class UserHome extends Component {
   constructor() {
     super()
     this.chooseLoad = this.chooseLoad.bind(this)
   }
-  async componentDidMount() {
-    await this.chooseLoad(this.props.admin)
+  componentDidMount() {
+    this.chooseLoad(this.props.admin)
   }
 
-  async componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (prevProps.email !== this.props.email) {
-      await this.chooseLoad(this.props.admin)
+      this.chooseLoad(this.props.admin)
     }
   }
 
   async chooseLoad(admin) {
     if (admin) {
       await this.props.loadAdmin()
-    } else {
-      await this.props.loadUser()
+    } else if (!admin) {
+      this.props.loadUser()
     }
   }
 
@@ -83,7 +83,7 @@ const mapState = ({user}) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadUser: () => console.log('user'),
+    loadUser: () => console.log('user reviews & orders'),
     loadAdmin: () => {
       dispatch(getUserList())
     },
