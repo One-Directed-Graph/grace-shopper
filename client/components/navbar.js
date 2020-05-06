@@ -13,7 +13,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/form'
+import Form from 'react-bootstrap/Form'
 
 // import {render} from 'enzyme' - REMOVE?
 
@@ -69,7 +69,7 @@ class Navbarclass extends Component {
               <Nav className="mr-auto">
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/signup">Signup</Nav.Link>
-                <Nav.Link href="products">Products</Nav.Link>
+                <Nav.Link href="/products">Products</Nav.Link>
               </Nav>
 
               <Search />

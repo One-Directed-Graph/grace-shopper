@@ -17,7 +17,8 @@ class Search extends Component {
     }
   }
   search = () => {
-    const {products} = this.props
+    const {products} = this.props.products
+    console.log('vmvmvmvmvmvmvmvmvmvmvmvmvm', products)
     const {searchInput, searchOutput} = this.state
     let titleLowCase = ''
     const searchList = products.filter((product) => {
