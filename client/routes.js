@@ -11,16 +11,17 @@ import {
   Product,
   DisplaySearch,
   Cart,
+  DisplayByCategory,
 } from './components'
 import {me, getCategories} from './store'
-import {getProducts} from './store/products'
+import {getProducts, loadPage} from './store/products'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
   }
   componentDidMount() {
     this.props.loadInitialData()
@@ -33,12 +34,17 @@ class Routes extends Component {
       <div>
         <Switch>
           {/* Routes placed here are available to all visitors */}
-
+          <Route exact path="/" component={Login} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/products" component={Products} />
           <Route exact path="/cart" component={Cart} />
+          <Route
+            exact
+            path="/category/:category"
+            component={DisplayByCategory}
+          />
           <Route exact path="/products/:id" component={Product} />
           {isLoggedIn && (
             <Switch>
@@ -46,8 +52,6 @@ class Routes extends Component {
               <Route path="/home" component={UserHome} />
             </Switch>
           )}
-          {/* Displays our Login component as a fallback */}
-          <Route component={Login} />
         </Switch>
       </div>
     )
@@ -67,10 +71,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData() {
-      dispatch(me())
-      dispatch(getProducts())
-      dispatch(getCategories())
+    loadInitialData: async () => {
+      await dispatch(me())
+      await dispatch(getProducts())
+      await dispatch(getCategories())
+      await dispatch(loadPage())
     },
   }
 }

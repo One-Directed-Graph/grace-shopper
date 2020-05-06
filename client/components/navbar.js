@@ -6,14 +6,15 @@ import {logout, getProducts} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import Form from 'react-bootstrap/Form'
 import Image from 'react-bootstrap/Image'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
-import {render} from 'enzyme'
+import Form from 'react-bootstrap/Form'
+
+// import {render} from 'enzyme' - REMOVE?
 
 class Navbarclass extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class Navbarclass extends Component {
     super()
   }
   componentDidMount() {
-    this.props.load()
+    // this.props.load()
   }
 
   render() {
@@ -37,7 +38,7 @@ class Navbarclass extends Component {
           variant="dark"
           className="navbarMain"
         >
-          <Navbar.Brand href="/home">
+          <Navbar.Brand href="/">
             <img
               src="/images/backgroundAmblem.jpg"
               width="50"
@@ -46,7 +47,7 @@ class Navbarclass extends Component {
               alt="React Bootstrap logo"
             />
           </Navbar.Brand>
-          <Navbar.Brand href="/home">Maskerade</Navbar.Brand>
+          <Navbar.Brand href="/">Maskerade</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           {isLoggedIn ? (
             <Nav className="mr-auto">
@@ -69,9 +70,8 @@ class Navbarclass extends Component {
                 <Nav.Link href="/signup">Signup</Nav.Link>
                 <Nav.Link href="products">Products</Nav.Link>
               </Nav>
-              <Form inline>
-                <Search />
-              </Form>
+
+              <Search />
             </Navbar.Collapse>
           )}
 
@@ -89,10 +89,10 @@ class Navbarclass extends Component {
           <Image src="/images/long3.jpg" fluid style={{width: '100%'}} />
         </div>
         <hr />
-        <Container>
+        <Container fluid>
           <Row className="hello">
-            <Col>
-              <Link>
+            <Col md={4} className="colpic">
+              <Link to="/category/fashion">
                 <Image
                   src="/images/manuPic3.jpeg"
                   roundedCircle
@@ -100,8 +100,8 @@ class Navbarclass extends Component {
                 />
               </Link>
             </Col>
-            <Col>
-              <Link to="/products">
+            <Col md={4} className="colpic">
+              <Link to="/category/handMade">
                 <Image
                   src="/images/manuHMpic1.jpg"
                   roundedCircle
@@ -109,8 +109,8 @@ class Navbarclass extends Component {
                 />
               </Link>
             </Col>
-            <Col>
-              <Link to="/products">
+            <Col md={4} className="colpic">
+              <Link to="/category/medical">
                 <Image
                   src="/images/menuMed.jpeg"
                   roundedCircle
@@ -142,10 +142,10 @@ const mapDispatch = (dispatch) => {
     handleClick: () => {
       dispatch(logout())
     },
-    load: () => {
-      console.log('loading product data')
-      dispatch(getProducts())
-    },
+    // load: () => {
+    //   console.log('loading product data')
+    //   dispatch(getProducts())
+    // },
   }
 }
 
@@ -154,8 +154,8 @@ export default connect(mapState, mapDispatch)(Navbarclass)
 /**
  * PROP TYPES
  */
-Navbarclass.propTypes = {
-  load: PropTypes.func.isRequired,
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-}
+// Navbarclass.propTypes = {
+//   load: PropTypes.func.isRequired,
+//   handleClick: PropTypes.func.isRequired,
+//   isLoggedIn: PropTypes.bool.isRequired,
+// }

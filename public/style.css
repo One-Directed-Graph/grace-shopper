@@ -1,6 +1,6 @@
 /* body {
   font-family: sans-serif;
-}
+} */
 
 a {
   text-decoration: none;
@@ -10,17 +10,16 @@ label {
   display: block;
 }
 
-nav a {
+/* nav a {
   display: inline-block;
   margin: 1em;
-}
+} */
 
 form div {
   margin: 1em;
   display: inline-block;
 }
 .container {
-  padding: 1rem;
   display: inline-flex;
   flex-flow: row;
   justify-content: space-around;
@@ -31,31 +30,47 @@ form div {
   flex-flow: column;
   justify-content: space-evenly;
   border: solid orange 1px;
-  width: 200px;
-  padding: 1rem;
-  margin: 1rem;
 }
 #buttonProduct {
   margin-top: 100px;
 }
-.hello {
-  float: 'right';
-}
+
 .custom-class {
   border: black solid 1px;
-} */
+}
 
 .hello {
   background-color: rgb(250, 231, 248);
   display: flex;
   flex-flow: row;
-  justify-content: space-evenly;
+
   border: solid orange 1px;
   width: auto;
-  padding-left: 100px;
 }
-.roundImages {
-}
+
 .navbarMain {
   background-color: rgb(41, 75, 67);
+}
+.outsideOfContainer {
+  display: inline-flex;
+  flex-flow: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.colpic {
+  display: inline-flex;
+  flex-flow: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#auth-form-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#auth-form {
+  padding: 0.5rem;
+  margin: 1rem;
+  width: 30%;
 }
