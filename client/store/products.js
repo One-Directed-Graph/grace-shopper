@@ -11,7 +11,6 @@ const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
 
 /**
  * ACTION CREATORS
@@ -39,7 +38,10 @@ export const loadPage = () => {
 /**
  * REDUCER
  */
-export default function (state = {}, action) {
+export default function (
+  state = {products: [], count: 0, divided: []},
+  action
+) {
   if (action.type === GET_PRODUCTS) {
     return {
       products: [...action.products],
@@ -49,7 +51,7 @@ export default function (state = {}, action) {
   if (action.type === LOAD_PAGE) {
     return {
       ...state,
-      divided: [...getPages(state)],
+      divided: getPages(state),
     }
   }
   return state
