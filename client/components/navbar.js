@@ -39,7 +39,7 @@ class Navbarclass extends Component {
           variant="dark"
           className="navbarMain"
         >
-          <Navbar.Brand href="/home">
+          <Navbar.Brand href="/">
             <img
               src="/images/backgroundAmblem.jpg"
               width="50"
@@ -48,7 +48,7 @@ class Navbarclass extends Component {
               alt="React Bootstrap logo"
             />
           </Navbar.Brand>
-          <Navbar.Brand href="/home">Maskerade</Navbar.Brand>
+          <Navbar.Brand href="/">Maskerade</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           {isLoggedIn ? (
             <Nav className="mr-auto">
@@ -92,7 +92,7 @@ class Navbarclass extends Component {
         <Container fluid>
           <Row className="hello">
             <Col md={4} className="colpic">
-              <Link to="/fashion">
+              <Link to="/category/fashion">
                 <Image
                   src="/images/manuPic3.jpeg"
                   roundedCircle
@@ -101,7 +101,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/handMade">
+              <Link to="/category/handMade">
                 <Image
                   src="/images/manuHMpic1.jpg"
                   roundedCircle
@@ -110,7 +110,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/medical">
+              <Link to="/category/medical">
                 <Image
                   src="/images/menuMed.jpeg"
                   roundedCircle
