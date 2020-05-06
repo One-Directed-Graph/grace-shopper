@@ -6,14 +6,13 @@ import {logout, getProducts} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-// import Form from 'react-bootstrap/Form' -REMOVE?
 import Image from 'react-bootstrap/Image'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/form'
+import Form from 'react-bootstrap/Form'
 
 // import {render} from 'enzyme' - REMOVE?
 
