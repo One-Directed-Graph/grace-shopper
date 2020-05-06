@@ -6,16 +6,14 @@ import {logout, getProducts} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-// import Form from 'react-bootstrap/Form' -REMOVE?
+import Form from 'react-bootstrap/Form'
 import Image from 'react-bootstrap/Image'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/form'
-
-// import {render} from 'enzyme' - REMOVE?
+import {render} from 'enzyme'
 
 class Navbarclass extends Component {
   constructor(props) {
@@ -78,6 +76,7 @@ class Navbarclass extends Component {
           )}
 
           <Navbar.Brand href="/cart">
+            <Nav.Link href="cart.js"></Nav.Link>
             <img
               src="/images/shop.png"
               width="40px"
