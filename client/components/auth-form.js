@@ -45,7 +45,16 @@ const AuthForm = (props) => {
 
         {error && error.response && <div> {error.response.data} </div>}
       </Form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <a id="google" href="/auth/google">
+        {displayName} with Google
+      </a>
+      {name === 'signup' && (
+        <div>
+          <p>
+            Already have an account? <a href="/login">Click here!</a>
+          </p>
+        </div>
+      )}
     </div>
   )
 }

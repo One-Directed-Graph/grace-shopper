@@ -24,26 +24,26 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
-router.get('/:page?', (req, res, next) => {
-  const resultsPerPage = 8
-  // pageNum is zero indexed
-  let pageNum = req.params.page
-  //console.log("12121212121212121212121", pageNum);
-  if (pageNum === undefined) {
-    pageNum = 0
-  } else if (isNaN(pageNum)) {
-    return res.status(400).send({error: 'Invalid page number'})
-  }
+// router.get('/:page?', (req, res, next) => {
+//   const resultsPerPage = 8
+//   // pageNum is zero indexed
+//   let pageNum = req.params.page
+//   //console.log("12121212121212121212121", pageNum);
+//   if (pageNum === undefined) {
+//     pageNum = 0
+//   } else if (isNaN(pageNum)) {
+//     return res.status(400).send({error: 'Invalid page number'})
+//   }
 
-  const {limit, offset} = paginate(pageNum, resultsPerPage)
-  Employee.findAndCountAll({
-    limit,
-    offset,
-    // order: [
-    //   ["firstName", "asc"],
-    //   ["lastName", "asc"]
-    // ]
-  }).then((results) => {
-    res.status(200).send(results)
-  })
-})
+//   const {limit, offset} = paginate(pageNum, resultsPerPage)
+//   Employee.findAndCountAll({
+//     limit,
+//     offset,
+//     // order: [
+//     //   ["firstName", "asc"],
+//     //   ["lastName", "asc"]
+//     // ]
+//   }).then((results) => {
+//     res.status(200).send(results)
+//   })
+// })
