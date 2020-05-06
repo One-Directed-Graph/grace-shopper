@@ -15,10 +15,10 @@ label {
   margin: 1em;
 } */
 
-form div {
+/* form div {
   margin: 1em;
   display: inline-block;
-}
+} */
 .container {
   display: inline-flex;
   flex-flow: row;
