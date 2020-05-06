@@ -17,10 +17,8 @@ before_script:
 script:
   - npm test
   - npm run build-client
-before_deploy:
-  - rm -rf node_modules # omit from the tarball, since we skip cleanup
 deploy:
-  skip_cleanup: true # prevents travis from deleting the build
   provider: heroku
+  app: maskerade
   api_key:
     secure: Cu+g4sseEeui5WwG3nGQQpqFvA7McLx+iIiPxO9lZ19/jESX8LP1yFPBqS2vhm8aMqOaoK53jvAh2QQaThDYbKEfzdANAZMcsQxZYPu+KBL7Ij+HgzeNkh/DjbdLAV4a+4Ejuh98lSc7TCaxHo3PoXW3oCLpJ8GWhFQQKRaJPC9wVUVGsyZ/SvxWZRFFv/TTX1Waj9q5u0UZniy1sPbzbxMvX3sFQ+blz+WbXIoB+cWzuGxa8iHod06EAJWJ4X9TYV5lfOikl32i3E0AnD6fKGjjErz2J0G9QqRXWxT4cb83AHxZvqyybTcy9PAMfrAy+Fw8xbU9LWrfHjt4D0JEhRrCYM1+yQSvKJYacZCgD0YIyC9iZVtckluD1cXYAn1ltsvR536K9W6fm66HRAcKppKoV4EX5dZLg9ivY9E0aQxFiy0hXuxzc2BiR0uwjCZpu54BNOOhBZE61TdvrmTKOTziy+DYWK98VYL3mgxHrZ20q7cIXk7rMwpaMlAPBr2JUp/u1og7WT6KHOVLIqw64l1HtDBiCZL1wuOk5SQUJ5rYN1UKCjJ7e15mH6OGw95TqAl4s7JnUUbx4f533fWTAlGIhtbjbyPEgOWGuhRdf5ywgxYuveASetINtCK+Cvm/m4EK6vbBKagdfxUZUTBaTHOhs7HKPoc7kNHS777ZKGM=
