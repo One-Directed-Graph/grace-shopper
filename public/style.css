@@ -15,10 +15,10 @@ label {
   margin: 1em;
 } */
 
-form div {
+/* form div {
   margin: 1em;
   display: inline-block;
-}
+} */
 .container {
   display: inline-flex;
   flex-flow: row;
@@ -68,6 +68,9 @@ form div {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+#google {
+  margin-bottom: 1rem;
 }
 #auth-form {
   padding: 0.5rem;

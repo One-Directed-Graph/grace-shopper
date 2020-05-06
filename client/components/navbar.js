@@ -52,7 +52,7 @@ class Navbarclass extends Component {
           {isLoggedIn ? (
             <Nav className="mr-auto">
               {/* The navbar will show these links after you log in */}
-              <Nav.Link href="/home">Home</Nav.Link>
+              <Nav.Link href="/account">Account</Nav.Link>
               <Nav.Link
                 href="#"
                 onClick={() => {
