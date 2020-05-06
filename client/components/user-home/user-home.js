@@ -31,7 +31,8 @@ export class UserHome extends Component {
     if (admin) {
       await this.props.loadAdmin()
     } else if (!admin) {
-      this.props.loadUser()
+      console.log('non-admin')
+      // this.props.loadUser()
     }
   }
 
