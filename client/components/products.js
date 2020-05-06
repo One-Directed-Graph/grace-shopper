@@ -27,47 +27,46 @@ class Products extends Component {
     //   }
     //   this.sort = this.sort.bind(this)
   }
-  componentDidMount() {
-    //this.props.load()
-    if (this.props.products.length > 0) {
-      this.setState({products: this.props.products})
-      console.log('<><><><><><><><><><><>', this.state.products)
-    }
-  }
-  sort(sortBy, products) {
-    console.log('hello', sortBy, products, this.props.categories)
-    if (sortBy === 'LowToHigh') {
-      products.products.sort((a, b) => {
-        return a.price - b.price
-      })
-    }
-    if (sortBy === 'HighToLow') {
-      products.products.sort((a, b) => {
-        return b.price - a.price
-      })
-    }
-    if (sortBy === 'Categories') {
-      let returnArray = []
-      for (let i = 0; i < this.props.categories.length; i++) {
-        products.products.filter((prod) => {
-          //console.log('hello2', this.props.categories[i].id, i)
-          if (prod.categoryId === this.props.categories[i].id) {
-            //console.log('prod', prod)
-            returnArray.push(prod)
-          }
-        })
-        console.log(products, 'product', returnArray)
-      }
-      products = returnArray
-    }
-    this.setState({products: products})
-    console.log('hello', products)
-  }
+  // componentDidMount() {
+  //   //this.props.load()
+  //   if (this.props.products.length > 0) {
+  //     this.setState({products: this.props.products})
+  //     console.log('<><><><><><><><><><><>', this.state.products)
+  //   }
+  // }
+  // sort(sortBy, products) {
+  //   console.log('hello', sortBy, products, this.props.categories)
+  //   if (sortBy === 'LowToHigh') {
+  //     products.products.sort((a, b) => {
+  //       return a.price - b.price
+  //     })
+  //   }
+  //   if (sortBy === 'HighToLow') {
+  //     products.products.sort((a, b) => {
+  //       return b.price - a.price
+  //     })
+  //   }
+  //   if (sortBy === 'Categories') {
+  //     let returnArray = []
+  //     for (let i = 0; i < this.props.categories.length; i++) {
+  //       products.products.filter((prod) => {
+  //         //console.log('hello2', this.props.categories[i].id, i)
+  //         if (prod.categoryId === this.props.categories[i].id) {
+  //           //console.log('prod', prod)
+  //           returnArray.push(prod)
+  //         }
+  //       })
+  //       console.log(products, 'product', returnArray)
+  //     }
+  //     products = returnArray
+  //   }
+  //   this.setState({products: products})
+  //   console.log('hello', products)
+  // }
 
   render() {
-    const {products, loadProduct, categories} = this.props
-    console.log('vwvwvwvwvwvwvwvwvwwvwvwvwvvw', this.props)
-    console.log('products from component products', products)
+    //const {products} = this.props.state
+    const {products, divided} = this.props.state.products
 
     return (
       <div className="outsideOfContainer">
@@ -85,56 +84,61 @@ class Products extends Component {
             </select>
           </div>
           <div className="container">
-            {products.map((prod, ind) => {
-              //console.log(prod)
-              return (
-                <Card
-                  key={prod.id}
-                  className="text-center"
-                  style={{width: '18rem', margin: '10px'}}
-                >
-                  <Card.Img variant="top" src={prod.img} />
-                  <Card.Body>
-                    <Card.Title>{prod.title}</Card.Title>
-                    <Card.Text>{prod.description}</Card.Text>
-                    <Button
-                      variant="success"
-                      onClick={() => {
-                        console.log('hello', prod.id)
-                        this.props.loadProduct(prod.id, this.props.history.push)
-                      }}
+            {divided
+              ? products.map((prod) => {
+                  return (
+                    <Card
+                      key={prod.id}
+                      className="text-center"
+                      style={{width: '18rem', margin: '10px'}}
                     >
-                      Select Product
-                    </Button>
-                  </Card.Body>
-                </Card>
+                      <Card.Img variant="top" src={prod.img} />
+                      <Card.Body>
+                        <Card.Title>{prod.title}</Card.Title>
+                        <Card.Text>{prod.description}</Card.Text>
+                        <Button
+                          variant="success"
+                          onClick={() => {
+                            console.log('hello', prod.id)
+                            this.props.loadProduct(
+                              prod.id,
+                              this.props.history.push
+                            )
+                          }}
+                        >
+                          Select Product
+                        </Button>
+                      </Card.Body>
+                    </Card>
 
-                // <div className="oneProduct" key={prod.id}>
-                //   {/* <Link to={`/products/${prod.id}`}> */}
-                //   <h3>{prod.title}</h3>
+                    // <div className="oneProduct" key={prod.id}>
+                    //   {/* <Link to={`/products/${prod.id}`}> */}
+                    //   <h3>{prod.title}</h3>
 
-                //   {/* </Link> */}
-                //   <p>{prod.description}</p>
-                //   <img src={prod.img} alt="image loading" />
-                //   <div>{prod.price}</div>
-                //   <Button
-                //     variant="success"
-                //     onClick={() => {
-                //       console.log('hello', prod.id)
-                //       this.props.loadProduct(prod.id, this.props.history.push)
-                //     }}
-                //   >
-                //     select product    holder.js/100px180"
-                //   </Button>
-                // </div>
-              )
-            })}
+                    //   {/* </Link> */}
+                    //   <p>{prod.description}</p>
+                    //   <img src={prod.img} alt="image loading" />
+                    //   <div>{prod.price}</div>
+                    //   <Button
+                    //     variant="success"
+                    //     onClick={() => {
+                    //       console.log('hello', prod.id)
+                    //       this.props.loadProduct(prod.id, this.props.history.push)
+                    //     }}
+                    //   >
+                    //     select product    holder.js/100px180"
+                    //   </Button>
+                    // </div>
+                  )
+                })
+              : ''}
             <br />
           </div>
           <Pagination>
             <Pagination.First
+              href="/products/0"
               onClick={() => {
-                this.props.loadPages()
+                // this.props.loadPages()
                 //this.props.loadPage(0,this.props.)
               }}
             />
@@ -174,9 +178,9 @@ const mapDispatch = (dispatch) => {
     loadProduct: (id, push) => {
       dispatch(getProduct(id, push))
     },
-    loadPages: () => {
-      dispatch(loadPage())
-    },
+    // loadPages: () => {
+    //   dispatch(loadPage())
+    // },
   }
 }
 

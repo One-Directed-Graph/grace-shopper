@@ -68,7 +68,7 @@ class Navbarclass extends Component {
               <Nav className="mr-auto">
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/signup">Signup</Nav.Link>
-                <Nav.Link href="products">Products</Nav.Link>
+                <Nav.Link href="/products">Products</Nav.Link>
               </Nav>
 
               <Search />
