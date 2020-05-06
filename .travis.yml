@@ -1,27 +1,22 @@
 language: node_js
 node_js:
-  - 12 # uses version 12
+- 12
 services:
-  - postgresql # starts up postgres
+- postgresql
 addons:
-  postgresql: '10' # recent postgres version on Travis
-dist: xenial # uses xenial environment
+  postgresql: '10'
+dist: xenial
 notifications:
   email:
-    on_success: change # default: change (only when going from broken to fixed)
-    on_failure: always # default: always (which is annoying, as it should be)
+    on_success: change
+    on_failure: always
 install:
-  - npm ci # faster, goes only from package-lock
+- npm ci
 before_script:
-  - psql -c 'create database "grace-shopper-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+- psql -c 'create database "grace-shopper-test";' -U postgres
 script:
-  - npm test # test the code
-  - npm run build-client # make the bundle
-# before_deploy:
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+- npm test
+- npm run build-client
+deploy:
+  api_key:
+    secure: Cu+g4sseEeui5WwG3nGQQpqFvA7McLx+iIiPxO9lZ19/jESX8LP1yFPBqS2vhm8aMqOaoK53jvAh2QQaThDYbKEfzdANAZMcsQxZYPu+KBL7Ij+HgzeNkh/DjbdLAV4a+4Ejuh98lSc7TCaxHo3PoXW3oCLpJ8GWhFQQKRaJPC9wVUVGsyZ/SvxWZRFFv/TTX1Waj9q5u0UZniy1sPbzbxMvX3sFQ+blz+WbXIoB+cWzuGxa8iHod06EAJWJ4X9TYV5lfOikl32i3E0AnD6fKGjjErz2J0G9QqRXWxT4cb83AHxZvqyybTcy9PAMfrAy+Fw8xbU9LWrfHjt4D0JEhRrCYM1+yQSvKJYacZCgD0YIyC9iZVtckluD1cXYAn1ltsvR536K9W6fm66HRAcKppKoV4EX5dZLg9ivY9E0aQxFiy0hXuxzc2BiR0uwjCZpu54BNOOhBZE61TdvrmTKOTziy+DYWK98VYL3mgxHrZ20q7cIXk7rMwpaMlAPBr2JUp/u1og7WT6KHOVLIqw64l1HtDBiCZL1wuOk5SQUJ5rYN1UKCjJ7e15mH6OGw95TqAl4s7JnUUbx4f533fWTAlGIhtbjbyPEgOWGuhRdf5ywgxYuveASetINtCK+Cvm/m4EK6vbBKagdfxUZUTBaTHOhs7HKPoc7kNHS777ZKGM=
