@@ -47,7 +47,6 @@ export class UserHome extends Component {
     console.log('in user-home', this.props)
     const rootDir = '/account'
     const {email, admin} = this.props
-    const greetName = email.split('@')[0]
     const adminLinkTo = [
       {path: 'user-list', name: 'Users', component: UserList},
       {path: 'product-list', name: 'Products', component: ProductList},
@@ -62,6 +61,7 @@ export class UserHome extends Component {
     return (
       <div id="user-home">
         <h4>Account Info</h4>
+        <h6>Logged in as {email}</h6>
         <hr />
         <Nav variant="tabs" id="user-home-nav" defaultActiveKey="/user-list">
           {linkToList.map((link) => {
