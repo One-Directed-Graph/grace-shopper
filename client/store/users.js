@@ -61,7 +61,7 @@ export default function (state = defaultUsers, action) {
         user.id === action.user.id ? action.user : user
       )
     case REMOVED_USER:
-      return [...state].filter((user) => user.id !== action.user.id)
+      return [...state].filter((user) => user.id !== action.id)
     default:
       return state
   }
