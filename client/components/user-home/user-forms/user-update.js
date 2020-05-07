@@ -9,50 +9,30 @@ import {updateUser, removeUser} from '../../../store'
 /**
  * COMPONENT
  */
-class UserUpdate extends Component {
-  constructor() {
-    super()
-    this.state = {
-      admin: false,
-      pwReset: false,
-    }
-  }
-
-  componentDidMount() {
-    console.log('in user-update mount', this.props)
-  }
-
-  render() {
-    const {admin, pwReset, handleSubmit, handleChange} = this.state
-    return (
-      <div id="user-update-form-div">
-        <Form id="user-update-form" onSubmit={handleSubmit} name="user-update">
-          <div id="user-udpdate-checkboxes">
-            <Form.Check
-              inline
-              type="checkbox"
-              name="admin"
-              label="Admin"
-              value={admin}
-              onChange={handleChange}
-            />
-            <Form.Check
-              inline
-              type="checkbox"
-              name="pwReset"
-              label="Require Password Reset"
-              value={pwReset}
-              onChange={handleChange}
-            />
-          </div>
-          <Button variant="primary" type="submit" block>
-            Submit
-          </Button>
-          {/* {error && error.response && <div> {error.response.data} </div>} */}
-        </Form>
+const UserUpdate = ({userToUpdate, handleChange, error}) => {
+  return (
+    <div id="user-update-form-div">
+      <div id="user-udpdate-checkboxes">
+        <Form.Check
+          inline
+          type="checkbox"
+          name="admin"
+          label="Admin"
+          checked={userToUpdate.admin}
+          onChange={(evt) => handleChange(userToUpdate, evt.target.name)}
+        />
+        <Form.Check
+          inline
+          type="checkbox"
+          name="pwReset"
+          label="Require Password Reset"
+          checked={userToUpdate.pwReset}
+          onChange={(evt) => handleChange(userToUpdate, evt.target.name)}
+        />
       </div>
-    )
-  }
+      {error && error.response && <div> {error.response.data} </div>}
+    </div>
+  )
 }
 
 /**
@@ -60,7 +40,7 @@ class UserUpdate extends Component {
  */
 
 const mapState = (state) => {
-  console.log(state)
+  console.log('in user-update state', state)
   return {
     state,
   }
@@ -68,15 +48,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const id = this.props.id
-      const admin = evt.target.admin.value
-      const pwReset = evt.target.ppwReset.value
-      dispatch(updateUser({id, change: {admin, pwReset}}))
-    },
-    handleChange(evt) {
-      console.log(evt)
+    handleChange(user, evtName) {
+      const {id, admin, pwReset} = user
+      const newValue = evtName === 'admin' ? !admin : !pwReset
+      dispatch(updateUser({id, change: {[evtName]: newValue}}))
     },
   }
 }
