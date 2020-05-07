@@ -1,5 +1,7 @@
 export {default} from './user-home'
 
+export {default as WelcomeUser} from './user-comps/welcome-user'
+
 //user
 export {default as Orders} from './user-comps/orders'
 export {default as Reviews} from './user-comps/reviews'
