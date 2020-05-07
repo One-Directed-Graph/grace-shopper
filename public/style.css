@@ -9,16 +9,6 @@ a {
 label {
   display: block;
 }
-
-/* nav a {
-  display: inline-block;
-  margin: 1em;
-} */
-
-/* form div {
-  margin: 1em;
-  display: inline-block;
-} */
 .container {
   display: inline-flex;
   flex-flow: row;
@@ -76,4 +66,15 @@ label {
   padding: 0.5rem;
   margin: 1rem;
   width: 30%;
+}
+
+#user-home,
+.user-home-comps {
+  margin: 1rem;
+}
+
+#user-home h4,
+h6 {
+  margin-top: 2rem;
+  margin-left: 1rem;
 }

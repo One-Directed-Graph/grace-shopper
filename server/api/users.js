@@ -43,9 +43,10 @@ router.put('/user-list', (req, res, next) => {
     .then((user) => res.send(user))
 })
 
-router.delete('/user-list', async (req, res, next) => {
+router.delete('/user-list/:id', async (req, res, next) => {
+  console.log('in api delete', req.params.id)
   try {
-    await User.destroy({where: {id: req.body.id}})
+    await User.destroy({where: {id: req.params.id}})
     res.status(204).end()
   } catch (ex) {
     next(ex)

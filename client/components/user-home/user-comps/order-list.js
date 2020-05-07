@@ -9,7 +9,7 @@ class OrderList extends Component {
   // }
 
   render() {
-    return <h3>Orders</h3>
+    return <h3 className="user-home-comps">Orders</h3>
   }
 }
 
