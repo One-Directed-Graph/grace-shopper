@@ -21,7 +21,6 @@ const AuthForm = (props) => {
               type="text"
               name="email"
               placeholder="Enter email"
-              onChange={console.log}
             />
           </Form.Row>
         </Form.Group>
@@ -85,7 +84,6 @@ const mapSignup = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleSubmit(evt) {
-      console.log('event', evt)
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
