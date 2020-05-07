@@ -19,7 +19,7 @@ class UserList extends Component {
           {users.map((user) => (
             <div key={user.id}>
               <h6>{user.email}</h6>
-              <UserUpdate id={user.id} />
+              <UserUpdate userToUpdate={user} />
             </div>
           ))}
         </div>
