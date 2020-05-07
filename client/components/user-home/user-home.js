@@ -2,12 +2,19 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, HashRouter, Route, Switch} from 'react-router-dom'
-import {Reviews, Orders, UserList, ProductList, OrderList} from './'
+import {
+  Reviews,
+  Orders,
+  UserList,
+  ProductList,
+  OrderList,
+  WelcomeUser,
+} from './'
 import {getUserList} from '../../store/users'
-import {render} from 'enzyme'
-import {getProducts} from '../../store'
+import Nav from 'react-bootstrap/Nav'
 
-//ASSIGNED TO: Katt
+//TODO: highlight selected tab
+//TODO: add welcome comp
 
 /**
  * COMPONENT
@@ -50,42 +57,35 @@ export class UserHome extends Component {
       {path: 'reviews', name: 'Reviews', component: Reviews},
       {path: 'orders', name: 'Orders', component: Orders},
     ]
-    // const combinedLinkToList = [...adminLinkTo, ...userLinkTo]
     const linkToList = admin ? adminLinkTo : userLinkTo
 
     return (
-      <div id="user-home-container">
-        <h2>My Account</h2>
-        <h3>Welcome back, {greetName}!</h3>
+      <div id="user-home">
+        <h4>Account Info</h4>
         <hr />
-        <div id="user-home-acct">
-          <nav id="user-home-acct-nav">
-            {
-              <div id="user-home-links">
-                {linkToList.map((link) => {
-                  const {path, name} = link
-                  return (
-                    <Link key={path} to={`${rootDir}/${path}`}>
-                      {name}
-                    </Link>
-                  )
-                })}
-              </div>
-            }
-          </nav>
-          <Switch>
-            {linkToList.map((link) => {
-              const {path, component} = link
-              return (
-                <Route
-                  key={path}
-                  path={`${rootDir}/${path}`}
-                  component={component}
-                />
-              )
-            })}
-          </Switch>
-        </div>
+        <Nav variant="tabs" id="user-home-nav" defaultActiveKey="/user-list">
+          {linkToList.map((link) => {
+            const {path, name} = link
+            return (
+              <Nav.Item key={path}>
+                <Nav.Link href={`${rootDir}/${path}`}>{name}</Nav.Link>
+              </Nav.Item>
+            )
+          })}
+        </Nav>
+        <Switch>
+          {linkToList.map((link) => {
+            const {path, component} = link
+            return (
+              <Route
+                key={path}
+                path={`${rootDir}/${path}`}
+                component={component}
+              />
+            )
+          })}
+          <Route exact path={`${rootDir}`} component={WelcomeUser} />
+        </Switch>
       </div>
     )
   }

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, HashRouter, Route, Switch} from 'react-router-dom'
+import ListGroup from 'react-bootstrap/ListGroup'
 import {UserUpdate} from '../index'
 
 /**
@@ -10,19 +11,18 @@ import {UserUpdate} from '../index'
 
 class UserList extends Component {
   render() {
-    console.log('in userlist', this.props)
     const users = this.props.users ? this.props.users : []
     return (
-      <div>
+      <div className="user-home-comps">
         <h3>Users</h3>
-        <div>
+        <ListGroup variant="flush" id="user-list-users">
           {users.map((user) => (
-            <div key={user.id}>
+            <ListGroup.Item key={user.id}>
               <h6>{user.email}</h6>
               <UserUpdate userToUpdate={user} />
-            </div>
+            </ListGroup.Item>
           ))}
-        </div>
+        </ListGroup>
       </div>
     )
   }
