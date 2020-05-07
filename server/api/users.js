@@ -24,7 +24,7 @@ router.get('/user-list', (req, res, next) => {
   console.log('getting user list for admin')
   User.findAll({
     where: {admin: false},
-    attributes: ['id', 'email', 'admin'],
+    attributes: ['id', 'email', 'admin', 'pwReset'],
   })
     .then((users) => res.send(users))
     .catch(next)
@@ -32,15 +32,15 @@ router.get('/user-list', (req, res, next) => {
 
 router.post('/user-list', (req, res, next) => {
   User.create(req.body)
-    .then((student) => res.status(201).send(student))
+    .then((user) => res.status(201).send(user))
     .catch(next)
 })
 
 router.put('/user-list', (req, res, next) => {
   const {change} = req.body
   User.findByPk(req.body.id)
-    .then((student) => student.update(change))
-    .then((student) => res.send(student))
+    .then((user) => user.update(change))
+    .then((user) => res.send(user))
 })
 
 router.delete('/user-list', async (req, res, next) => {
