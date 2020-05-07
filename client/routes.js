@@ -13,7 +13,7 @@ import {
   Cart,
   DisplayByCategory,
 } from './components'
-import {me, getCategories} from './store'
+import {me, getCategories, getCart} from './store'
 import {getProducts, loadPage} from './store/products'
 
 /**
@@ -75,6 +75,7 @@ const mapDispatch = (dispatch) => {
       await dispatch(me())
       await dispatch(getProducts())
       await dispatch(getCategories())
+      await dispatch(getCart())
       await dispatch(loadPage())
     },
   }

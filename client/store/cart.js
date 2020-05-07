@@ -5,11 +5,13 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_CART = 'GET_CART'
-
+const INCREASE_QTY = 'INCRREASE_QTY'
+const DECREASE_QTY = 'DESCREASE_QTY'
+const REMOVE_ITEM = 'REMOVE_ITEM'
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+//const defaultUser = {}
 
 /**
  * ACTION CREATORS
@@ -23,6 +25,7 @@ export const getCart = () => {
   console.log('from thunk for getCart')
   return async (dispatch) => {
     const cart = await axios.get('/api/cart')
+    console.log(cart.data)
     dispatch(_getCart(cart.data))
   }
 }
