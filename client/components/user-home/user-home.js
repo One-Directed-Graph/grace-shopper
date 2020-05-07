@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, HashRouter, Route, Switch} from 'react-router-dom'
-import {Reviews, Orders, UserList, ProductList} from './'
+import {Reviews, Orders, UserList, ProductList, OrderList} from './'
 import {getUserList} from '../../store/users'
 import {render} from 'enzyme'
 import {getProducts} from '../../store'
@@ -37,8 +37,21 @@ export class UserHome extends Component {
   }
 
   render() {
+    console.log('in user-home', this.props)
+    const rootDir = '/account'
     const {email, admin} = this.props
     const greetName = email.split('@')[0]
+    const adminLinkTo = [
+      {path: 'user-list', name: 'Users', component: UserList},
+      {path: 'product-list', name: 'Products', component: ProductList},
+      {path: 'order-list', name: 'Orders', component: OrderList},
+    ]
+    const userLinkTo = [
+      {path: 'reviews', name: 'Reviews', component: Reviews},
+      {path: 'orders', name: 'Orders', component: Orders},
+    ]
+    // const combinedLinkToList = [...adminLinkTo, ...userLinkTo]
+    const linkToList = admin ? adminLinkTo : userLinkTo
 
     return (
       <div id="user-home-container">
@@ -47,24 +60,30 @@ export class UserHome extends Component {
         <hr />
         <div id="user-home-acct">
           <nav id="user-home-acct-nav">
-            {admin ? (
-              <div id="user-home-admin-links">
-                <Link to="/home/orders">Orders</Link>
-                <Link to="/home/user-list">User List</Link>
-                <Link to="/home/product-list">Product List</Link>
+            {
+              <div id="user-home-links">
+                {linkToList.map((link) => {
+                  const {path, name} = link
+                  return (
+                    <Link key={path} to={`${rootDir}/${path}`}>
+                      {name}
+                    </Link>
+                  )
+                })}
               </div>
-            ) : (
-              <div id="user-home-nonadmin-links">
-                <Link to="/home/orders">Orders</Link>
-                <Link to="/home/reviews">Reviews</Link>
-              </div>
-            )}
+            }
           </nav>
           <Switch>
-            <Route path="/home/orders" component={Orders} />
-            <Route path="/home/reviews" component={Reviews} />
-            <Route path="/home/user-list" component={UserList} />
-            <Route path="/home/product-list" component={ProductList} />
+            {linkToList.map((link) => {
+              const {path, component} = link
+              return (
+                <Route
+                  key={path}
+                  path={`${rootDir}/${path}`}
+                  component={component}
+                />
+              )
+            })}
           </Switch>
         </div>
       </div>
@@ -75,12 +94,7 @@ export class UserHome extends Component {
 /**
  * CONTAINER
  */
-const mapState = ({user}) => {
-  return {
-    email: user.email,
-    admin: user.admin,
-  }
-}
+const mapState = ({user}) => ({email: user.email, admin: user.admin})
 
 const mapDispatch = (dispatch) => {
   return {

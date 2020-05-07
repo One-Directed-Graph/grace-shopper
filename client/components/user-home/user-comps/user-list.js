@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, HashRouter, Route, Switch} from 'react-router-dom'
-import {updateUser, removeUser} from '../../../store'
+import {UserUpdate} from '../index'
 
 /**
  * COMPONENT
@@ -14,11 +14,12 @@ class UserList extends Component {
     const users = this.props.users ? this.props.users : []
     return (
       <div>
-        <h3>User List</h3>
+        <h3>Users</h3>
         <div>
           {users.map((user) => (
             <div key={user.id}>
               <h6>{user.email}</h6>
+              <UserUpdate id={user.id} />
             </div>
           ))}
         </div>
