@@ -1,12 +1,14 @@
 import axios from 'axios'
 import history from '../history'
-const LOAD_PAGE = 'LOAD_PAGE'
+import store from './index'
+
 /**
  * ACTION TYPES
  */
 const GET_PRODUCTS = 'GET_PRODUCTS'
-
+const LOW_HIGH = 'LOW_HIGH'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
+const HIGH_LOW = 'HIGH_LOW'
 
 /**
  * INITIAL STATE
@@ -16,58 +18,58 @@ const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
  * ACTION CREATORS
  */
 const _getProducts = (products) => ({type: GET_PRODUCTS, products})
-const _loadPage = () => ({type: LOAD_PAGE})
-
+const _lowToHigh = (products) => ({type: LOW_HIGH, products})
+const _highToLow = (products) => ({type: HIGH_LOW, products})
 /**
  * THUNK CREATORS
  */
-export const getProducts = () => {
-  console.log('from thunk for getProducts')
+export const getProducts = (str) => {
   return async (dispatch) => {
-    const products = await axios.get('/api/products')
-    dispatch(_getProducts(products.data))
+    if (str === 'load') {
+      //console.log('555555', products.length)
+      let products = await axios.get('/api/products')
+
+      return dispatch(_getProducts(products.data))
+    }
+    if (str === 'do nothing') {
+      let products = store.getState().products
+      return dispatch(_getProducts(products))
+    }
   }
 }
-
-export const loadPage = () => {
-  console.log('from thunk for getProducts')
+export const lowToHigh = () => {
   return async (dispatch) => {
-    dispatch(_loadPage())
+    const products = await store.getState().products
+    return dispatch(_lowToHigh(products))
+  }
+}
+export const highToLow = () => {
+  return async (dispatch) => {
+    const products = await store.getState().products
+    return dispatch(_highToLow(products))
   }
 }
 /**
  * REDUCER
  */
-export default function (
-  state = {products: [], count: 0, divided: []},
-  action
-) {
+export default function (state = [], action) {
   if (action.type === GET_PRODUCTS) {
-    return {
-      products: [...action.products],
-      count: action.products.length,
-    }
+    return action.products
   }
-  if (action.type === LOAD_PAGE) {
-    return {
-      ...state,
-      divided: getPages(state),
-    }
-  }
-  return state
-}
+  if (action.type === LOW_HIGH) {
+    const newState = action.products.sort((a, b) => {
+      return a.price - b.price
+    })
 
-let getPages = (state) => {
-  let count = state.count
-  console.log('count count count count', state)
-  let perPage = 5
-  let totalPages = Math.ceil(count / perPage)
-  console.log('count count count count', totalPages)
-  let piecedArray = []
-  let i = 0
-  while (i < count) {
-    piecedArray.push(state.products.slice(i, (i += perPage)))
+    return newState
   }
-  console.log('ststststststststs', piecedArray)
-  return piecedArray
+  if (action.type === HIGH_LOW) {
+    const newState = action.products.sort((a, b) => {
+      return b.price - a.price
+    })
+
+    return newState
+  }
+
+  return state
 }
