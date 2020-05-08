@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 //import {Link} from 'react-router-dom'
 import {getProducts, getCart} from '../store'
+import {ListGroup, Image, DropdownButton, Dropdown} from 'react-bootstrap'
 
 //ASSIGNED TO: Vinayak
 
@@ -20,16 +21,32 @@ class Cart extends Component {
     console.log(itemList)
     return (
       <div>
+        <DropdownButton
+          id="dropdown-item-button"
+          className="dropdown"
+          title="Dropdown button"
+        >
+          <Dropdown.Item as="button">Action</Dropdown.Item>
+          <Dropdown.Item as="button">Another action</Dropdown.Item>
+          <Dropdown.Item as="button">Something else</Dropdown.Item>
+        </DropdownButton>
         <h1> Cart ({itemList.length} )</h1>
-        <ul>
+        <ul className="listgrp">
           {itemList
             ? itemList.map((item) => {
                 return (
-                  <li key="item.id">
-                    {/* <img src="{item.productDetail.img}" /> */}
-                    {item.productDetail.title} {item.quantity}
-                    {item.price}
-                  </li>
+                  <ListGroup horizontal="sm" className="my-2" key={item.id}>
+                    <ListGroup.Item>
+                      <Image
+                        src={item.productDetail.img}
+                        className="thumbnail"
+                      />
+                    </ListGroup.Item>
+                    {/*  <Image src={item.productDetail.img} thumbnail /> */}
+                    <ListGroup.Item>{item.productDetail.title} </ListGroup.Item>
+                    <ListGroup.Item>Quantity: {item.quantity}</ListGroup.Item>
+                    <ListGroup.Item>Price: {item.price}</ListGroup.Item>
+                  </ListGroup>
                 )
               })
             : ''}
