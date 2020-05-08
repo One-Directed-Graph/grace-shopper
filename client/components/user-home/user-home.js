@@ -58,6 +58,8 @@ export class UserHome extends Component {
     ]
     const linkToList = admin ? adminLinkTo : userLinkTo
 
+    // <Nav.Link as={Link} to="/">
+
     return (
       <div id="user-home">
         <h4>Account Info</h4>
@@ -68,7 +70,9 @@ export class UserHome extends Component {
             const {path, name} = link
             return (
               <Nav.Item key={path}>
-                <Nav.Link href={`${rootDir}/${path}`}>{name}</Nav.Link>
+                <Nav.Link as={Link} to={`${rootDir}/${path}`}>
+                  {name}
+                </Nav.Link>
               </Nav.Item>
             )
           })}
