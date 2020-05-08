@@ -9,7 +9,7 @@ class Reviews extends Component {
   // }
 
   render() {
-    return <h3>My Reviews</h3>
+    return <h3 className="user-home-comps">My Reviews</h3>
   }
 }
 

@@ -9,7 +9,7 @@ class ProductList extends Component {
   // }
 
   render() {
-    return <h3>Product List</h3>
+    return <h3 className="user-home-comps">Products</h3>
   }
 }
 

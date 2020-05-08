@@ -6,7 +6,6 @@ import {logout, getProducts, loadPage} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-// import Form from 'react-bootstrap/Form' -REMOVE?
 import Image from 'react-bootstrap/Image'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -36,7 +35,7 @@ class Navbarclass extends Component {
           variant="dark"
           className="navbarMain"
         >
-          <Navbar.Brand href="/home">
+          <Navbar.Brand href="/">
             <img
               src="/images/backgroundAmblem.jpg"
               width="50"
@@ -45,12 +44,12 @@ class Navbarclass extends Component {
               alt="React Bootstrap logo"
             />
           </Navbar.Brand>
-          <Navbar.Brand href="/home">Maskerade</Navbar.Brand>
+          <Navbar.Brand href="/">Maskerade</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           {isLoggedIn ? (
             <Nav className="mr-auto">
               {/* The navbar will show these links after you log in */}
-              <Nav.Link href="/home">Home</Nav.Link>
+              <Nav.Link href="/account">Account</Nav.Link>
               <Nav.Link
                 href="#"
                 onClick={() => {
@@ -96,7 +95,7 @@ class Navbarclass extends Component {
         <Container fluid>
           <Row className="hello">
             <Col md={4} className="colpic">
-              <Link to="/fashion">
+              <Link to="/category/fashion">
                 <Image
                   src="/images/manuPic3.jpeg"
                   roundedCircle
@@ -105,7 +104,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/handMade">
+              <Link to="/category/handMade">
                 <Image
                   src="/images/manuHMpic1.jpg"
                   roundedCircle
@@ -114,7 +113,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/medical">
+              <Link to="/category/medical">
                 <Image
                   src="/images/menuMed.jpeg"
                   roundedCircle
