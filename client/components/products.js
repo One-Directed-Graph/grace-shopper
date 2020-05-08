@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import {logout} from '../store'
-import {getProducts, loadPage} from '../store/products'
+import {loadPage} from '../store/divided'
+import {getProducts} from '../store/products'
 import {getProduct} from '../store/product'
 import Product from './product'
 import Search from './Search'
@@ -11,41 +12,15 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Pagination from 'react-bootstrap/Pagination'
+import {lowToHigh} from '../store/products'
+import {highToLow} from '../store/products'
 
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
   constructor(props) {
-    //let products = []
-    // if (props.products.length > 0) {
-    //   console.log('from products in constructor', props)
-    //   props.products.length > 0 ? (products = props.products) : ''
-    // }
     super()
-    //   this.state = {
-    //     products: products,
-    //   }
-    //   this.sort = this.sort.bind(this)
   }
-  // componentDidMount() {
-  //   //this.props.load()
-  //   if (this.props.products.length > 0) {
-  //     this.setState({products: this.props.products})
-  //     console.log('<><><><><><><><><><><>', this.state.products)
-  //   }
-  // }
-  // sort(sortBy, products) {
-  //   console.log('hello', sortBy, products, this.props.categories)
-  //   if (sortBy === 'LowToHigh') {
-  //     products.products.sort((a, b) => {
-  //       return a.price - b.price
-  //     })
-  //   }
-  //   if (sortBy === 'HighToLow') {
-  //     products.products.sort((a, b) => {
-  //       return b.price - a.price
-  //     })
-  //   }
   //   if (sortBy === 'Categories') {
   //     let returnArray = []
   //     for (let i = 0; i < this.props.categories.length; i++) {
@@ -63,10 +38,32 @@ class Products extends Component {
   //   this.setState({products: products})
   //   console.log('hello', products)
   // }
+  sort(sortBy) {
+    if (sortBy === 'LowToHigh') {
+      this.props.LowToHigh(this.props.match.params.page)
+    }
+    if (sortBy === 'HighToLow') {
+      this.props.HighToLow(this.props.match.params.page)
+    }
+  }
 
+  // componentDidUpdate(prevState) {
+  //   console.log(
+  //     '11111111111111',
+  //     prevState.location.pathname,
+  //     this.props.location.pathname
+  //   )
+  //   if (prevState.location.pathname === this.props.location.pathname) {
+  //     this.props.history.push(this.props.location.pathname)
+  //   }
+  // }
+
+  componentDidMount() {
+    this.props.load()
+  }
   render() {
-    //const {products} = this.props.state
-    const {products, divided} = this.props.state.products
+    const {products, divided} = this.props
+    const push = this.props.history.push
 
     return (
       <div className="outsideOfContainer">
@@ -74,7 +71,7 @@ class Products extends Component {
           <div className="sortBlock">
             <select
               onChange={(ev) => {
-                this.sort(ev.target.value, products)
+                this.sort(ev.target.value)
               }}
             >
               <option>Sort By</option>
@@ -84,78 +81,75 @@ class Products extends Component {
             </select>
           </div>
           <div className="container">
-            {divided
-              ? products.map((prod) => {
-                  return (
-                    <Card
-                      key={prod.id}
-                      className="text-center"
-                      style={{width: '18rem', margin: '10px'}}
+            {divided.map((prod) => {
+              return (
+                <Card
+                  key={prod.id}
+                  className="text-center"
+                  style={{width: '18rem', margin: '10px'}}
+                >
+                  <Card.Img variant="top" src={prod.img} />
+                  <Card.Body>
+                    <Card.Title>{prod.title}</Card.Title>
+                    <Card.Text>
+                      Product Description: {prod.description}
+                    </Card.Text>
+                    <Card.Text>Price: ${prod.price}</Card.Text>
+
+                    <Button
+                      variant="success"
+                      onClick={(e) => {
+                        this.props.loadProduct(prod.id, push)
+                      }}
                     >
-                      <Card.Img variant="top" src={prod.img} />
-                      <Card.Body>
-                        <Card.Title>{prod.title}</Card.Title>
-                        <Card.Text>{prod.description}</Card.Text>
-                        <Button
-                          variant="success"
-                          onClick={() => {
-                            console.log('hello', prod.id)
-                            this.props.loadProduct(
-                              prod.id,
-                              this.props.history.push
-                            )
-                          }}
-                        >
-                          Select Product
-                        </Button>
-                      </Card.Body>
-                    </Card>
-
-                    // <div className="oneProduct" key={prod.id}>
-                    //   {/* <Link to={`/products/${prod.id}`}> */}
-                    //   <h3>{prod.title}</h3>
-
-                    //   {/* </Link> */}
-                    //   <p>{prod.description}</p>
-                    //   <img src={prod.img} alt="image loading" />
-                    //   <div>{prod.price}</div>
-                    //   <Button
-                    //     variant="success"
-                    //     onClick={() => {
-                    //       console.log('hello', prod.id)
-                    //       this.props.loadProduct(prod.id, this.props.history.push)
-                    //     }}
-                    //   >
-                    //     select product    holder.js/100px180"
-                    //   </Button>
-                    // </div>
-                  )
-                })
-              : ''}
+                      Select Product
+                    </Button>
+                  </Card.Body>
+                </Card>
+              )
+            })}
             <br />
           </div>
           <Pagination>
             <Pagination.First
-              href="/products/0"
               onClick={() => {
-                // this.props.loadPages()
-                //this.props.loadPage(0,this.props.)
+                this.props.loadPages(1, push)
               }}
             />
-            <Pagination.Prev />
-            <Pagination.Item>{1}</Pagination.Item>
-            <Pagination.Ellipsis />
+            <Pagination.Prev
+              onClick={(e) => {
+                this.props.loadPages(this.props.match.params.page * 1 - 1, push)
+              }}
+            />
 
-            <Pagination.Item>{10}</Pagination.Item>
-            <Pagination.Item>{11}</Pagination.Item>
-            <Pagination.Item active>{12}</Pagination.Item>
-            <Pagination.Item>{13}</Pagination.Item>
-            <Pagination.Item disabled>{14}</Pagination.Item>
+            {[...Array(Math.ceil(products.length / 5))].map(
+              (pageNumber, ind) => {
+                return (
+                  <Pagination.Item
+                    key={ind}
+                    onClick={() => {
+                      this.props.loadPages(ind + 1, push)
+                    }}
+                  >
+                    {ind + 1}
+                  </Pagination.Item>
+                )
+              }
+            )}
 
-            <Pagination.Ellipsis />
-            <Pagination.Item>{20}</Pagination.Item>
-            <Pagination.Next />
-            <Pagination.Last />
+            <Pagination.Next
+              onClick={(e) => {
+                this.props.loadPages(this.props.match.params.page * 1 + 1, push)
+              }}
+            />
+            <Pagination.Last
+              onClick={(e) => {
+                this.props.loadPages(
+                  Math.ceil(products.length / divided.length),
+                  push
+                )
+              }}
+            />
           </Pagination>
         </Container>
       </div>
@@ -163,26 +157,34 @@ class Products extends Component {
   }
 }
 
-const mapState = (state) => {
+const mapState = ({products, divided}) => {
   return {
-    state,
+    products,
+    divided,
   }
 }
 const mapDispatch = (dispatch) => {
   return {
-    // load: () => {
-    //   dispatch(getProducts())
-    //   dispatch(getCategories())
-    // },
+    load: () => {
+      dispatch(getProducts('load'))
+    },
 
     loadProduct: (id, push) => {
       dispatch(getProduct(id, push))
     },
-    // loadPages: () => {
-    //   dispatch(loadPage())
-    // },
+    loadPages: async (page, push) => {
+      await dispatch(loadPage(page, push))
+    },
+    LowToHigh: async (page) => {
+      await dispatch(lowToHigh())
+
+      await dispatch(loadPage(page))
+    },
+    HighToLow: async (page) => {
+      await dispatch(highToLow())
+      await dispatch(loadPage(page))
+    },
   }
 }
 
-// export default connect(mapState, mapDispatch)(Products)
 export default connect(mapState, mapDispatch)(Products)

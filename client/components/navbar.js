@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout, getProducts} from '../store'
+import {Link, withRouter} from 'react-router-dom'
+import {logout, getProducts, loadPage} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -18,9 +18,6 @@ import Form from 'react-bootstrap/Form'
 
 class Navbarclass extends Component {
   constructor(props) {
-    if (props.products.length > 0) {
-      console.log('props from nav bar in constructor', props)
-    }
     super()
   }
   componentDidMount() {
@@ -29,7 +26,7 @@ class Navbarclass extends Component {
 
   render() {
     const {handleClick, isLoggedIn, products} = this.props
-    console.log('navbar', products)
+
     return (
       <div>
         <Navbar
@@ -68,7 +65,14 @@ class Navbarclass extends Component {
               <Nav className="mr-auto">
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/signup">Signup</Nav.Link>
-                <Nav.Link href="/products">Products</Nav.Link>
+                <Nav.Link
+                  //href="/products/1"
+                  onClick={() => {
+                    this.props.loadPages(1, this.props.history.push)
+                  }}
+                >
+                  Products
+                </Nav.Link>
               </Nav>
 
               <Search />
@@ -141,20 +145,19 @@ const mapDispatch = (dispatch) => {
     handleClick: () => {
       dispatch(logout())
     },
-    // load: () => {
-    //   console.log('loading product data')
-    //   dispatch(getProducts())
-    // },
+    loadPages: (pg, push) => {
+      dispatch(loadPage(pg, push))
+    },
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbarclass)
+export default withRouter(connect(mapState, mapDispatch)(Navbarclass))
 
 /**
  * PROP TYPES
  */
-// Navbarclass.propTypes = {
-//   load: PropTypes.func.isRequired,
-//   handleClick: PropTypes.func.isRequired,
-//   isLoggedIn: PropTypes.bool.isRequired,
-// }
+Navbarclass.propTypes = {
+  load: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+}

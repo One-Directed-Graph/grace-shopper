@@ -1,37 +1,50 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getProduct} from '../store/product'
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
 
 class DisplaySearch extends React.Component {
   render() {
     const {searchItem} = this.props
-    console.log('searchitem from display page', searchItem)
+
     return (
-      <div className="container">
-        {searchItem > 0 ? (
-          searchItem.map((prod) => {
-            //console.log(prod)
-            return (
-              <div className="oneProduct" key={prod.id}>
-                {/* <Link to={`/products/${prod.id}`}> */}
-                <h3>{prod.title}</h3>
-                <button
-                  onClick={() => {
-                    //console.log('hello', prod.id, this.props.history.push)
-                    this.props.loadProduct(prod.id, this.props.history.push)
-                  }}
+      <div>
+        {searchItem.map((product) => {
+          return (
+            <Card
+              key={product.id}
+              className="text-center"
+              style={{width: '18rem', margin: '10px'}}
+            >
+              <Card.Img variant="top" src={product.img} />
+              <Card.Body>
+                <Card.Title>{product.title}</Card.Title>
+                <Card.Text>
+                  Product Description: {product.description}
+                </Card.Text>
+                <Card.Text>Price: ${product.price}</Card.Text>
+                <Card.Text>
+                  Category Name: {product.category ? product.category.name : ''}
+                </Card.Text>
+                <Button
+                  className="buttonInProduct"
+                  variant="success"
+                  onClick={() => {}}
                 >
-                  select product
-                </button>
-                {/* </Link> */}
-                <p>{prod.description}</p>
-                <img src={prod.img} alt="image loading" />
-              </div>
-            )
-          })
-        ) : (
-          <h3>'No Results'</h3>
-        )}
+                  add to cart
+                </Button>
+                <Button
+                  className="buttonInProduct"
+                  variant="success"
+                  onClick={() => {}}
+                >
+                  checkout
+                </Button>
+              </Card.Body>
+            </Card>
+          )
+        })}
       </div>
     )
   }
