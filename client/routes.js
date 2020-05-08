@@ -35,18 +35,26 @@ class Routes extends Component {
       <div>
         <Switch>
           {/* Routes placed here are available to all visitors */}
-
+          <Route exact path="/" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
 
           <Route exact path="/products/:page" component={Products} />
-          <Route exact path="/:category" component={DisplayByCategory} />
+      {/*<Route exact path="/:category" component={DisplayByCategory} />*/}
           <Route exact path="/product/:id" component={Product} />
+          <Route exact path="/products" component={Products} />
+          <Route
+            exact
+            path="/category/:category"
+            component={DisplayByCategory}
+          />
+      {/*<Route exact path="/products/:id" component={Product} />*/}
+
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
-              <Route path="/home" component={UserHome} />
+              <Route path="/account" component={UserHome} />
             </Switch>
           )}
         </Switch>

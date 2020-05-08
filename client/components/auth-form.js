@@ -21,7 +21,6 @@ const AuthForm = (props) => {
               type="text"
               name="email"
               placeholder="Enter email"
-              onChange={console.log}
             />
           </Form.Row>
         </Form.Group>
@@ -45,7 +44,16 @@ const AuthForm = (props) => {
 
         {error && error.response && <div> {error.response.data} </div>}
       </Form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <a id="google" href="/auth/google">
+        {displayName} with Google
+      </a>
+      {name === 'signup' && (
+        <div>
+          <p>
+            Already have an account? <a href="/login">Click here!</a>
+          </p>
+        </div>
+      )}
     </div>
   )
 }
@@ -76,7 +84,6 @@ const mapSignup = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleSubmit(evt) {
-      console.log('event', evt)
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
