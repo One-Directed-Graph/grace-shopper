@@ -27,11 +27,11 @@ export const getProduct = (id, push) => {
   //   if (!id) {
   //     id = location.pathname.slice(9)
   //   }
-  console.log('from thunk for one getProduct', location.pathname)
+
   return async (dispatch) => {
     const product = await axios.get(`/api/products/${id}`)
-    push(`/products/${id}`)
-    console.log('xxxxxxxxxxxxxxxxxx', product.data)
+    push(`/product/${id}`)
+
     dispatch(_getProduct(product.data))
   }
 }

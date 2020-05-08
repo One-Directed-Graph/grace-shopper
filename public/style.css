@@ -68,6 +68,10 @@ label {
   width: 30%;
 }
 
+.buttonInProduct {
+  width: 100%;
+  margin: 10px;
+}
 #user-home,
 .user-home-comps {
   margin: 1rem;
