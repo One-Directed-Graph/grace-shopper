@@ -10,7 +10,8 @@ const LOW_HIGH = 'LOW_HIGH'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const HIGH_LOW = 'HIGH_LOW'
 const SORT_CATEGORIES = 'SORT_CATEGORIES'
-const A_B = 'A_B'
+const A_Z = 'A_Z'
+const Z_A = 'Z_A'
 /**
  * INITIAL STATE
  */
@@ -26,7 +27,8 @@ const _Categories = (products, categories) => ({
   products,
   categories,
 })
-const _aTob = (products) => ({type: A_B, products})
+const _aToz = (products) => ({type: A_Z, products})
+const _zToa = (products) => ({type: Z_A, products})
 /**
  * THUNK CREATORS
  */
@@ -56,10 +58,16 @@ export const highToLow = () => {
     return dispatch(_highToLow(products))
   }
 }
-export const aTob = () => {
+export const aToz = () => {
   return async (dispatch) => {
     const products = await store.getState().products
-    return dispatch(_aTob(products))
+    return dispatch(_aToz(products))
+  }
+}
+export const zToa = () => {
+  return async (dispatch) => {
+    const products = await store.getState().products
+    return dispatch(_zToa(products))
   }
 }
 
@@ -90,11 +98,16 @@ export default function (state = [], action) {
     })
     return newState
   }
-  if (action.type === A_B) {
+  if (action.type === A_Z) {
     const newState = action.products.sort((a, b) => {
-      return a.title < b.title
+      return a.title.localeCompare(b.title)
     })
-
+    return newState
+  }
+  if (action.type === Z_A) {
+    const newState = action.products.sort((a, b) => {
+      return b.title.localeCompare(a.title)
+    })
     return newState
   }
   if (action.type === SORT_CATEGORIES) {

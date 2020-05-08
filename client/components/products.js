@@ -14,7 +14,7 @@ import Container from 'react-bootstrap/Container'
 import Pagination from 'react-bootstrap/Pagination'
 import {lowToHigh} from '../store/products'
 import {highToLow} from '../store/products'
-import {Categories, aTob} from '../store/products'
+import {Categories, aToz, zToa} from '../store/products'
 
 //ASSIGNED TO: Aleks
 
@@ -51,8 +51,11 @@ class Products extends Component {
     if (sortBy === 'Categories') {
       this.props.sortCategories(page, push)
     }
-    if (sortBy === 'AtoB') {
-      this.props.AtoB(page, push)
+    if (sortBy === 'AtoZ') {
+      this.props.AtoZ(page, push)
+    }
+    if (sortBy === 'ZtoA') {
+      this.props.ZtoA(page, push)
     }
   }
 
@@ -87,7 +90,8 @@ class Products extends Component {
               <option>Categories</option>
               <option>LowToHigh</option>
               <option>HighToLow</option>
-              <option>AtoB</option>
+              <option>AtoZ</option>
+              <option>ZtoA</option>
             </select>
           </div>
           <div className="container">
@@ -198,8 +202,12 @@ const mapDispatch = (dispatch) => {
       await dispatch(Categories())
       await dispatch(loadPage(page, push))
     },
-    AtoB: async (page, push) => {
-      await dispatch(aTob())
+    AtoZ: async (page, push) => {
+      await dispatch(aToz())
+      await dispatch(loadPage(page, push))
+    },
+    ZtoA: async (page, push) => {
+      await dispatch(zToa())
       await dispatch(loadPage(page, push))
     },
   }
