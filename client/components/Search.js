@@ -17,23 +17,22 @@ class Search extends Component {
     }
   }
   search = () => {
-    const {products} = this.props.products
-    console.log('vmvmvmvmvmvmvmvmvmvmvmvmvm', products)
+    const {products} = this.props
+
     const {searchInput, searchOutput} = this.state
     let titleLowCase = ''
     const searchList = products.filter((product) => {
       titleLowCase = product.title.toLowerCase()
       return titleLowCase.includes(searchInput)
     })
-    //console.log(searchList)
-    //this.state.searchOutput = searchList
+
     this.setState({searchOutput: searchList})
     return searchList
   }
   render() {
     const {searchInput, searchOutput} = this.state
     const {history} = this.props
-    console.log('hfrom search history', this.props.history)
+
     return (
       <Form inline>
         <FormControl

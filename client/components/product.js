@@ -18,16 +18,29 @@ class Product extends Component {
           <Card.Img variant="top" src={product.img} />
           <Card.Body>
             <Card.Title>{product.title}</Card.Title>
-            <Card.Text>{product.description}</Card.Text>
-            {/* <Button
-                    variant="success"
-                    onClick={() => {
-                      console.log('hello', prod.id)
-                      this.props.loadProduct(prod.id, this.props.history.push)
-                    }}
-                  >
-                    Select Product
-                  </Button> */}
+            <Card.Text>Product Description: {product.description}</Card.Text>
+            <Card.Text>Price: ${product.price}</Card.Text>
+            <Card.Text>
+              Category Name: {product.category ? product.category.name : ''}
+            </Card.Text>
+            <Button
+              className="buttonInProduct"
+              variant="success"
+              onClick={() => {
+                console.log('hello')
+              }}
+            >
+              add to cart
+            </Button>
+            <Button
+              className="buttonInProduct"
+              variant="success"
+              onClick={() => {
+                console.log('hello')
+              }}
+            >
+              checkout
+            </Button>
           </Card.Body>
         </Card>
       )
