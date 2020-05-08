@@ -14,6 +14,7 @@ import Container from 'react-bootstrap/Container'
 import Pagination from 'react-bootstrap/Pagination'
 import {lowToHigh} from '../store/products'
 import {highToLow} from '../store/products'
+import {Categories, aToz, zToa} from '../store/products'
 
 //ASSIGNED TO: Aleks
 
@@ -39,11 +40,22 @@ class Products extends Component {
   //   console.log('hello', products)
   // }
   sort(sortBy) {
+    const push = this.props.history.push
+    const page = this.props.match.params.page
     if (sortBy === 'LowToHigh') {
-      this.props.LowToHigh(this.props.match.params.page)
+      this.props.LowToHigh(page, push)
     }
     if (sortBy === 'HighToLow') {
-      this.props.HighToLow(this.props.match.params.page)
+      this.props.HighToLow(page, push)
+    }
+    if (sortBy === 'Categories') {
+      this.props.sortCategories(page, push)
+    }
+    if (sortBy === 'AtoZ') {
+      this.props.AtoZ(page, push)
+    }
+    if (sortBy === 'ZtoA') {
+      this.props.ZtoA(page, push)
     }
   }
 
@@ -78,6 +90,8 @@ class Products extends Component {
               <option>Categories</option>
               <option>LowToHigh</option>
               <option>HighToLow</option>
+              <option>AtoZ</option>
+              <option>ZtoA</option>
             </select>
           </div>
           <div className="container">
@@ -175,14 +189,26 @@ const mapDispatch = (dispatch) => {
     loadPages: async (page, push) => {
       await dispatch(loadPage(page, push))
     },
-    LowToHigh: async (page) => {
+    LowToHigh: async (page, push) => {
       await dispatch(lowToHigh())
 
-      await dispatch(loadPage(page))
+      await dispatch(loadPage(page, push))
     },
-    HighToLow: async (page) => {
+    HighToLow: async (page, push) => {
       await dispatch(highToLow())
-      await dispatch(loadPage(page))
+      await dispatch(loadPage(page, push))
+    },
+    sortCategories: async (page, push) => {
+      await dispatch(Categories())
+      await dispatch(loadPage(page, push))
+    },
+    AtoZ: async (page, push) => {
+      await dispatch(aToz())
+      await dispatch(loadPage(page, push))
+    },
+    ZtoA: async (page, push) => {
+      await dispatch(zToa())
+      await dispatch(loadPage(page, push))
     },
   }
 }

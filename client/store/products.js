@@ -9,7 +9,9 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 const LOW_HIGH = 'LOW_HIGH'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const HIGH_LOW = 'HIGH_LOW'
-
+const SORT_CATEGORIES = 'SORT_CATEGORIES'
+const A_Z = 'A_Z'
+const Z_A = 'Z_A'
 /**
  * INITIAL STATE
  */
@@ -20,6 +22,13 @@ const HIGH_LOW = 'HIGH_LOW'
 const _getProducts = (products) => ({type: GET_PRODUCTS, products})
 const _lowToHigh = (products) => ({type: LOW_HIGH, products})
 const _highToLow = (products) => ({type: HIGH_LOW, products})
+const _Categories = (products, categories) => ({
+  type: SORT_CATEGORIES,
+  products,
+  categories,
+})
+const _aToz = (products) => ({type: A_Z, products})
+const _zToa = (products) => ({type: Z_A, products})
 /**
  * THUNK CREATORS
  */
@@ -49,6 +58,26 @@ export const highToLow = () => {
     return dispatch(_highToLow(products))
   }
 }
+export const aToz = () => {
+  return async (dispatch) => {
+    const products = await store.getState().products
+    return dispatch(_aToz(products))
+  }
+}
+export const zToa = () => {
+  return async (dispatch) => {
+    const products = await store.getState().products
+    return dispatch(_zToa(products))
+  }
+}
+
+export const Categories = () => {
+  return async (dispatch) => {
+    const categories = await store.getState().categories
+    const products = await store.getState().products
+    return dispatch(_Categories(products, categories))
+  }
+}
 /**
  * REDUCER
  */
@@ -67,8 +96,30 @@ export default function (state = [], action) {
     const newState = action.products.sort((a, b) => {
       return b.price - a.price
     })
-
     return newState
+  }
+  if (action.type === A_Z) {
+    const newState = action.products.sort((a, b) => {
+      return a.title.localeCompare(b.title)
+    })
+    return newState
+  }
+  if (action.type === Z_A) {
+    const newState = action.products.sort((a, b) => {
+      return b.title.localeCompare(a.title)
+    })
+    return newState
+  }
+  if (action.type === SORT_CATEGORIES) {
+    let returnArray = []
+    for (let i = 0; i < action.categories.length; i++) {
+      action.products.filter((prod) => {
+        if (prod.categoryId === action.categories[i].id) {
+          returnArray.push(prod)
+        }
+      })
+    }
+    return returnArray
   }
 
   return state
