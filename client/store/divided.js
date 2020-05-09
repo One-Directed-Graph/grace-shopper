@@ -22,10 +22,10 @@ const _loadPage = (page, products) => ({type: LOAD_PAGE, page, products})
  * THUNK CREATORS
  */
 
-export const loadPage = (page, push) => {
+export const loadPage = (page) => {
   return async (dispatch) => {
     const products = await store.getState().products
-    push(`/products/${page}`)
+    //push(`/products/${page}`)
     dispatch(_loadPage(page, products))
   }
 }
@@ -40,7 +40,7 @@ export default function (state = [], action) {
 }
 
 const getPages = (pageNumber, products) => {
-  let perPage = 5
+  let perPage = 6
   let totalPages = Math.ceil(products.length / perPage)
   let piecedArray = []
   const end = perPage * pageNumber * 1
