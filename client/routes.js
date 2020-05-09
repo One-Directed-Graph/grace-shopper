@@ -13,8 +13,7 @@ import {
   Cart,
   DisplayByCategory,
 } from './components'
-import {me, getCategories, getCart} from './store'
-import {getProducts, loadPage} from './store/products'
+import {me, getCategories, getCart, getProducts, loadPage} from './store'
 
 /**
  * COMPONENT

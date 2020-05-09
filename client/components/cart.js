@@ -8,20 +8,21 @@ import {ListGroup, Image, DropdownButton, Dropdown} from 'react-bootstrap'
 
 class Cart extends Component {
   render() {
+    console.log(this.props)
     const cart = this.props.cart
-    const productList = this.props.products.products
-    console.log('Cart in render: ', {...cart})
-    console.log('Cart in render: ')
+    const productList = this.props.products
+    //console.log('Cart in render: ', {...cart})
+    //console.log('Cart in render: ')
     const itemList = cart.map((item) => {
       return {
         ...item,
-        productDetail: productList.find((pl) => pl.id === item.productId),
+        /* productDetail: productList.find((pl) => pl.id === item.productId),*/
       }
     })
     console.log(itemList)
     return (
       <div>
-        <DropdownButton
+        {/*  <DropdownButton
           id="dropdown-item-button"
           className="dropdown"
           title="Dropdown button"
@@ -29,7 +30,7 @@ class Cart extends Component {
           <Dropdown.Item as="button">Action</Dropdown.Item>
           <Dropdown.Item as="button">Another action</Dropdown.Item>
           <Dropdown.Item as="button">Something else</Dropdown.Item>
-        </DropdownButton>
+        </DropdownButton> */}
         <h1> Cart ({itemList.length} )</h1>
         <ul className="listgrp">
           {itemList
@@ -37,15 +38,24 @@ class Cart extends Component {
                 return (
                   <ListGroup horizontal="sm" className="my-2" key={item.id}>
                     <ListGroup.Item>
-                      <Image
+                      {/* <Image
                         src={item.productDetail.img}
                         className="thumbnail"
-                      />
+                      /> */}
                     </ListGroup.Item>
                     {/*  <Image src={item.productDetail.img} thumbnail /> */}
-                    <ListGroup.Item>{item.productDetail.title} </ListGroup.Item>
-                    <ListGroup.Item>Quantity: {item.quantity}</ListGroup.Item>
-                    <ListGroup.Item>Price: {item.price}</ListGroup.Item>
+                    {/*   <ListGroup.Item>{item.productDetail.title} </ListGroup.Item> */}
+                    <ListGroup.Item>
+                      <p>Quantity</p>{' '}
+                      <input className="plusminus" type="button" value="-" />{' '}
+                      <input className="plusminus" value={item.quantity} />{' '}
+                      <input className="plusminus" type="button" value="+" />
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      {' '}
+                      <p>Price</p>
+                      {item.price}
+                    </ListGroup.Item>
                   </ListGroup>
                 )
               })
@@ -57,7 +67,7 @@ class Cart extends Component {
 }
 
 const mapState = ({cart, products}) => {
-  console.log(' Cart in mapstate : ', products)
+  console.log(' Cart in mapstate Products: ', products)
   return {
     cart,
     products,
@@ -66,7 +76,7 @@ const mapState = ({cart, products}) => {
 const mapDispatch = (dispatch) => {
   return {
     load: () => {
-      // dispatch(getProducts())
+      dispatch(getProducts())
       dispatch(getCart())
     },
   }
