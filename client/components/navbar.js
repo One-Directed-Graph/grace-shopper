@@ -37,16 +37,16 @@ class Navbarclass extends Component {
         >
           <Navbar.Brand as={Link} to="/">
             <img
-              src="/images/backgroundAmblem.jpg"
-              width="50"
-              height="50"
+              src="/images/MaskeradeLogoName.jpeg"
+              width="220"
+              height="70"
               className="d-inline-block align-top"
-              alt="React Bootstrap logo"
+              alt="Maskerade logo"
             />
           </Navbar.Brand>
-          <Navbar.Brand as={Link} to="/">
+          {/* <Navbar.Brand as={Link} to="/">
             Maskerade
-          </Navbar.Brand>
+          </Navbar.Brand> */}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">

@@ -1,9 +1,14 @@
-/* body {
-  font-family: sans-serif;
-} */
+body {
+  background-color: #e2dad1;
+}
 
 a {
   text-decoration: none;
+  color: #38495e;
+}
+
+hr {
+  border: 1px solid #dacac0;
 }
 
 label {
@@ -19,7 +24,7 @@ label {
   display: flex;
   flex-flow: column;
   justify-content: space-evenly;
-  border: solid orange 1px;
+  border: solid #c28867 1px;
 }
 #buttonProduct {
   margin-top: 100px;
@@ -30,16 +35,16 @@ label {
 }
 
 .hello {
-  background-color: rgb(250, 231, 248);
+  background-color: #dacac0;
   display: flex;
   flex-flow: row;
 
-  border: solid orange 1px;
+  border: solid #c28867 1px;
   width: auto;
 }
 
 .navbarMain {
-  background-color: rgb(41, 75, 67);
+  background-color: #e2dad1;
 }
 .outsideOfContainer {
   display: inline-flex;
