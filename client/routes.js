@@ -40,10 +40,10 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
 
-          <Route exact path="/products/:page" component={Products} />
+          <Route path="/products/:page?" component={Products} />
           {/*<Route exact path="/:category" component={DisplayByCategory} />*/}
           <Route exact path="/product/:id" component={Product} />
-          <Route exact path="/products" component={Products} />
+          {/* <Route exact path="/products" component={Products} /> */}
           <Route
             exact
             path="/category/:category"
@@ -78,7 +78,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData: () => {
       dispatch(me())
-      dispatch(getProducts('load'))
+      //dispatch(getProducts('load'))
       dispatch(getCategories())
       //dispatch(loadPage(1))
     },
