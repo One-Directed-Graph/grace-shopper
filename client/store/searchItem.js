@@ -20,10 +20,8 @@ const _getSearchProducts = (products) => ({type: GET_SEARCH, products})
  * THUNK CREATORS
  */
 export const getSearchProducts = (results) => {
-  console.log('from thunk for getProducts111111111', results)
   return async (dispatch) => {
     dispatch(_getSearchProducts(results))
-    //push('/displaysearch')
   }
 }
 

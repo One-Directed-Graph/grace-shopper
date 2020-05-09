@@ -39,17 +39,16 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
 
-          <Route exact path="/products/:page" component={Products} />
           {/*<Route exact path="/:category" component={DisplayByCategory} />*/}
-          <Route exact path="/product/:id" component={Product} />
           <Route exact path="/products" component={Products} />
           <Route exact path="/cart" component={Cart} />
+          <Route path="/products/:page?" component={Products} />
+          <Route exact path="/product/:id" component={Product} />
           <Route
             exact
             path="/category/:category"
             component={DisplayByCategory}
           />
-          {/*<Route exact path="/products/:id" component={Product} />*/}
 
           {isLoggedIn && (
             <Switch>
@@ -76,12 +75,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData: async () => {
-      await dispatch(me())
-      await dispatch(getProducts())
-      await dispatch(getCategories())
-      await dispatch(getCart())
-      await dispatch(loadPage())
+    loadInitialData: () => {
+      dispatch(me())
+      //dispatch(getProducts('load'))
+      dispatch(getCategories())
       //dispatch(loadPage(1))
     },
   }

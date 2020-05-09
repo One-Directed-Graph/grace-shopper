@@ -68,7 +68,8 @@ class Navbarclass extends Component {
                 <Nav.Link
                   //href="/products/1"
                   onClick={() => {
-                    this.props.loadPages(1, this.props.history.push)
+                    this.props.history.push(`/products/1?sortBy=AtoZ`)
+                    this.props.loadPages(1)
                   }}
                 >
                   Products
