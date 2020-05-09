@@ -15,75 +15,55 @@ import Pagination from 'react-bootstrap/Pagination'
 import {lowToHigh} from '../store/products'
 import {highToLow} from '../store/products'
 import {Categories, aToz, zToa} from '../store/products'
-
+import queryString from 'query-string'
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
   constructor(props) {
+    console.log('props', props)
+    console.log('from props', queryString.parse(props.location.search))
     super()
   }
-  //   if (sortBy === 'Categories') {
-  //     let returnArray = []
-  //     for (let i = 0; i < this.props.categories.length; i++) {
-  //       products.products.filter((prod) => {
-  //         //console.log('hello2', this.props.categories[i].id, i)
-  //         if (prod.categoryId === this.props.categories[i].id) {
-  //           //console.log('prod', prod)
-  //           returnArray.push(prod)
-  //         }
-  //       })
-  //       console.log(products, 'product', returnArray)
-  //     }
-  //     products = returnArray
-  //   }
-  //   this.setState({products: products})
-  //   console.log('hello', products)
-  // }
-  sort(sortBy) {
+  //
+
+  componentDidUpdate(prevState) {
     const push = this.props.history.push
-    const page = this.props.match.params.page
-    if (sortBy === 'LowToHigh') {
-      this.props.LowToHigh(page, push)
+    let sortBy
+
+    if (queryString.parse(this.props.location.search).sortBy) {
+      sortBy = queryString.parse(this.props.location.search).sortBy
+    } else {
+      sortBy = 'AtoZ'
     }
-    if (sortBy === 'HighToLow') {
-      this.props.HighToLow(page, push)
+    const page = this.props.match.params.page || 1
+    //sortBy === 'undefined' ? 'AtoZ' : sortBy
+    if (prevState.location.search.slice(8) !== sortBy) {
+      push(`/products/${page}?sortBy=${sortBy}`)
+      this.props.load(sortBy, page)
     }
-    if (sortBy === 'Categories') {
-      this.props.sortCategories(page, push)
-    }
-    if (sortBy === 'AtoZ') {
-      this.props.AtoZ(page, push)
-    }
-    if (sortBy === 'ZtoA') {
-      this.props.ZtoA(page, push)
-    }
+    
   }
 
-  // componentDidUpdate(prevState) {
-  //   console.log(
-  //     '11111111111111',
-  //     prevState.location.pathname,
-  //     this.props.location.pathname
-  //   )
-  //   if (prevState.location.pathname === this.props.location.pathname) {
-  //     this.props.history.push(this.props.location.pathname)
-  //   }
-  // }
-
   componentDidMount() {
-    this.props.load()
+    const sortBy = queryString.parse(this.props.location.search).sortBy
+
+    const page = this.props.match.params.page || 1
+    const push = this.props.history.push
+    this.props.load(sortBy, page)
   }
   render() {
     const {products, divided} = this.props
     const push = this.props.history.push
-
+    const page = this.props.match.params.page
+    const sortBy = queryString.parse(this.props.location.search).sortBy
     return (
       <div className="outsideOfContainer">
         <Container>
           <div className="sortBlock">
             <select
               onChange={(ev) => {
-                this.sort(ev.target.value)
+                push(`/products/${page}/?sortBy=${ev.target.value}`)
+                //this.sort(ev.target.value)
               }}
             >
               <option>Sort By</option>
@@ -127,12 +107,14 @@ class Products extends Component {
           <Pagination>
             <Pagination.First
               onClick={() => {
-                this.props.loadPages(1, push)
+                push(`/products/${1}?sortBy=${sortBy}`)
+                this.props.loadPages(1)
               }}
             />
             <Pagination.Prev
               onClick={(e) => {
-                this.props.loadPages(this.props.match.params.page * 1 - 1, push)
+                push(`/products/${page * 1 - 1}?sortBy=${sortBy}`)
+                this.props.loadPages(page * 1 - 1)
               }}
             />
 
@@ -142,7 +124,8 @@ class Products extends Component {
                   <Pagination.Item
                     key={ind}
                     onClick={() => {
-                      this.props.loadPages(ind + 1, push)
+                      push(`/products/${ind + 1}?sortBy=${sortBy}`)
+                      this.props.loadPages(ind + 1)
                     }}
                   >
                     {ind + 1}
@@ -153,14 +136,19 @@ class Products extends Component {
 
             <Pagination.Next
               onClick={(e) => {
-                this.props.loadPages(this.props.match.params.page * 1 + 1, push)
+                push(`/products/${page * 1 + 1}?sortBy=${sortBy}`)
+                this.props.loadPages(page * 1 + 1)
               }}
             />
             <Pagination.Last
               onClick={(e) => {
+                push(
+                  `/products/${Math.ceil(
+                    products.length / divided.length
+                  )}?sortBy=${sortBy}`
+                )
                 this.props.loadPages(
-                  Math.ceil(products.length / divided.length),
-                  push
+                  Math.ceil(products.length / divided.length)
                 )
               }}
             />
@@ -179,8 +167,8 @@ const mapState = ({products, divided}) => {
 }
 const mapDispatch = (dispatch) => {
   return {
-    load: () => {
-      dispatch(getProducts('load'))
+    load: (sortBy = 'AtoZ', page = 1) => {
+      dispatch(getProducts('load', sortBy, page))
     },
 
     loadProduct: (id, push) => {
@@ -189,27 +177,27 @@ const mapDispatch = (dispatch) => {
     loadPages: async (page, push) => {
       await dispatch(loadPage(page, push))
     },
-    LowToHigh: async (page, push) => {
-      await dispatch(lowToHigh())
+    // LowToHigh: async (page, push) => {
+    //   await dispatch(lowToHigh())
 
-      await dispatch(loadPage(page, push))
-    },
-    HighToLow: async (page, push) => {
-      await dispatch(highToLow())
-      await dispatch(loadPage(page, push))
-    },
-    sortCategories: async (page, push) => {
-      await dispatch(Categories())
-      await dispatch(loadPage(page, push))
-    },
-    AtoZ: async (page, push) => {
-      await dispatch(aToz())
-      await dispatch(loadPage(page, push))
-    },
-    ZtoA: async (page, push) => {
-      await dispatch(zToa())
-      await dispatch(loadPage(page, push))
-    },
+    //   await dispatch(loadPage(page, push))
+    // },
+    // HighToLow: async (page, push) => {
+    //   await dispatch(highToLow())
+    //   await dispatch(loadPage(page, push))
+    // },
+    // sortCategories: async (page, push) => {
+    //   await dispatch(Categories())
+    //   await dispatch(loadPage(page, push))
+    // },
+    // AtoZ: async (page, push) => {
+    //   await dispatch(aToz())
+    //   await dispatch(loadPage(page, push))
+    // },
+    // ZtoA: async (page, push) => {
+    //   await dispatch(zToa())
+    //   await dispatch(loadPage(page, push))
+    // },
   }
 }
 
