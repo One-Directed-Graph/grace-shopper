@@ -41,7 +41,6 @@ class Products extends Component {
       push(`/products/${page}?sortBy=${sortBy}`)
       this.props.load(sortBy, page)
     }
-    
   }
 
   componentDidMount() {
