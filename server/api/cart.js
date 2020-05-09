@@ -12,3 +12,11 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', (req, res, next) => {
+  Cart.create(req.body)
+    .then((resp) => {
+      res.status(200).send(resp)
+    })
+    .catch(next)
+})

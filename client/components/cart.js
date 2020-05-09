@@ -2,57 +2,54 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 //import {Link} from 'react-router-dom'
 import {getProducts, getCart} from '../store'
-import {ListGroup, Image, DropdownButton, Dropdown} from 'react-bootstrap'
+import {ListGroup} from 'react-bootstrap'
+import Image from 'react-bootstrap/Image'
 
 //ASSIGNED TO: Vinayak
 
 class Cart extends Component {
+  constructor() {
+    super()
+  }
+  componentDidMount() {
+    this.props.load()
+  }
   render() {
-    console.log(this.props)
+    //console.log(this.props)
     const cart = this.props.cart
     const productList = this.props.products
-    //console.log('Cart in render: ', {...cart})
-    //console.log('Cart in render: ')
+    //  console.log('Cart in render: ',cart)
+    //  console.log('Cart in render: ',productList)
     const itemList = cart.map((item) => {
       return {
         ...item,
-        /* productDetail: productList.find((pl) => pl.id === item.productId),*/
+        productDetail: productList.find((pl) => pl.id === item.productId),
       }
     })
-    console.log(itemList)
+    console.log('processed cart', itemList)
     return (
       <div>
-        {/*  <DropdownButton
-          id="dropdown-item-button"
-          className="dropdown"
-          title="Dropdown button"
-        >
-          <Dropdown.Item as="button">Action</Dropdown.Item>
-          <Dropdown.Item as="button">Another action</Dropdown.Item>
-          <Dropdown.Item as="button">Something else</Dropdown.Item>
-        </DropdownButton> */}
         <h1> Cart ({itemList.length} )</h1>
         <ul className="listgrp">
           {itemList
             ? itemList.map((item) => {
+                console.log(item.productDetail.img)
                 return (
                   <ListGroup horizontal="sm" className="my-2" key={item.id}>
                     <ListGroup.Item>
-                      {/* <Image
+                      <img
                         src={item.productDetail.img}
+                        alt="..loading"
                         className="thumbnail"
-                      /> */}
-                    </ListGroup.Item>
-                    {/*  <Image src={item.productDetail.img} thumbnail /> */}
-                    {/*   <ListGroup.Item>{item.productDetail.title} </ListGroup.Item> */}
-                    <ListGroup.Item>
-                      <p>Quantity</p>{' '}
-                      <input className="plusminus" type="button" value="-" />{' '}
-                      <input className="plusminus" value={item.quantity} />{' '}
-                      <input className="plusminus" type="button" value="+" />
+                      />
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      {' '}
+                      <p>Quantity</p>
+                      <input className="plusminus" type="button" value="-" />
+                      <input className="plusminus" value={item.quantity} />
+                      <input className="plusminus" type="button" value="+" />}{' '}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
                       <p>Price</p>
                       {item.price}
                     </ListGroup.Item>
@@ -67,7 +64,7 @@ class Cart extends Component {
 }
 
 const mapState = ({cart, products}) => {
-  console.log(' Cart in mapstate Products: ', products)
+  //console.log(' Cart in mapstate Cart, Products: ',cart, products)
   return {
     cart,
     products,
@@ -76,7 +73,7 @@ const mapState = ({cart, products}) => {
 const mapDispatch = (dispatch) => {
   return {
     load: () => {
-      dispatch(getProducts())
+      dispatch(getProducts('load'))
       dispatch(getCart())
     },
   }
