@@ -78,9 +78,8 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData: () => {
       dispatch(me())
-      //dispatch(getProducts('load'))
+      dispatch(getProducts('load'))
       dispatch(getCategories())
-      //dispatch(loadPage(1))
     },
   }
 }
