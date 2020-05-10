@@ -13,23 +13,39 @@ import {
   Cart,
   DisplayByCategory,
 } from './components'
+
+import {me, getCategories} from './store'
+import {getProducts} from './store/products'
+import {loadPage} from './store/divided'
+import uuid from 'react-uuid'
+import Axios from 'axios'
 import {me, getCategories, getProducts, getCart} from './store'
 
 /**
  * COMPONENT
  */
+
+// async function getId() {
+//   let id = sessionId().then((res) => {
+//     console.log(res)
+//   })
+
+//   console.log('sasasasasasasasa', id)
+//   return
+// }
+
 class Routes extends Component {
   constructor() {
     super()
   }
   componentDidMount() {
-    console.log('routes')
     this.props.loadInitialData()
   }
-
   render() {
     const {isLoggedIn} = this.props
-
+    sessionId().then((res) => {
+      console.log('ididididididididid', res)
+    })
     return (
       <div>
         <Switch>
@@ -47,7 +63,9 @@ class Routes extends Component {
             path="/category/:category"
             component={DisplayByCategory}
           />
-
+          {/*<Route exact path="/products/:id" component={Product} />*/}
+          <Route path="/products" component={Products} />
+      
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
@@ -70,6 +88,12 @@ const mapState = (state) => {
     isLoggedIn: !!state.user.id,
   }
 }
+
+const sessionId = (window.onload = async () => {
+  let id = await Axios.get('/api/sessionId')
+  //console.log(id)
+  return id
+})
 
 const mapDispatch = (dispatch) => {
   return {

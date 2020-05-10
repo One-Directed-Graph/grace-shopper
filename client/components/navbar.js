@@ -86,6 +86,8 @@ class Navbarclass extends Component {
               >
                 Products
               </Nav.Link>
+              <Nav.Link as={Link} to="/products">Products</Nav.Link>
+
             </Nav>
             <Search />
           </Navbar.Collapse>
