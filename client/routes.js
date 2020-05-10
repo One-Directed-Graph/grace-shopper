@@ -6,7 +6,6 @@ import {
   Login,
   Signup,
   UserHome,
-  AdminHome,
   Products,
   Product,
   DisplaySearch,
@@ -14,9 +13,8 @@ import {
   DisplayByCategory,
 } from './components'
 
-import {loadPage} from './store/divided'
-import uuid from 'react-uuid'
-import Axios from 'axios'
+// import uuid from 'react-uuid'
+// import Axios from 'axios'
 import {me, getCategories, getProducts, getCart} from './store'
 
 /**
@@ -42,9 +40,9 @@ class Routes extends Component {
   render() {
     const {isLoggedIn} = this.props
 
-    sessionId().then((res) => {
-      console.log('ididididididididid', res)
-    })
+    // sessionId().then((res) => {
+    //   console.log('ididididididididid', res)
+    // })
 
     return (
       <div>
@@ -89,11 +87,11 @@ const mapState = (state) => {
   }
 }
 
-const sessionId = (window.onload = async () => {
-  let id = await Axios.get('/api/sessionId')
-  //console.log(id)
-  return id
-})
+// const sessionId = (window.onload = async () => {
+//   let id = await Axios.get('/api/sessionId')
+//   //console.log(id)
+//   return id
+// })
 
 const mapDispatch = (dispatch) => {
   return {
