@@ -14,7 +14,7 @@ class ProductCreate extends Component {
       description: '',
       price: '',
       quantity: '',
-      // img: FormFile,
+      img: null,
       categoryId: null,
       error: '',
     }
@@ -30,7 +30,7 @@ class ProductCreate extends Component {
   }
   //TODO: Upload file
   upload = (ev) => {
-    console.log('in change', ev.target.files[0])
+    console.log('in upload', ev.target.files[0])
   }
 
   submit = async () => {
@@ -124,14 +124,11 @@ class ProductCreate extends Component {
               ))}
             </Form.Control>
           </Form.Group>
-          <Form.Group controlId="productForm.image">
+          {/* <Form.Group controlId="productForm.image">
             <Form.Label>Product Image</Form.Label>
             <InputGroup>
               <InputGroup.Prepend>
-                <Button
-                  variant="secondary"
-                  onClick={(ev) => console.log('upload', ev.target)}
-                >
+                <Button variant="secondary" onClick={upload}>
                   Upload
                 </Button>
               </InputGroup.Prepend>
@@ -143,7 +140,7 @@ class ProductCreate extends Component {
                 custom
               />
             </InputGroup>
-          </Form.Group>
+          </Form.Group> */}
           <Button variant="primary" type="submit" onClick={submit}>
             Create
           </Button>
