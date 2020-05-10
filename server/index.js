@@ -2,9 +2,7 @@ const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
-const cookieParser = require('cookie-parser')
 const session = require('express-session')
-
 const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
@@ -19,8 +17,6 @@ module.exports = app
 if (process.env.NODE_ENV === 'test') {
   after('close the session store', () => sessionStore.stopExpiringSessions())
 }
-//app.use(cookieParser())
-app.use(session({secret: 'Shh, its a secret!'}))
 
 /**
  * In your development environment, you can keep all of your
@@ -60,33 +56,12 @@ const createApp = () => {
     session({
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
-      resave: true,
+      resave: false,
       saveUninitialized: false,
     })
   )
   app.use(passport.initialize())
   app.use(passport.session())
-
-  app.get('/api/sessionId', function (req, res) {
-    res.send(req.session.id)
-    if (req.session.page_views) {
-      console.log(
-        '<><><><><><><><><><><><><><><><><><><><><><><',
-        req.session.id,
-        req.session.page_views
-      )
-      req.session.page_views++
-      res.send('You visited this page ' + req.session.page_views + ' times')
-    } else {
-      console.log(
-        '<><>>?>?><><><><>?<?<>?<>?<>?<>?',
-        req.session.id,
-        req.session.page_views
-      )
-      req.session.page_views = 1
-      res.send('Welcome to this page for the first time!')
-    }
-  })
 
   // auth and api routes
   app.use('/auth', require('./auth'))
@@ -98,7 +73,6 @@ const createApp = () => {
   app.use('/assets', express.static(path.join(__dirname, './assets')))
   app.use(express.static('public'))
   // any remaining requests with an extension (.js, .css, etc.) send 404
-
   app.use((req, res, next) => {
     if (path.extname(req.path).length) {
       const err = new Error('Not found')
