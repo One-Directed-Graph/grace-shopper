@@ -12,8 +12,7 @@ import {
   DisplaySearch,
   DisplayByCategory,
 } from './components'
-import {me, getCategories} from './store'
-import {getProducts} from './store/products'
+
 import {loadPage} from './store/divided'
 import uuid from 'react-uuid'
 import Axios from 'axios'
@@ -40,9 +39,11 @@ class Routes extends Component {
   }
   render() {
     const {isLoggedIn} = this.props
+
     sessionId().then((res) => {
       console.log('ididididididididid', res)
     })
+
     return (
       <div>
         <Switch>
