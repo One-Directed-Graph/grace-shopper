@@ -24,6 +24,17 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  req.body.categoryId =
+    req.body.categoryId === 'null'
+      ? JSON.parse(req.body.categoryId)
+      : req.body.categoryId
+  Product.create(req.body)
+    .then((product) => res.status(201).json(product))
+    .catch(next)
+})
+
 // router.get('/:page?', (req, res, next) => {
 //   const resultsPerPage = 8
 //   // pageNum is zero indexed
