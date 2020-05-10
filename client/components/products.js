@@ -41,10 +41,12 @@ class Products extends Component {
       push(`/products/${page}?sortBy=${sortBy}`)
       this.props.load(sortBy, page)
     }
-    
   }
 
   componentDidMount() {
+    window.onload = () => {
+      console.log('hello')
+    }
     const sortBy = queryString.parse(this.props.location.search).sortBy
 
     const page = this.props.match.params.page || 1
@@ -58,7 +60,7 @@ class Products extends Component {
     const sortBy = queryString.parse(this.props.location.search).sortBy
     return (
       <div className="outsideOfContainer">
-        <Container>
+        <Container fluid>
           <div className="sortBlock">
             <select
               onChange={(ev) => {
@@ -177,28 +179,23 @@ const mapDispatch = (dispatch) => {
     loadPages: async (page, push) => {
       await dispatch(loadPage(page, push))
     },
-    // LowToHigh: async (page, push) => {
-    //   await dispatch(lowToHigh())
-
-    //   await dispatch(loadPage(page, push))
-    // },
-    // HighToLow: async (page, push) => {
-    //   await dispatch(highToLow())
-    //   await dispatch(loadPage(page, push))
-    // },
-    // sortCategories: async (page, push) => {
-    //   await dispatch(Categories())
-    //   await dispatch(loadPage(page, push))
-    // },
-    // AtoZ: async (page, push) => {
-    //   await dispatch(aToz())
-    //   await dispatch(loadPage(page, push))
-    // },
-    // ZtoA: async (page, push) => {
-    //   await dispatch(zToa())
-    //   await dispatch(loadPage(page, push))
-    // },
   }
 }
+
+// function setCookie(name, valu, days) {
+//   var date = new Date()
+//   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+//   var expires = ';expires=' + date.toGMTString()
+//   document.cookie = name + '=' + value + expires
+// }
+// function getParam(p) {
+//   var match = RegExp('[?&]' + p + '=([^&])').exec(window.location.search)
+//   return match && decodeURIComponent(match[1].replace(/\+/g, ''))
+// }
+// var params=getParam(myparam);
+// if((myparam){
+//   setCookie('mycookie',paramVal,90)
+// })
+// console.log(params)
 
 export default connect(mapState, mapDispatch)(Products)

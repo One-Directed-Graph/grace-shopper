@@ -20,9 +20,9 @@ class Navbarclass extends Component {
   constructor(props) {
     super()
   }
-  componentDidMount() {
-    // this.props.load()
-  }
+  // componentDidMount() {
+  //   this.props.load()
+  // }
 
   render() {
     const {handleClick, isLoggedIn, products} = this.props
@@ -58,7 +58,7 @@ class Navbarclass extends Component {
               >
                 Logout
               </Nav.Link>
-              <Nav.Link to="/products">Products</Nav.Link>
+              <Nav.Link href="/products">Products</Nav.Link>
             </Nav>
           ) : (
             <Navbar.Collapse id="responsive-navbar-nav">

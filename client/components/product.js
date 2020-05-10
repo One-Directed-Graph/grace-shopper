@@ -3,11 +3,18 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
+import uuid from 'react-uuid'
 //ASSIGNED TO: Aleks
 
 class Product extends Component {
   constructor() {
     super()
+  }
+  componentDidMount() {
+    window.onload = () => {
+      let id = uuid()
+      console.log('hello', id)
+    }
   }
   render() {
     const {product} = this.props
@@ -26,9 +33,7 @@ class Product extends Component {
             <Button
               className="buttonInProduct"
               variant="success"
-              onClick={() => {
-                console.log('hello')
-              }}
+              onClick={() => {}}
             >
               add to cart
             </Button>
