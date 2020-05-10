@@ -29,7 +29,12 @@ class Product extends Component {
               variant="success"
               onClick={() => {
                 console.log('add to cart')
-                this.props.addToCart(product.id, 1, product.price)
+                const item = {
+                  productId: product.id,
+                  quantity: 1,
+                  price: product.price,
+                }
+                this.props.addToCart(item)
               }}
             >
               add to cart
@@ -68,7 +73,7 @@ const mapState = ({product}) => {
 }
 const mapDispatch = (dispatch) => {
   return {
-    addToCart: (id, qty, price) => dispatch(addToCart(id, qty, price)),
+    addToCart: (item) => dispatch(addToCart(item)),
   }
 }
 // export default connect(mapState, mapDispatch)(Products)

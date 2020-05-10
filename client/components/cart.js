@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 //import {Link} from 'react-router-dom'
-import {getProducts, getCart} from '../store'
+import {getProducts, getCart, getUser} from '../store'
 import {ListGroup} from 'react-bootstrap'
 import Image from 'react-bootstrap/Image'
 
@@ -15,7 +15,7 @@ class Cart extends Component {
     this.props.load()
   }
   render() {
-    //console.log(this.props)
+    console.log(this.props)
     const cart = this.props.cart
     const productList = this.props.products
     //  console.log('Cart in render: ',cart)
@@ -33,7 +33,6 @@ class Cart extends Component {
         <ul className="listgrp">
           {itemList
             ? itemList.map((item) => {
-                console.log(item.productDetail.img)
                 return (
                   <ListGroup horizontal="sm" className="my-2" key={item.id}>
                     <ListGroup.Item>
@@ -47,7 +46,11 @@ class Cart extends Component {
                       <p>Quantity</p>
                       <input className="plusminus" type="button" value="-" />
                       <input className="plusminus" value={item.quantity} />
-                      <input className="plusminus" type="button" value="+" />}{' '}
+                      <input
+                        className="plusminus"
+                        type="button"
+                        value="+"
+                      />}{' '}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <p>Price</p>
@@ -64,7 +67,6 @@ class Cart extends Component {
 }
 
 const mapState = ({cart, products}) => {
-  //console.log(' Cart in mapstate Cart, Products: ',cart, products)
   return {
     cart,
     products,
@@ -78,5 +80,4 @@ const mapDispatch = (dispatch) => {
     },
   }
 }
-// export default connect(mapState, mapDispatch)(Products)
 export default connect(mapState, mapDispatch)(Cart)
