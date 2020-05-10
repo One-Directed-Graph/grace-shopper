@@ -6,9 +6,21 @@ const db = require('../db')
 //TODO: define properties
 //TODO: Add ID
 const Order = db.define('order', {
-  currenPrice: {},
-  currentProductId: {},
-  quantity: {}
+  id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    primaryKey: true,
+  },
+  status: {
+    type: Sequelize.ENUM('Created', 'Processing', 'Completed'),
+  },
+  dateOfPurchase: {
+    type: Sequelize.DATE,
+    defaultValue: Date.now,
+  },
+  subTotal: {
+    type: Sequelize.DECIMAL,
+  },
 })
 
 //ADD associations to models/index.js

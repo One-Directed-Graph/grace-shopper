@@ -1,13 +1,19 @@
-### Assignee Tasks
+### Description of changes
 
-* [ ] added unit tests (or none needed)
-* [ ] written relevant docs (or none needed)
-* [ ] referenced any relevant issues (or none exist)
+Please enter description below...
 
-### Guidelines
+### Areas being affected
 
-Please add a description of this Pull Request's motivation, scope, outstanding issues or potential alternatives, reasoning behind the current solution, and any other relevant information for posterity.
-
----
-
-_Your PR Notes Here_
+- [ ] client
+- [ ] client/components
+- [ ] client/routes
+- [ ] client/store
+- [ ] public
+- [ ] public/images
+- [ ] script
+- [ ] server/api
+- [ ] server/auth
+- [ ] server/db
+- [ ] server/db/models
+- [ ] server/socket
+- [ ] other

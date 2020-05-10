@@ -1,21 +1,103 @@
 body {
-  font-family: sans-serif;
+  background-color: #e2dad1;
 }
 
 a {
   text-decoration: none;
+  color: #38495e;
+}
+
+hr {
+  border: 1px solid #dacac0;
 }
 
 label {
   display: block;
 }
-
-nav a {
-  display: inline-block;
-  margin: 1em;
+.container {
+  display: inline-flex;
+  flex-flow: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.oneProduct {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-evenly;
+  border: solid #c28867 1px;
+}
+#buttonProduct {
+  margin-top: 100px;
 }
 
-form div {
-  margin: 1em;
-  display: inline-block;
+.custom-class {
+  border: black solid 1px;
+}
+
+.hello {
+  background-color: #dacac0;
+  display: flex;
+  flex-flow: row;
+
+  border: solid #c28867 1px;
+  width: auto;
+}
+
+.navbarMain {
+  background-color: #e2dad1;
+}
+.outsideOfContainer {
+  display: inline-flex;
+  flex-flow: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.colpic {
+  display: inline-flex;
+  flex-flow: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#auth-form-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#google {
+  margin-bottom: 1rem;
+}
+#auth-form {
+  padding: 0.5rem;
+  margin: 1rem;
+  width: 30%;
+}
+
+.buttonInProduct {
+  width: 100%;
+  margin: 10px;
+}
+#user-home,
+.user-home-comps {
+  margin: 1rem;
+}
+
+#user-home h4,
+h6 {
+  margin-top: 2rem;
+  margin-left: 1rem;
+}
+.dropdown {
+  background-color: firebrick;
+}
+
+.thumbnail {
+  width: 50%;
+}
+.listgrp {
+  width: 400px;
+  height: 200px;
+}
+.plusminus {
+  width: 40px;
 }
