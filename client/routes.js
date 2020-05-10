@@ -10,11 +10,10 @@ import {
   Products,
   Product,
   DisplaySearch,
+  Cart,
   DisplayByCategory,
 } from './components'
-import {me, getCategories} from './store'
-import {getProducts} from './store/products'
-import {loadPage} from './store/divided'
+import {me, getCategories, getProducts, getCart} from './store'
 
 /**
  * COMPONENT
@@ -39,17 +38,15 @@ class Routes extends Component {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
-
+          <Route exact path="/products" component={Products} />
+          <Route exact path="/cart" component={Cart} />
           <Route path="/products/:page?" component={Products} />
-          {/*<Route exact path="/:category" component={DisplayByCategory} />*/}
           <Route exact path="/product/:id" component={Product} />
-          {/* <Route exact path="/products" component={Products} /> */}
           <Route
             exact
             path="/category/:category"
             component={DisplayByCategory}
           />
-          {/*<Route exact path="/products/:id" component={Product} />*/}
 
           {isLoggedIn && (
             <Switch>
@@ -80,6 +77,8 @@ const mapDispatch = (dispatch) => {
       dispatch(me())
       dispatch(getProducts('load'))
       dispatch(getCategories())
+      dispatch(getCart())
+      //dispatch(loadPage(1))
     },
   }
 }

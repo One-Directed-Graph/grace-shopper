@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
+import {addToCart} from '../store'
 //ASSIGNED TO: Aleks
 
 class Product extends Component {
@@ -11,7 +12,7 @@ class Product extends Component {
   }
   render() {
     const {product} = this.props
-    console.log('<>><><<><><><><>><><><><><><><><', product)
+    console.log('<>><><<><><><><>><><><>inside render', product)
     if (product) {
       return (
         <Card className="text-center" style={{width: '18rem', margin: '10px'}}>
@@ -27,7 +28,13 @@ class Product extends Component {
               className="buttonInProduct"
               variant="success"
               onClick={() => {
-                console.log('hello')
+                console.log('add to cart')
+                const item = {
+                  productId: product.id,
+                  quantity: 1,
+                  price: product.price,
+                }
+                this.props.addToCart(item)
               }}
             >
               add to cart
@@ -64,16 +71,10 @@ const mapState = ({product}) => {
     product,
   }
 }
-// const mapDispatch = (dispatch) => {
-//   return {
-//     load: () => {
-//       dispatch(getProducts())
-//     },
-//     loadProduct: (id) => {
-//       dispatch(getProduct(id))
-//     },
-//   }
-// }
-
+const mapDispatch = (dispatch) => {
+  return {
+    addToCart: (item) => dispatch(addToCart(item)),
+  }
+}
 // export default connect(mapState, mapDispatch)(Products)
-export default connect(mapState)(Product)
+export default connect(mapState, mapDispatch)(Product)

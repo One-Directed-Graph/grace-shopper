@@ -87,3 +87,17 @@ h6 {
   margin-top: 2rem;
   margin-left: 1rem;
 }
+.dropdown {
+  background-color: firebrick;
+}
+
+.thumbnail {
+  width: 50%;
+}
+.listgrp {
+  width: 400px;
+  height: 200px;
+}
+.plusminus {
+  width: 40px;
+}
