@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-// import { createProduct } from '../../../store'
+import {createProduct} from '../../../store'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import InputGroup from 'react-bootstrap/InputGroup'
+import {OrderList} from '..'
 
 class ProductCreate extends Component {
   constructor() {
@@ -19,13 +21,20 @@ class ProductCreate extends Component {
   }
 
   change = (ev) => {
-    console.log('in change', ev.target)
-    this.setState({[ev.target.name]: ev.target.value})
+    if (Object.hasOwnProperty('files')) {
+      this.setState({[ev.target.name]: ev.target.files[0]})
+    } else {
+      this.setState({[ev.target.name]: ev.target.value})
+    }
+    console.log('in change', this.state)
+  }
+  //TODO: Upload file
+  upload = (ev) => {
+    console.log('in change', ev.target.files[0])
   }
 
   submit = async () => {
     const {title, description, price, quantity, categoryId} = this.state
-    console.log('in submit', {title, description, price, quantity, categoryId})
     try {
       await this.props.save({title, description, price, quantity, categoryId})
       this.setState({
@@ -33,7 +42,7 @@ class ProductCreate extends Component {
         description: '',
         price: '',
         quantity: '',
-        // img: FormFile,
+        img: null,
         categoryId: null,
         error: '',
       })
@@ -43,12 +52,12 @@ class ProductCreate extends Component {
   }
 
   render() {
-    const {change, submit} = this
+    const {upload, change, submit} = this
     const {title, description, price, quantity, categoryId, error} = this.state
-    const {products, categories} = this.props
+    const {categories} = this.props
     return (
       <div id="product-create-form-div">
-        <Form onSubmit={(ev) => ev.preventDefault()}>
+        <Form id="product-create-form" onSubmit={(ev) => ev.preventDefault()}>
           <Form.Group controlId="productForm.title">
             <Form.Label>Title</Form.Label>
             <Form.Control
@@ -62,13 +71,18 @@ class ProductCreate extends Component {
 
           <Form.Group controlId="productForm.price">
             <Form.Label>Price</Form.Label>
-            <Form.Control
-              type="number"
-              name="price"
-              value={price}
-              onChange={change}
-              placeholder="1.00"
-            />
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text>$</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                type="number"
+                name="price"
+                value={price}
+                onChange={change}
+                placeholder="1.00"
+              />
+            </InputGroup>
           </Form.Group>
 
           <Form.Group controlId="productForm.quantity">
@@ -110,8 +124,28 @@ class ProductCreate extends Component {
               ))}
             </Form.Control>
           </Form.Group>
+          <Form.Group controlId="productForm.image">
+            <Form.Label>Product Image</Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <Button
+                  variant="secondary"
+                  onClick={(ev) => console.log('upload', ev.target)}
+                >
+                  Upload
+                </Button>
+              </InputGroup.Prepend>
+              <Form.File
+                name="img"
+                type="file"
+                label=""
+                onChange={change}
+                custom
+              />
+            </InputGroup>
+          </Form.Group>
           <Button variant="primary" type="submit" onClick={submit}>
-            Submit
+            Create
           </Button>
         </Form>
         {error && error.response && <div> {error.response.data} </div>}
@@ -120,13 +154,13 @@ class ProductCreate extends Component {
   }
 }
 
-const mapStateToProps = ({products, categories}) => ({products, categories})
+const mapStateToProps = ({categories}) => ({categories})
 const mapDispatchToProps = (dispatch) => {
   return {
     save: (product) => {
       console.log('sending to thunk', product)
+      dispatch(createProduct(product))
     },
-    // save: (product) => dispatch(createProduct(product)),
   }
 }
 
