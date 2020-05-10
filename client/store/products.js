@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import axios from 'axios'
 import history from '../history'
 import store from './index'
@@ -7,18 +8,23 @@ import {loadPage} from './divided'
  */
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const LOW_HIGH = 'LOW_HIGH'
-const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const HIGH_LOW = 'HIGH_LOW'
 const SORT_CATEGORIES = 'SORT_CATEGORIES'
 const A_Z = 'A_Z'
 const Z_A = 'Z_A'
+const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
+const CREATE_PRODUCT = 'CREATE_PRODUCT'
+
 /**
  * INITIAL STATE
  */
 
+const defaultProducts = []
+
 /**
  * ACTION CREATORS
  */
+
 const _getProducts = (products) => ({type: GET_PRODUCTS, products})
 const _LowToHigh = (products) => ({type: LOW_HIGH, products})
 const _highToLow = (products) => ({type: HIGH_LOW, products})
@@ -29,6 +35,8 @@ const _Categories = (products, categories) => ({
 })
 const _aToz = (products) => ({type: A_Z, products})
 const _zToa = (products) => ({type: Z_A, products})
+const _createProduct = (product) => ({type: CREATE_PRODUCT, product})
+
 /**
  * THUNK CREATORS
  */
@@ -79,6 +87,11 @@ export const getProducts = (str, sortBy, page, push) => {
   }
 }
 
+export const createProduct = (product) => async (dispatch) => {
+  const newProduct = (await axios.post('/api/products', product)).data
+  dispatch(_createProduct(newProduct))
+}
+
 // export const lowToHigh = () => {
 //   return async (dispatch) => {
 //     const products = await store.getState().products
@@ -114,7 +127,7 @@ export const getProducts = (str, sortBy, page, push) => {
 /**
  * REDUCER
  */
-export default function (state = [], action) {
+export default function (state = defaultProducts, action) {
   if (action.type === GET_PRODUCTS) {
     return action.products
   }
@@ -153,6 +166,10 @@ export default function (state = [], action) {
       })
     }
     return returnArray
+  }
+
+  if (action.type === CREATE_PRODUCT) {
+    return [action.product, ...state]
   }
 
   return state

@@ -9,6 +9,7 @@ const {
   Order,
   OrderItem,
   Review,
+  Cart,
 } = require('../server/db/models')
 
 async function seed() {
@@ -309,6 +310,19 @@ async function seed() {
       productId: products[2].id,
       rating: 5,
       description: 'Excellent mask',
+    }),
+  ])
+
+  const carts = await Promise.all([
+    Cart.create({
+      productId: products[2].id,
+      quantity: 4,
+      price: 1.25,
+    }),
+    Cart.create({
+      productId: products[1].id,
+      quantity: 10,
+      price: 1.9,
     }),
   ])
 }

@@ -9,6 +9,7 @@ import products from './products'
 import product from './product'
 import searchItem from './searchItem'
 import categories from './categories'
+import cart from './cart'
 import divided from './divided'
 
 const reducer = combineReducers({
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   product,
   searchItem,
   categories,
+  cart,
   divided,
 })
 // const middleware = composeWithDevTools(
@@ -36,4 +38,5 @@ export * from './products'
 export * from './product'
 export * from './searchItem'
 export * from './categories'
+export * from './cart'
 export * from './divided'
