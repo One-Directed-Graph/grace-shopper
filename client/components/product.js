@@ -44,7 +44,6 @@ class Product extends Component {
                 }
                 this.props.addToCart(item)
               }}
-
             >
               add to cart
             </Button>

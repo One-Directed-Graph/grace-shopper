@@ -14,8 +14,6 @@ import {
   DisplayByCategory,
 } from './components'
 
-import {me, getCategories} from './store'
-import {getProducts} from './store/products'
 import {loadPage} from './store/divided'
 import uuid from 'react-uuid'
 import Axios from 'axios'
@@ -43,9 +41,11 @@ class Routes extends Component {
   }
   render() {
     const {isLoggedIn} = this.props
+
     sessionId().then((res) => {
       console.log('ididididididididid', res)
     })
+
     return (
       <div>
         <Switch>
@@ -65,7 +65,7 @@ class Routes extends Component {
           />
           {/*<Route exact path="/products/:id" component={Product} />*/}
           <Route path="/products" component={Products} />
-      
+
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
