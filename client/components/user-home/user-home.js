@@ -7,6 +7,7 @@ import {
   Orders,
   UserList,
   ProductList,
+  ProductCreate,
   OrderList,
   WelcomeUser,
 } from './'
@@ -14,7 +15,6 @@ import {getUserList} from '../../store/users'
 import Nav from 'react-bootstrap/Nav'
 
 //TODO: highlight selected tab
-//TODO: add welcome comp
 
 /**
  * COMPONENT
@@ -49,8 +49,13 @@ export class UserHome extends Component {
     const {email, admin} = this.props
     const adminLinkTo = [
       {path: 'user-list', name: 'Users', component: UserList},
-      {path: 'product-list', name: 'Products', component: ProductList},
       {path: 'order-list', name: 'Orders', component: OrderList},
+      {path: 'product-list', name: 'Products', component: ProductList},
+      {
+        path: 'product-create',
+        name: 'Create Product',
+        component: ProductCreate,
+      },
     ]
     const userLinkTo = [
       {path: 'reviews', name: 'Reviews', component: Reviews},
