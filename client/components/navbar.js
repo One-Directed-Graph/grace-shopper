@@ -25,7 +25,7 @@ class Navbarclass extends Component {
   // }
 
   render() {
-    const {handleClick, isLoggedIn, products} = this.props
+    const {handleClick, isLoggedIn} = this.props
 
     return (
       <div>
@@ -35,52 +35,64 @@ class Navbarclass extends Component {
           variant="dark"
           className="navbarMain"
         >
-          <Navbar.Brand href="/">
+          <Navbar.Brand as={Link} to="/">
             <img
-              src="/images/backgroundAmblem.jpg"
-              width="50"
-              height="50"
+              src="/images/MaskeradeLogoName.jpeg"
+              width="220"
+              height="70"
               className="d-inline-block align-top"
-              alt="React Bootstrap logo"
+              alt="Maskerade logo"
             />
           </Navbar.Brand>
-          <Navbar.Brand href="/">Maskerade</Navbar.Brand>
+          {/* <Navbar.Brand as={Link} to="/">
+            Maskerade
+          </Navbar.Brand> */}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          {isLoggedIn ? (
+          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              {/* The navbar will show these links after you log in */}
-              <Nav.Link href="/account">Account</Nav.Link>
+              {isLoggedIn ? (
+                <Nav className="mr-auto">
+                  {/* This nav links will show these links after you log in */}
+                  <Nav.Link as={Link} to="/account">
+                    Account
+                  </Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    to="#"
+                    onClick={() => {
+                      handleClick()
+                    }}
+                  >
+                    Logout
+                  </Nav.Link>
+                </Nav>
+              ) : (
+                <Nav className="mr-auto">
+                  {/* This nav links will show these links if you are not logged in */}
+                  <Nav.Link as={Link} to="/login">
+                    Login
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/signup">
+                    Signup
+                  </Nav.Link>
+                </Nav>
+              )}
+              <Nav className="mr-auto"></Nav>
               <Nav.Link
-                href="#"
                 onClick={() => {
-                  handleClick()
+                  this.props.history.push(`/products/1?sortBy=AtoZ`)
+                  this.props.loadPages(1)
                 }}
               >
-                Logout
+                Products
               </Nav.Link>
-              <Nav.Link href="/products">Products</Nav.Link>
+              <Nav.Link as={Link} to="/products">Products</Nav.Link>
+
             </Nav>
-          ) : (
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="mr-auto">
-                <Nav.Link href="/login">Login</Nav.Link>
-                <Nav.Link href="/signup">Signup</Nav.Link>
-                <Nav.Link
-                  //href="/products/1"
-                  onClick={() => {
-                    this.props.history.push(`/products/1?sortBy=AtoZ`)
-                    this.props.loadPages(1)
-                  }}
-                >
-                  Products
-                </Nav.Link>
-              </Nav>
+            <Search />
+          </Navbar.Collapse>
 
-              <Search />
-            </Navbar.Collapse>
-          )}
-
-          <Navbar.Brand href="/cart">
+          <Navbar.Brand as={Link} to="/cart">
             <img
               src="/images/shop.png"
               width="40px"
@@ -158,7 +170,7 @@ export default withRouter(connect(mapState, mapDispatch)(Navbarclass))
  * PROP TYPES
  */
 Navbarclass.propTypes = {
-  load: PropTypes.func.isRequired,
+  // load: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
 }
