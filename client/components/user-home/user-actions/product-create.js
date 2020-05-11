@@ -4,56 +4,60 @@ import {createProduct} from '../../../store'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
-import {OrderList} from '..'
+
+//TODO: Error handling
 
 class ProductCreate extends Component {
   constructor() {
     super()
-    this.state = {
-      title: '',
-      description: '',
-      price: '',
-      quantity: '',
-      img: null,
-      categoryId: null,
-      error: '',
-    }
+    this.state = this.defaultState
+  }
+
+  defaultState = {
+    title: '',
+    description: '',
+    price: '',
+    quantity: '',
+    img: '',
+    categoryId: null,
+    error: '',
   }
 
   change = (ev) => {
-    if (Object.hasOwnProperty('files')) {
-      this.setState({[ev.target.name]: ev.target.files[0]})
-    } else {
-      this.setState({[ev.target.name]: ev.target.value})
-    }
-    console.log('in change', this.state)
-  }
-  //TODO: Upload file
-  upload = (ev) => {
-    console.log('in upload', ev.target.files[0])
+    this.setState({[ev.target.name]: ev.target.value})
   }
 
   submit = async () => {
-    const {title, description, price, quantity, categoryId} = this.state
+    const {title, description, price, quantity, img, categoryId} = this.state
     try {
-      await this.props.save({title, description, price, quantity, categoryId})
-      this.setState({
-        title: '',
-        description: '',
-        price: '',
-        quantity: '',
-        img: null,
-        categoryId: null,
-        error: '',
+      await this.props.save({
+        title,
+        description,
+        price,
+        quantity,
+        img,
+        categoryId,
       })
+      this.setState(this.defaultState)
+      const select = document.getElementById('productForm.category')
+      select.selectedIndex = 0
     } catch (ex) {
+      console.log('error', ex)
       this.setState({error: ex.response.data.message})
     }
   }
 
   render() {
-    const {upload, change, submit} = this
-    const {title, description, price, quantity, categoryId, error} = this.state
+    const {change, submit} = this
+    const {
+      title,
+      description,
+      price,
+      quantity,
+      categoryId,
+      img,
+      error,
+    } = this.state
     const {categories} = this.props
     return (
       <div id="product-create-form-div">
@@ -124,35 +128,33 @@ class ProductCreate extends Component {
               ))}
             </Form.Control>
           </Form.Group>
-          {/* <Form.Group controlId="productForm.image">
+          <Form.Group controlId="productForm.image">
             <Form.Label>Product Image</Form.Label>
-            <InputGroup>
-              <InputGroup.Prepend>
-                <Button variant="secondary" onClick={upload}>
-                  Upload
-                </Button>
-              </InputGroup.Prepend>
-              <Form.File
-                name="img"
-                type="file"
-                label=""
-                onChange={change}
-                custom
-              />
-            </InputGroup>
-          </Form.Group> */}
+            <Form.Control
+              type="text"
+              name="img"
+              value={img}
+              onChange={change}
+              placeholder="URL of image"
+            />
+          </Form.Group>
           <Button variant="primary" type="submit" onClick={submit}>
             Create
           </Button>
         </Form>
-        {error && error.response && <div> {error.response.data} </div>}
+        {error && <div> {error} </div>}
       </div>
     )
   }
 }
 
-const mapStateToProps = ({categories}) => ({categories})
-const mapDispatchToProps = (dispatch) => {
+const mapCreateState = ({categories}) => ({categories})
+// const mapUpdateState = (state => {
+//   console.log(state)
+//   return state
+// })
+
+const mapDispatch = (dispatch) => {
   return {
     save: (product) => {
       console.log('sending to thunk', product)
@@ -161,4 +163,25 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductCreate)
+export default connect(mapCreateState, mapDispatch)(ProductCreate)
+// export const ProductCreate = connect(mapCreateState, mapDispatch)(ProductForm)
+// export const ProductUpdate = connect(mapUpdateState, mapDispatch)(ProductForm)
+
+//code for import file
+/* <Form.Group controlId="productForm.image">
+      <Form.Label>Product Image</Form.Label>
+        <InputGroup>
+          <InputGroup.Prepend>
+            <Button variant="secondary" onClick={upload}>
+              Upload
+            </Button>
+          </InputGroup.Prepend>
+          <Form.File
+            name="img"
+            type="file"
+            label=""
+            onChange={change}
+            custom
+          />
+        </InputGroup>
+    </Form.Group> */
