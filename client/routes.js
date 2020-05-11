@@ -41,9 +41,9 @@ class Routes extends Component {
   }
   render() {
     const {isLoggedIn} = this.props
-
+    console.log('routes---user logged in ', isLoggedIn, this.props)
     sessionId().then((res) => {
-      console.log('ididididididididid', res)
+      //  console.log('ididididididididid', res)
     })
 
     return (
@@ -101,7 +101,7 @@ const mapDispatch = (dispatch) => {
       dispatch(me())
       dispatch(getProducts('load'))
       dispatch(getCategories())
-      dispatch(getCart())
+      // dispatch(getCart())
       //dispatch(loadPage(1))
     },
   }

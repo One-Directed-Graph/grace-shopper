@@ -59,11 +59,14 @@ export default function (state = [], action) {
       console.log('Inside ADD_CART reducer: ', action.item, existingItem)
       if (existingItem) {
         existingItem.quantity += action.item.quantity
+        return state.map((item) => {
+          if (item.productId === existingItem.productId) {
+            return existingItem
+          }
+        })
       } else {
         return [...state, action.item]
       }
-      return state
-
     default:
       return state
   }
