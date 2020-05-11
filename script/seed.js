@@ -18,26 +18,32 @@ async function seed() {
 
   const users = await Promise.all([
     User.create({email: 'cody@email.com', password: '123', admin: true}),
+    User.create({email: 'vinayak@email.com', password: '123', admin: true}),
+    User.create({email: 'katt@email.com', password: '123', admin: true}),
+    User.create({email: 'aleks@email.com', password: '123', admin: true}),
     User.create({email: 'murphy@email.com', password: '123'}),
     User.create({email: 'jeff@email.com', password: '123'}),
-    User.create({email: 'taylor@email.com', password: '123', admin: true}),
+    User.create({email: 'taylor@email.com', password: '123'}),
+    User.create({email: 'manny@email.com', password: '123'}),
+    User.create({email: 'eric@email.com', password: '123'}),
+    User.create({email: 'mark@email.com', password: '123'}),
+    User.create({email: 'peet@email.com', password: '123'}),
   ])
 
   console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
 
   const [medical, fashion, handMade] = await Promise.all([
     Category.create({
       name: 'medical',
-      description: 'every day use',
+      description: 'safety masks for everyday use',
     }),
     Category.create({
       name: 'fashion',
-      description: 'hand made and very fashionated',
+      description: ' masks that are fashion-forward and chic',
     }),
     Category.create({
-      name: 'handMade',
-      description: 'hand made masks for everyday',
+      name: 'handmade',
+      description: 'handmade masks that are comfortable and fun',
     }),
   ])
 
@@ -278,41 +284,110 @@ async function seed() {
       categoryId: handMade.id,
     }),
   ])
-  console.log('seeded Products successfully')
 
-  const orders = await Promise.all([
-    Order.create({
-      dateOfPurchase: '05/01/2020',
-      status: 'Completed',
-      subtotal: 14.0,
-      userId: users[0].id,
-    }),
-  ])
+  console.log(`seeded ${products.length} products`)
 
-  const orderItems = await Promise.all([
-    OrderItem.create({
-      orderId: orders[0].id,
-      productId: products[2].id,
-      quantity: 4,
-      price: 1.25,
-    }),
-    OrderItem.create({
-      orderId: orders[0].id,
-      productId: products[1].id,
-      quantity: 10,
-      price: 1.9,
-    }),
-  ])
+  //ORDERS & ORDERITEMS
 
-  const reviews = await Promise.all([
-    Review.create({
-      userId: users[0].id,
-      productId: products[2].id,
-      rating: 5,
-      description: 'Excellent mask',
-    }),
-  ])
+  const randStatus = ['Created', 'Processing', 'Completed']
 
+  const orders = await Promise.all(
+    users
+      .filter((user) => !user.admin)
+      .map((user) =>
+        Order.create({
+          status: randStatus[Math.floor(Math.random() * randStatus.length)],
+          subtotal: 0,
+          userId: user.id,
+        })
+      )
+  )
+
+  console.log(`seeded ${orders.length} orders`)
+
+  // const orders = await Promise.all([
+  //   Order.create({
+  //     dateOfPurchase: '05/01/2020',
+  //     status: 'Completed',
+  //     subtotal: 14.0,
+  //     userId: users[0].id,
+  //   }),
+  // ])
+
+  const orderItems = await Promise.all(
+    orders.map((order) => {
+      const randProduct = products[Math.floor(Math.random() * products.length)]
+      return OrderItem.create({
+        orderId: order.id,
+        productId: randProduct.id,
+        quantity: Math.floor(Math.random() * (10 - 1 + 1)) + 1,
+        price: randProduct.price,
+      })
+    })
+  )
+
+  console.log(`seeded ${orderItems.length} orderItems`)
+
+  // const orderItems = await Promise.all([
+  //   OrderItem.create({
+  //     orderId: orders[0].id,
+  //     productId: products[2].id,
+  //     quantity: 4,
+  //     price: 1.25,
+  //   }),
+  //   OrderItem.create({
+  //     orderId: orders[0].id,
+  //     productId: products[1].id,
+  //     quantity: 10,
+  //     price: 1.9,
+  //   }),
+  // ])
+
+  orders.forEach((order) => {
+    let subTotal = 0
+    orderItems.forEach((orderItem) => {
+      if (order.id === orderItem.orderId) {
+        subTotal += orderItem.price * 1
+      }
+    })
+    order.update({subTotal})
+  })
+
+  console.log(`updated ${orders.length} orders`)
+
+  //REVIEWS
+  const randDescriptions = [
+    'This mask is horrible.',
+    'I definitely would not buy this again.',
+    'Usable...',
+    'I like it! Decent.',
+    'Excellent mask!',
+  ]
+
+  const reviews = await Promise.all(
+    orderItems.map((orderItem) => {
+      const order = orders.find((_order) => _order.id === orderItem.orderId)
+      const rand = Math.floor(Math.random() * (5 - 1 + 1)) + 1
+      return Review.create({
+        userId: order.userId,
+        productId: orderItem.productId,
+        rating: rand,
+        description: randDescriptions[rand - 1],
+      })
+    })
+  )
+  console.log(`seeded ${reviews.length} reviews`)
+
+  // const reviews = await Promise.all([
+  //   Review.create({
+  //     userId: users[0].id,
+  //     productId: products[2].id,
+  //     rating: 5,
+  //     description: 'Excellent mask',
+  //   }),
+  // ])
+
+  //CARTS
   const carts = await Promise.all([
     Cart.create({
       productId: products[2].id,
@@ -325,7 +400,11 @@ async function seed() {
       price: 1.9,
     }),
   ])
+
+  console.log(`seeded ${carts.length} carts`)
+  console.log(`seeded successfully`)
 }
+
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.
 // The `seed` function is concerned only with modifying the database.
