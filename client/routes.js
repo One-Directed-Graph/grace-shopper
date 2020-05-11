@@ -58,7 +58,7 @@ class Routes extends Component {
           <Route exact path="/product/:id" component={Product} />
           <Route
             exact
-            path="/category/:category"
+            path="/category/:category/:page"
             component={DisplayByCategory}
           />
           {/*<Route exact path="/products/:id" component={Product} />*/}
