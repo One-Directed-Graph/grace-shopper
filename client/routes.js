@@ -42,9 +42,9 @@ class Routes extends Component {
   render() {
     const {isLoggedIn} = this.props
 
-    sessionId().then((res) => {
-      console.log('ididididididididid', res)
-    })
+    // sessionId().then((res) => {
+    //   console.log('ididididididididid', res)
+    // })
 
     return (
       <div>
@@ -60,7 +60,7 @@ class Routes extends Component {
           <Route exact path="/product/:id" component={Product} />
           <Route
             exact
-            path="/category/:category"
+            path="/category/:category/:page"
             component={DisplayByCategory}
           />
           {/*<Route exact path="/products/:id" component={Product} />*/}
@@ -89,11 +89,11 @@ const mapState = (state) => {
   }
 }
 
-const sessionId = (window.onload = async () => {
-  let id = await Axios.get('/api/sessionId')
-  //console.log(id)
-  return id
-})
+// const sessionId = (window.onload = async () => {
+//   let id = await Axios.get('/api/sessionId')
+//   //console.log(id)
+//   return id
+// })
 
 const mapDispatch = (dispatch) => {
   return {

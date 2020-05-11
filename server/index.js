@@ -2,9 +2,7 @@ const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
-const cookieParser = require('cookie-parser')
 const session = require('express-session')
-
 const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
@@ -70,19 +68,9 @@ const createApp = () => {
   app.get('/api/sessionId', function (req, res) {
     res.send(req.session.id)
     if (req.session.page_views) {
-      console.log(
-        '<><><><><><><><><><><><><><><><><><><><><><><',
-        req.session.id,
-        req.session.page_views
-      )
       req.session.page_views++
       res.send('You visited this page ' + req.session.page_views + ' times')
     } else {
-      console.log(
-        '<><>>?>?><><><><>?<?<>?<>?<>?<>?',
-        req.session.id,
-        req.session.page_views
-      )
       req.session.page_views = 1
       res.send('Welcome to this page for the first time!')
     }

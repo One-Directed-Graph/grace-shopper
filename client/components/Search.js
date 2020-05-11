@@ -34,7 +34,12 @@ class Search extends Component {
     const {history} = this.props
 
     return (
-      <Form inline>
+      <Form
+        inline
+        onSubmit={(e) => {
+          e.preventDefaulte()
+        }}
+      >
         <FormControl
           className="mr-sm-2"
           value={searchInput}
