@@ -6,7 +6,6 @@ import {
   Login,
   Signup,
   UserHome,
-  AdminHome,
   Products,
   Product,
   DisplaySearch,
@@ -14,9 +13,8 @@ import {
   DisplayByCategory,
 } from './components'
 
-import {loadPage} from './store/divided'
-import uuid from 'react-uuid'
-import Axios from 'axios'
+// import uuid from 'react-uuid'
+// import Axios from 'axios'
 import {me, getCategories, getProducts, getCart} from './store'
 
 /**
