@@ -44,9 +44,6 @@ class Products extends Component {
   }
 
   componentDidMount() {
-    window.onload = () => {
-      console.log('hello')
-    }
     const sortBy = queryString.parse(this.props.location.search).sortBy
 
     const page = this.props.match.params.page || 1
