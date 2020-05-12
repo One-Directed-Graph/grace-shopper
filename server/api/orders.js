@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
   //console.log('<><><><><><><><><>><><><><><><><>')
   try {
     const orders = await Order.findAll({include: OrderItem})
-    console.log('from server side get orders', orders)
+    // console.log('from server side get orders', orders)
     res.json(orders)
   } catch (err) {
     next(err)

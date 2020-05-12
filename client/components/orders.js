@@ -7,15 +7,26 @@ class Orders extends Component {
     this.props.load()
   }
   render() {
-    const {orders} = this.props
-    console.log('orders yeyeyeyeyeyey', orders)
+    const {orders, products} = this.props
+    // console.log('User: ',state.user)
+    console.log('orders yeyeyeyeyeyey', orders, products)
+
+    const itemList = orders.map((item) => {
+      return {
+        ...item,
+        // orderItems: products.find((pl) => pl.id === item.orderitems.productId),
+      }
+    })
+    console.log('processed cart', itemList)
+
     return <hr />
   }
 }
 
-const mapState = ({orders}) => {
+const mapState = ({orders, products}) => {
   return {
     orders,
+    products,
   }
 }
 const mapDispatch = (dispatch) => {
