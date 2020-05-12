@@ -82,8 +82,7 @@ label {
   margin: 1rem;
 }
 
-#user-home h4,
-h6 {
+#user-home h4 {
   margin-top: 2rem;
   margin-left: 1rem;
 }
@@ -100,4 +99,32 @@ h6 {
 }
 .plusminus {
   width: 40px;
+}
+
+.product-list-image {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 0.5rem;
+  border-radius: 2px;
+  background-color: white;
+  background-position: center;
+  background-size: cover;
+}
+
+#user-home-products {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  width: 40%;
+  border: 2px solid #c28867;
+  margin: 1rem;
+}
+
+.product-item {
+  width: 150px;
+  height: 250px;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: solid #c28867 2px;
+  border-radius: 2px;
 }
