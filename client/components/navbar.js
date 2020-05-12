@@ -121,6 +121,7 @@ class Navbarclass extends Component {
               alt="React Bootstrap logo"
             />
           </Navbar.Brand>
+          <i className="fas fa-cart-arrow-down"></i>
         </Navbar>
         <div className="hello2">
           <Image src="/images/long3.jpg" fluid style={{width: '100%'}} />
