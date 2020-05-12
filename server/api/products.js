@@ -35,6 +35,17 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+router.put('/:id', (req, res, next) => {
+  req.body.categoryId =
+    req.body.categoryId === 'null'
+      ? JSON.parse(req.body.categoryId)
+      : req.body.categoryId
+  Product.findByPk(req.params.id)
+    .then((product) => product.update(req.body))
+    .then((product) => res.json(product))
+    .catch(next)
+})
+
 // router.get('/:page?', (req, res, next) => {
 //   const resultsPerPage = 8
 //   // pageNum is zero indexed
