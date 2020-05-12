@@ -63,6 +63,7 @@ class Navbarclass extends Component {
                     onClick={() => {
                       handleClick()
                     }}
+                    className="linksInNavBar"
                   >
                     Logout
                   </Nav.Link>
@@ -70,10 +71,26 @@ class Navbarclass extends Component {
               ) : (
                 <Nav className="mr-auto">
                   {/* This nav links will show these links if you are not logged in */}
-                  <Nav.Link as={Link} to="/login">
+                  <Nav.Link
+                    as={Link}
+                    to="/login"
+                    style={{
+                      color: 'black',
+                      fontWeight: '500',
+                      fontSize: '150%',
+                    }}
+                  >
                     Login
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/signup">
+                  <Nav.Link
+                    as={Link}
+                    to="/signup"
+                    style={{
+                      color: 'black',
+                      fontWeight: '500',
+                      fontSize: '150%',
+                    }}
+                  >
                     Signup
                   </Nav.Link>
                 </Nav>
@@ -84,10 +101,12 @@ class Navbarclass extends Component {
                   this.props.history.push(`/products/1?sortBy=AtoZ`)
                   this.props.loadPages(1)
                 }}
+                style={{
+                  color: 'black',
+                  fontWeight: '500',
+                  fontSize: '150%',
+                }}
               >
-                Products
-              </Nav.Link>
-              <Nav.Link as={Link} to="/products">
                 Products
               </Nav.Link>
             </Nav>
@@ -110,7 +129,7 @@ class Navbarclass extends Component {
         <Container fluid>
           <Row className="hello">
             <Col md={4} className="colpic">
-              <Link to="/category/fashion/1">
+              <Link to="/category/fashion/1" className="linksInNavBar">
                 <Image
                   src="/images/manuPic3.jpeg"
                   roundedCircle
@@ -119,7 +138,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/category/handMade/1">
+              <Link to="/category/handmade/1" className="linksInNavBar">
                 <Image
                   src="/images/manuHMpic1.jpg"
                   roundedCircle
@@ -128,7 +147,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/category/medical/1">
+              <Link to="/category/medical/1" className="linksInNavBar">
                 <Image
                   src="/images/menuMed.jpeg"
                   roundedCircle
