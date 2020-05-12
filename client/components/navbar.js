@@ -17,12 +17,9 @@ import Form from 'react-bootstrap/Form'
 // import {render} from 'enzyme' - REMOVE?
 
 class Navbarclass extends Component {
-  constructor(props) {
-    super()
+  componentDidMount() {
+    this.props.load()
   }
-  // componentDidMount() {
-  //   this.props.load()
-  // }
 
   render() {
     console.log('documenta cookie', document.cookie)
@@ -54,12 +51,25 @@ class Navbarclass extends Component {
               {isLoggedIn ? (
                 <Nav className="mr-auto">
                   {/* This nav links will show these links after you log in */}
-                  <Nav.Link as={Link} to="/account">
+                  <Nav.Link
+                    as={Link}
+                    to="/account"
+                    style={{
+                      color: ' #38495e',
+                      fontWeight: '500',
+                      fontSize: '120%',
+                    }}
+                  >
                     Account
                   </Nav.Link>
                   <Nav.Link
                     as={Link}
                     to="#"
+                    style={{
+                      color: ' #38495e',
+                      fontWeight: '500',
+                      fontSize: '120%',
+                    }}
                     onClick={() => {
                       handleClick()
                     }}
@@ -76,8 +86,8 @@ class Navbarclass extends Component {
                     to="/login"
                     style={{
                       color: ' #38495e',
-                      fontWeight: '700',
-                      fontSize: '150%',
+                      fontWeight: '500',
+                      fontSize: '120%',
                     }}
                   >
                     Login
@@ -87,8 +97,8 @@ class Navbarclass extends Component {
                     to="/signup"
                     style={{
                       color: ' #38495e',
-                      fontWeight: '700',
-                      fontSize: '150%',
+                      fontWeight: '500',
+                      fontSize: '120%',
                     }}
                   >
                     Signup
@@ -103,8 +113,8 @@ class Navbarclass extends Component {
                 }}
                 style={{
                   color: ' #38495e',
-                  fontWeight: '700',
-                  fontSize: '150%',
+                  fontWeight: '500',
+                  fontSize: '120%',
                 }}
               >
                 Products
@@ -182,6 +192,9 @@ const mapDispatch = (dispatch) => {
     },
     loadPages: (pg, push) => {
       dispatch(loadPage(pg, push))
+    },
+    load: () => {
+      dispatch(getProducts('load'))
     },
   }
 }

@@ -1,19 +1,35 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createProduct} from '../../../store'
+import {createProduct, updateProduct} from '../../../store'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 
 //TODO: Error handling
 
-class ProductCreate extends Component {
+class ProductForm extends Component {
   constructor() {
     super()
     this.state = this.defaultState
   }
 
+  componentDidMount() {
+    console.log('in product-form mount', this.props, this.state)
+    const product = this.props.products.find(
+      (_product) => _product.id === this.props.match.params.id
+    )
+    const {id, title, description, price, quantity, img, categoryId} = product
+    this.setState({id, title, description, price, quantity, img, categoryId})
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      console.log('in comp update', prevProps.product, this.props.product)
+    }
+  }
+
   defaultState = {
+    id: '',
     title: '',
     description: '',
     price: '',
@@ -28,16 +44,29 @@ class ProductCreate extends Component {
   }
 
   submit = async () => {
-    const {title, description, price, quantity, img, categoryId} = this.state
+    const {
+      id,
+      title,
+      description,
+      price,
+      quantity,
+      img,
+      categoryId,
+    } = this.state
+    const {action} = this.props
     try {
-      await this.props.save({
-        title,
-        description,
-        price,
-        quantity,
-        img,
-        categoryId,
-      })
+      await this.props.save(
+        {
+          id,
+          title,
+          description,
+          price,
+          quantity,
+          img,
+          categoryId,
+        },
+        action
+      )
       this.setState(this.defaultState)
       const select = document.getElementById('productForm.category')
       select.selectedIndex = 0
@@ -46,7 +75,6 @@ class ProductCreate extends Component {
       this.setState({error: ex.response.data.message})
     }
   }
-
   render() {
     const {change, submit} = this
     const {
@@ -58,10 +86,15 @@ class ProductCreate extends Component {
       img,
       error,
     } = this.state
-    const {categories} = this.props
+    const {categories, action, displayName} = this.props
+
     return (
       <div id="product-create-form-div">
-        <Form id="product-create-form" onSubmit={(ev) => ev.preventDefault()}>
+        <Form
+          id="product-form"
+          name={action}
+          onSubmit={(ev) => ev.preventDefault()}
+        >
           <Form.Group controlId="productForm.title">
             <Form.Label>Title</Form.Label>
             <Form.Control
@@ -139,7 +172,7 @@ class ProductCreate extends Component {
             />
           </Form.Group>
           <Button variant="primary" type="submit" onClick={submit}>
-            Create
+            {displayName}
           </Button>
         </Form>
         {error && <div> {error} </div>}
@@ -148,24 +181,31 @@ class ProductCreate extends Component {
   }
 }
 
-const mapCreateState = ({categories}) => ({categories})
-// const mapUpdateState = (state => {
-//   console.log(state)
-//   return state
-// })
+const mapCreateState = ({categories}) => ({
+  categories,
+  action: 'create',
+  displayName: 'Create Product',
+})
+
+const mapUpdateState = ({products, categories}) => ({
+  products,
+  categories,
+  action: 'update',
+  displayName: 'Update Product',
+})
 
 const mapDispatch = (dispatch) => {
   return {
-    save: (product) => {
+    save: (product, action) => {
       console.log('sending to thunk', product)
-      dispatch(createProduct(product))
+      if (action === 'create') dispatch(createProduct(product))
+      if (action === 'update') dispatch(updateProduct(product))
     },
   }
 }
 
-export default connect(mapCreateState, mapDispatch)(ProductCreate)
-// export const ProductCreate = connect(mapCreateState, mapDispatch)(ProductForm)
-// export const ProductUpdate = connect(mapUpdateState, mapDispatch)(ProductForm)
+export const ProductCreate = connect(mapCreateState, mapDispatch)(ProductForm)
+export const ProductUpdate = connect(mapUpdateState, mapDispatch)(ProductForm)
 
 //code for import file
 /* <Form.Group controlId="productForm.image">
