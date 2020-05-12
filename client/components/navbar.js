@@ -25,6 +25,7 @@ class Navbarclass extends Component {
   // }
 
   render() {
+    console.log('documenta cookie', document.cookie)
     const {handleClick, isLoggedIn} = this.props
 
     return (
@@ -93,7 +94,7 @@ class Navbarclass extends Component {
             <Search />
           </Navbar.Collapse>
 
-          <Navbar.Brand as={Link} to="/cart">
+          <Navbar.Brand as={Link} to="/orders">
             <img
               src="/images/shop.png"
               width="40px"
