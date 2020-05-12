@@ -75,8 +75,8 @@ class Navbarclass extends Component {
                     as={Link}
                     to="/login"
                     style={{
-                      color: 'black',
-                      fontWeight: '500',
+                      color: ' #38495e',
+                      fontWeight: '700',
                       fontSize: '150%',
                     }}
                   >
@@ -86,8 +86,8 @@ class Navbarclass extends Component {
                     as={Link}
                     to="/signup"
                     style={{
-                      color: 'black',
-                      fontWeight: '500',
+                      color: ' #38495e',
+                      fontWeight: '700',
                       fontSize: '150%',
                     }}
                   >
@@ -102,8 +102,8 @@ class Navbarclass extends Component {
                   this.props.loadPages(1)
                 }}
                 style={{
-                  color: 'black',
-                  fontWeight: '500',
+                  color: ' #38495e',
+                  fontWeight: '700',
                   fontSize: '150%',
                 }}
               >
