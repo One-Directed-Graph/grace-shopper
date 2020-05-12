@@ -17,6 +17,9 @@ const OrderItem = db.define('orderitem', {
   price: {
     type: Sequelize.DECIMAL(10, 2),
   },
+  productId: {
+    type: Sequelize.UUID,
+  },
 })
 
 //ADD associations to models/index.js

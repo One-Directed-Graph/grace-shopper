@@ -40,9 +40,9 @@ const _createProduct = (product) => ({type: CREATE_PRODUCT, product})
 /**
  * THUNK CREATORS
  */
-export const getProducts = (str, sortBy, page, push) => {
-  console.log('from getProducts', sortBy, str)
-
+export const getProducts = (str, sortBy, page) => {
+  console.log('from getProducts', sortBy, str, page)
+  //page = page || 1
   return async (dispatch) => {
     if (str === 'load') {
       //console.log('555555', products.length)
@@ -50,7 +50,7 @@ export const getProducts = (str, sortBy, page, push) => {
 
       dispatch(_getProducts(products.data))
       //dispatch(_aToz(products.data))
-      dispatch(loadPage(page, push))
+      dispatch(loadPage(page))
     }
     if (sortBy === 'Categories') {
       const products = await store.getState().products

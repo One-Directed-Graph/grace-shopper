@@ -28,18 +28,18 @@ Order.belongsTo(User, {
 })
 
 //OrderDetail to Order
-OrderItem.belongsTo(Order, {
-  foreignKey: {
-    allowNull: false,
-  },
-})
 
+Order.hasMany(OrderItem)
 OrderItem.belongsTo(Product, {
-  foreignKey: {
-    allowNull: false,
-  },
+  // foreignKey: {
+  //   allowNull: false,
+  // },
 })
-
+OrderItem.belongsTo(Order, {
+  // foreignKey: {
+  //   allowNull: false,
+  // },
+})
 Product.belongsTo(Category)
 
 Cart.belongsTo(Product)

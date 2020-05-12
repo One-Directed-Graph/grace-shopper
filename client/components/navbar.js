@@ -25,6 +25,7 @@ class Navbarclass extends Component {
   // }
 
   render() {
+    console.log('documenta cookie', document.cookie)
     const {handleClick, isLoggedIn} = this.props
 
     return (
@@ -93,7 +94,7 @@ class Navbarclass extends Component {
             <Search />
           </Navbar.Collapse>
 
-          <Navbar.Brand as={Link} to="/cart">
+          <Navbar.Brand as={Link} to="/orders">
             <img
               src="/images/shop.png"
               width="40px"
@@ -109,7 +110,7 @@ class Navbarclass extends Component {
         <Container fluid>
           <Row className="hello">
             <Col md={4} className="colpic">
-              <Link to="/category/fashion">
+              <Link to="/category/fashion/1">
                 <Image
                   src="/images/manuPic3.jpeg"
                   roundedCircle
@@ -118,7 +119,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/category/handMade">
+              <Link to="/category/handMade/1">
                 <Image
                   src="/images/manuHMpic1.jpg"
                   roundedCircle
@@ -127,7 +128,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/category/medical">
+              <Link to="/category/medical/1">
                 <Image
                   src="/images/menuMed.jpeg"
                   roundedCircle
