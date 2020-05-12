@@ -51,6 +51,7 @@ export default function (state = [], action) {
     case GET_CART:
       return action.items
     case ADD_TO_CART:
+      console.log(state)
       // if new item then add else update existing item's quantity
       const existingItem = state.find(
         (item) => item.productId === action.productId
