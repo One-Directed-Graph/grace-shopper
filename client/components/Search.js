@@ -52,6 +52,7 @@ class Search extends Component {
 
         <Link to="/displaysearch">
           <Button
+            style={{backgroundColor: ' #38495e', border: 'none'}}
             onClick={() => {
               let searchResults = this.search()
               //console.log(history)
