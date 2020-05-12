@@ -7,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 
 //TODO: Error handling
 
-class ProductCreate extends Component {
+class ProductForm extends Component {
   constructor() {
     super()
     this.state = this.defaultState
@@ -149,10 +149,7 @@ class ProductCreate extends Component {
 }
 
 const mapCreateState = ({categories}) => ({categories})
-// const mapUpdateState = (state => {
-//   console.log(state)
-//   return state
-// })
+const mapUpdateState = ({product, categories}) => ({product, categories})
 
 const mapDispatch = (dispatch) => {
   return {
@@ -163,9 +160,18 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default connect(mapCreateState, mapDispatch)(ProductCreate)
-// export const ProductCreate = connect(mapCreateState, mapDispatch)(ProductForm)
-// export const ProductUpdate = connect(mapUpdateState, mapDispatch)(ProductForm)
+// const mapDispatch = (dispatch) => {
+//   return {
+//     save: (action, product) => {
+//       console.log('sending to thunk', product)
+//       dispatch(updateProduct(product))
+//     },
+//   }
+// }
+
+// export default connect(mapCreateState, mapDispatch)(ProductCreate)
+export const ProductCreate = connect(mapCreateState, mapDispatch)(ProductForm)
+export const ProductUpdate = connect(mapUpdateState, mapDispatch)(ProductForm)
 
 //code for import file
 /* <Form.Group controlId="productForm.image">
