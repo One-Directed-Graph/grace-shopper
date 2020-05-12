@@ -128,3 +128,14 @@ label {
   border: solid #c28867 2px;
   border-radius: 2px;
 }
+.hello2 {
+  /* filter: invert(46%); */
+  /* filter: opacity(100%); */
+  filter: hue-rotate(180deg);
+  filter: sepia(100%);
+}
+.linksInNavBar {
+  color: 'black';
+  font-weight: '900';
+  font-size: '150%';
+}
