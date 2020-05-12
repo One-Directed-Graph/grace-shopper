@@ -305,14 +305,14 @@ async function seed() {
 
   console.log(`seeded ${orders.length} orders`)
 
-  // const orders = await Promise.all([
-  //   Order.create({
-  //     dateOfPurchase: '05/01/2020',
-  //     status: 'Completed',
-  //     subtotal: 14.0,
-  //     userId: users[0].id,
-  //   }),
-  // ])
+  await Promise.all([
+    Order.create({
+      dateOfPurchase: '05/01/2020',
+      status: 'Completed',
+      subtotal: 14.0,
+      userId: users[0].id,
+    }),
+  ])
 
   const orderItems = await Promise.all(
     orders.map((order) => {
@@ -328,20 +328,20 @@ async function seed() {
 
   console.log(`seeded ${orderItems.length} orderItems`)
 
-  // const orderItems = await Promise.all([
-  //   OrderItem.create({
-  //     orderId: orders[0].id,
-  //     productId: products[2].id,
-  //     quantity: 4,
-  //     price: 1.25,
-  //   }),
-  //   OrderItem.create({
-  //     orderId: orders[0].id,
-  //     productId: products[1].id,
-  //     quantity: 10,
-  //     price: 1.9,
-  //   }),
-  // ])
+  await Promise.all([
+    OrderItem.create({
+      orderId: orders[0].id,
+      productId: products[2].id,
+      quantity: 4,
+      price: 1.25,
+    }),
+    OrderItem.create({
+      orderId: orders[0].id,
+      productId: products[1].id,
+      quantity: 10,
+      price: 1.9,
+    }),
+  ])
 
   orders.forEach((order) => {
     let subTotal = 0
@@ -378,14 +378,14 @@ async function seed() {
   )
   console.log(`seeded ${reviews.length} reviews`)
 
-  // const reviews = await Promise.all([
-  //   Review.create({
-  //     userId: users[0].id,
-  //     productId: products[2].id,
-  //     rating: 5,
-  //     description: 'Excellent mask',
-  //   }),
-  // ])
+  await Promise.all([
+    Review.create({
+      userId: users[0].id,
+      productId: products[2].id,
+      rating: 5,
+      description: 'Excellent mask',
+    }),
+  ])
 
   //CARTS
   const carts = await Promise.all([

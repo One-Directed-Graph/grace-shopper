@@ -17,12 +17,9 @@ import Form from 'react-bootstrap/Form'
 // import {render} from 'enzyme' - REMOVE?
 
 class Navbarclass extends Component {
-  constructor(props) {
-    super()
+  componentDidMount() {
+    this.props.load()
   }
-  // componentDidMount() {
-  //   this.props.load()
-  // }
 
   render() {
     console.log('documenta cookie', document.cookie)
@@ -54,15 +51,29 @@ class Navbarclass extends Component {
               {isLoggedIn ? (
                 <Nav className="mr-auto">
                   {/* This nav links will show these links after you log in */}
-                  <Nav.Link as={Link} to="/account">
+                  <Nav.Link
+                    as={Link}
+                    to="/account"
+                    style={{
+                      color: ' #38495e',
+                      fontWeight: '500',
+                      fontSize: '120%',
+                    }}
+                  >
                     Account
                   </Nav.Link>
                   <Nav.Link
                     as={Link}
                     to="#"
+                    style={{
+                      color: ' #38495e',
+                      fontWeight: '500',
+                      fontSize: '120%',
+                    }}
                     onClick={() => {
                       handleClick()
                     }}
+                    className="linksInNavBar"
                   >
                     Logout
                   </Nav.Link>
@@ -70,10 +81,26 @@ class Navbarclass extends Component {
               ) : (
                 <Nav className="mr-auto">
                   {/* This nav links will show these links if you are not logged in */}
-                  <Nav.Link as={Link} to="/login">
+                  <Nav.Link
+                    as={Link}
+                    to="/login"
+                    style={{
+                      color: ' #38495e',
+                      fontWeight: '500',
+                      fontSize: '120%',
+                    }}
+                  >
                     Login
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/signup">
+                  <Nav.Link
+                    as={Link}
+                    to="/signup"
+                    style={{
+                      color: ' #38495e',
+                      fontWeight: '500',
+                      fontSize: '120%',
+                    }}
+                  >
                     Signup
                   </Nav.Link>
                 </Nav>
@@ -84,10 +111,12 @@ class Navbarclass extends Component {
                   this.props.history.push(`/products/1?sortBy=AtoZ`)
                   this.props.loadPages(1)
                 }}
+                style={{
+                  color: ' #38495e',
+                  fontWeight: '500',
+                  fontSize: '120%',
+                }}
               >
-                Products
-              </Nav.Link>
-              <Nav.Link as={Link} to="/products">
                 Products
               </Nav.Link>
             </Nav>
@@ -110,7 +139,7 @@ class Navbarclass extends Component {
         <Container fluid>
           <Row className="hello">
             <Col md={4} className="colpic">
-              <Link to="/category/fashion/1">
+              <Link to="/category/fashion/1" className="linksInNavBar">
                 <Image
                   src="/images/manuPic3.jpeg"
                   roundedCircle
@@ -119,7 +148,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/category/handMade/1">
+              <Link to="/category/handmade/1" className="linksInNavBar">
                 <Image
                   src="/images/manuHMpic1.jpg"
                   roundedCircle
@@ -128,7 +157,7 @@ class Navbarclass extends Component {
               </Link>
             </Col>
             <Col md={4} className="colpic">
-              <Link to="/category/medical/1">
+              <Link to="/category/medical/1" className="linksInNavBar">
                 <Image
                   src="/images/menuMed.jpeg"
                   roundedCircle
@@ -162,6 +191,9 @@ const mapDispatch = (dispatch) => {
     },
     loadPages: (pg, push) => {
       dispatch(loadPage(pg, push))
+    },
+    load: () => {
+      dispatch(getProducts('load'))
     },
   }
 }
