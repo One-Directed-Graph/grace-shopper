@@ -28,6 +28,7 @@ class DisplayByCategory extends Component {
     let {categories} = this.props
     const page = this.props.match.params.page || 1
     let categoryToDisplay = categories.find((cat) => {
+      console.log(cat.name, this.props.match.params.category)
       return cat.name == this.props.match.params.category
     })
     if (categoryToDisplay) {

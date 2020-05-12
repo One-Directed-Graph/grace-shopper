@@ -19,11 +19,9 @@ const _getOrders = (orders) => ({type: GET_ORDERS, orders})
  * THUNK CREATORS
  */
 export const getOrders = () => {
-  console.log('hrllo from thunk to get orders')
   return async (dispatch) => {
-    console.log('before exios call in order')
     const res = await axios.get('/api/orders')
-    console.log(',.,.,.,.,.,.,', res.data)
+
     dispatch(_getOrders(res.data))
   }
 }
