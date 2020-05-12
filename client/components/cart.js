@@ -17,6 +17,7 @@ class Cart extends Component {
   render() {
     console.log(this.props)
     const cart = this.props.cart
+    console.log(',.,.,.,.,.,.,.,.,.,', this.props, cart)
     const productList = this.props.products
     //  console.log('Cart in render: ',cart)
     //  console.log('Cart in render: ',productList)
@@ -33,6 +34,7 @@ class Cart extends Component {
         <ul className="listgrp">
           {itemList
             ? itemList.map((item) => {
+                console.log('itemitemitem', item)
                 return (
                   <ListGroup horizontal="sm" className="my-2" key={item.id}>
                     <ListGroup.Item>

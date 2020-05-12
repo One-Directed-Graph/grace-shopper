@@ -9,13 +9,12 @@ import {
   Products,
   Product,
   DisplaySearch,
-  Cart,
   DisplayByCategory,
 } from './components'
-
+import Orders from './components/orders'
 // import uuid from 'react-uuid'
 // import Axios from 'axios'
-import {me, getCategories, getProducts, getCart} from './store'
+import {me, getCategories, getProducts, getOrders, loadPage} from './store'
 
 /**
  * COMPONENT
@@ -53,7 +52,8 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/products" component={Products} />
-          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/orders" component={Orders} />
+
           <Route path="/products/:page?" component={Products} />
           <Route exact path="/product/:id" component={Product} />
           <Route
@@ -96,10 +96,11 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData: () => {
+      console.log(1)
       dispatch(me())
-      dispatch(getProducts('load'))
+      // dispatch(getProducts('load'))
       dispatch(getCategories())
-      dispatch(getCart())
+      dispatch(getOrders())
       //dispatch(loadPage(1))
     },
   }

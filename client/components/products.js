@@ -1,33 +1,23 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-
-import {logout} from '../store'
 import {loadPage} from '../store/divided'
 import {getProducts} from '../store/products'
 import {getProduct} from '../store/product'
-import Product from './product'
-import Search from './Search'
-import {getCategories} from '../store/categories'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Pagination from 'react-bootstrap/Pagination'
-import {lowToHigh} from '../store/products'
-import {highToLow} from '../store/products'
-import {Categories, aToz, zToa} from '../store/products'
 import queryString from 'query-string'
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
-  constructor(props) {
-    console.log('props', props)
-    console.log('from props', queryString.parse(props.location.search))
+  constructor() {
     super()
+    this.urlProducer = this.urlProducer.bind(this)
   }
-  //
-
   componentDidUpdate(prevState) {
     const push = this.props.history.push
+    const page = this.props.match.params.page || 1
     let sortBy
 
     if (queryString.parse(this.props.location.search).sortBy) {
@@ -35,8 +25,7 @@ class Products extends Component {
     } else {
       sortBy = 'AtoZ'
     }
-    const page = this.props.match.params.page || 1
-    //sortBy === 'undefined' ? 'AtoZ' : sortBy
+
     if (prevState.location.search.slice(8) !== sortBy) {
       push(`/products/${page}?sortBy=${sortBy}`)
       this.props.load(sortBy, page)
@@ -45,16 +34,27 @@ class Products extends Component {
 
   componentDidMount() {
     const sortBy = queryString.parse(this.props.location.search).sortBy
-
     const page = this.props.match.params.page || 1
     const push = this.props.history.push
     this.props.load(sortBy, page)
   }
+
+  urlProducer(p) {
+    const push = this.props.history.push
+    const sortBy =
+      queryString.parse(this.props.location.search).sortBy || 'AtoZ'
+    let page = p || 1
+
+    push(`/products/${page}?${sortBy}`)
+    //this.props.loadPages(page)
+  }
+
   render() {
+    const {urlProducer} = this
     const {products, divided} = this.props
     const push = this.props.history.push
     const page = this.props.match.params.page
-    const sortBy = queryString.parse(this.props.location.search).sortBy
+
     return (
       <div className="outsideOfContainer">
         <Container fluid>
@@ -62,7 +62,6 @@ class Products extends Component {
             <select
               onChange={(ev) => {
                 push(`/products/${page}/?sortBy=${ev.target.value}`)
-                //this.sort(ev.target.value)
               }}
             >
               <option>Sort By</option>
@@ -106,25 +105,22 @@ class Products extends Component {
           <Pagination>
             <Pagination.First
               onClick={() => {
-                push(`/products/${1}?sortBy=${sortBy}`)
-                this.props.loadPages(1)
+                urlProducer(1)
               }}
             />
             <Pagination.Prev
               onClick={(e) => {
-                push(`/products/${page * 1 - 1}?sortBy=${sortBy}`)
-                this.props.loadPages(page * 1 - 1)
+                urlProducer(page * 1 - 1)
               }}
             />
 
-            {[...Array(Math.ceil(products.length / 5))].map(
+            {[...Array(Math.floor(products.length / 5))].map(
               (pageNumber, ind) => {
                 return (
                   <Pagination.Item
                     key={ind}
                     onClick={() => {
-                      push(`/products/${ind + 1}?sortBy=${sortBy}`)
-                      this.props.loadPages(ind + 1)
+                      urlProducer(ind + 1)
                     }}
                   >
                     {ind + 1}
@@ -135,20 +131,12 @@ class Products extends Component {
 
             <Pagination.Next
               onClick={(e) => {
-                push(`/products/${page * 1 + 1}?sortBy=${sortBy}`)
-                this.props.loadPages(page * 1 + 1)
+                urlProducer(page * 1 + 1)
               }}
             />
             <Pagination.Last
               onClick={(e) => {
-                push(
-                  `/products/${Math.ceil(
-                    products.length / divided.length
-                  )}?sortBy=${sortBy}`
-                )
-                this.props.loadPages(
-                  Math.ceil(products.length / divided.length)
-                )
+                urlProducer(Math.floor(products.length / 5))
               }}
             />
           </Pagination>
