@@ -14,6 +14,7 @@ const A_Z = 'A_Z'
 const Z_A = 'Z_A'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const CREATE_PRODUCT = 'CREATE_PRODUCT'
+const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 
 /**
  * INITIAL STATE
@@ -36,6 +37,7 @@ const _Categories = (products, categories) => ({
 const _aToz = (products) => ({type: A_Z, products})
 const _zToa = (products) => ({type: Z_A, products})
 const _createProduct = (product) => ({type: CREATE_PRODUCT, product})
+const _updateProduct = (product) => ({type: UPDATE_PRODUCT, product})
 
 /**
  * THUNK CREATORS
@@ -90,6 +92,12 @@ export const getProducts = (str, sortBy, page) => {
 export const createProduct = (product) => async (dispatch) => {
   const newProduct = (await axios.post('/api/products', product)).data
   dispatch(_createProduct(newProduct))
+}
+
+export const updateProduct = (product) => async (dispatch) => {
+  const newProduct = (await axios.put(`/api/products/${product.id}`, product))
+    .data
+  dispatch(_updateProduct(newProduct))
 }
 
 // export const lowToHigh = () => {
@@ -170,6 +178,13 @@ export default function (state = defaultProducts, action) {
 
   if (action.type === CREATE_PRODUCT) {
     return [action.product, ...state]
+  }
+
+  if (action.type === UPDATE_PRODUCT) {
+    return state.map((product) => {
+      if (product.id === action.product.id) return action.product
+      return product
+    })
   }
 
   return state
