@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import {ProductUpdate} from '../user-actions/product-create-update'
+import {ProductUpdate} from '../'
 import Search from '../../Search'
 import {Link, Route} from 'react-router-dom'
 
@@ -29,16 +29,21 @@ const ProductList = ({products, history}) => {
                 className="product-list-image"
                 style={{
                   backgroundImage: 'url(' + product.img + ')',
-                  margin: '1rem',
                 }}
               />
               <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
-                <Link to={`${rootDir}/${product.id}`}>
-                  <Button variant="primary" type="submit">
-                    Update
-                  </Button>
-                </Link>
+                {/* <Link to={`${rootDir}/${product.id}`}> */}
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={() => {
+                    history.push(`${rootDir}/${product.id}`)
+                  }}
+                >
+                  Update
+                </Button>
+                {/* </Link> */}
                 <Button variant="danger">Delete</Button>
               </Card.Body>
             </Card>

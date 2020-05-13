@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 
 //TODO: Error handling
+//TODO: Fix reload error on update
 
 class ProductForm extends Component {
   constructor() {
@@ -43,7 +44,7 @@ class ProductForm extends Component {
     const product = this.props.products.find(
       (_product) => _product.id === this.props.match.params.id
     )
-
+    console.log(product)
     const {id, title, description, price, quantity, img, categoryId} = product
     this.setState({id, title, description, price, quantity, img, categoryId})
   }
