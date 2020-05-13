@@ -44,7 +44,6 @@ class ProductForm extends Component {
     const product = this.props.products.find(
       (_product) => _product.id === this.props.match.params.id
     )
-    console.log(product)
     const {id, title, description, price, quantity, img, categoryId} = product
     this.setState({id, title, description, price, quantity, img, categoryId})
   }
@@ -65,18 +64,32 @@ class ProductForm extends Component {
     } = this.state
     const {action} = this.props
     try {
-      await this.props.save(
-        {
-          id,
-          title,
-          description,
-          price,
-          quantity,
-          img,
-          categoryId,
-        },
-        action
-      )
+      if (action === 'update') {
+        await this.props.save(
+          {
+            id,
+            title,
+            description,
+            price,
+            quantity,
+            img,
+            categoryId,
+          },
+          action
+        )
+      } else {
+        await this.props.save(
+          {
+            title,
+            description,
+            price,
+            quantity,
+            img,
+            categoryId,
+          },
+          action
+        )
+      }
       this.setState(this.defaultState)
       const select = document.getElementById('productForm.category')
       select.selectedIndex = 0
