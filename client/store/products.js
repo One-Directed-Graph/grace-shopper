@@ -104,7 +104,7 @@ export const updateProduct = (product) => async (dispatch) => {
 export const removeProduct = (id) => {
   return async (dispatch) => {
     await axios.delete(`/api/products/${id}`)
-    dispatch(removeProduct(id))
+    dispatch(_removeProduct(id))
   }
 }
 
