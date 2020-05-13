@@ -46,7 +46,6 @@ export class UserHome extends Component {
   }
 
   render() {
-    console.log('in user-home', this.props)
     const rootDir = '/account'
     const {id, email, admin} = this.props.user
     const adminLinkTo = [

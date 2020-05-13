@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import {updateUser, removeUser} from '../../../store'
-import orders from '../../../store/orders'
 
 /**
  * COMPONENT
@@ -35,7 +34,7 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
           inline="true"
           variant="danger"
           disabled={userToUpdate.orders.length || userToUpdate.admin}
-          onClick={(evt) => handleDelete(userToUpdate.id, evt.target)}
+          onClick={() => handleDelete(userToUpdate.id)}
         >
           Delete User
         </Button>
@@ -65,9 +64,8 @@ const mapDispatch = (dispatch) => {
       const newValue = evtName === 'admin' ? !admin : !pwReset
       dispatch(updateUser({id, change: {[evtName]: newValue}}))
     },
-    handleDelete(id, evt) {
-      console.log('targer', evt.target)
-      console.log(`updating user ${id}`)
+    handleDelete(id) {
+      console.log(`deleting user ${id}`)
       dispatch(removeUser(id))
     },
   }
