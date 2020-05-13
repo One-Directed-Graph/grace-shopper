@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import ListGroup from 'react-bootstrap/ListGroup'
 import {UserUpdate} from '../index'
 
+//TODO: Disable delete if user has orders
+
 /**
  * COMPONENT
  */
@@ -17,6 +19,7 @@ const UserList = (props) => {
         {users.map((user) => (
           <ListGroup.Item key={user.id}>
             <h6>{user.email}</h6>
+            {user.orders && <p># of orders: {user.orders.length}</p>}
             <UserUpdate userToUpdate={user} />
           </ListGroup.Item>
         ))}
@@ -28,7 +31,13 @@ const UserList = (props) => {
 /**
  * CONTAINER
  */
-const mapState = ({users}) => ({users})
+const mapState = ({users, orders}) => {
+  const processedUsers = users.map((user) => {
+    user.orders = orders.filter((order) => order.userId === user.id)
+    return user
+  })
+  return {users: processedUsers}
+}
 
 export default connect(mapState)(UserList)
 
