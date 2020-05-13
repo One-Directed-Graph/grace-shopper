@@ -21,7 +21,7 @@ class Orders extends Component {
   }
   render() {
     const {orders, user} = this.props
-
+    console.log(orders, user)
     const userOrders = user.id
       ? orders.filter((ord) => ord.userId === user.id)
       : ''
@@ -29,7 +29,7 @@ class Orders extends Component {
     const orderItems = userOrders
       ? userOrders.map((item) => item.orderitems)
       : ''
-
+    console.log('orders 1111', orderItems, userOrders)
     //     const {modalShow} = this.props
     //     const {setModalShow} = this
     //     return (
@@ -47,7 +47,7 @@ class Orders extends Component {
     return (
       <div>
         <h1> Cart ({orderItems.length} )</h1>
-        <ul className="listgrp">
+        {/* <ul className="listgrp">
           {orderItems
             ? orderItems.map((item, idx) => {
                 console.log(item[idx])
@@ -75,7 +75,8 @@ class Orders extends Component {
                 )
               })
             : ''}
-        </ul>
+          <Button>add</Button>
+        </ul> */}
       </div>
     )
   }

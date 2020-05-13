@@ -14,6 +14,17 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+router.post('/', (req, res, next) => {
+  //console.log(',.,.,.,.,.,.,.,.,.,.,', req.body)
+  Order.create(req.body)
+    .then((resp) => {
+      // console.log(',.,.,.,.,.,.,.,.,.,.,', resp.id)
+
+      res.status(200).send(resp)
+      //OrderItem.create({orderId: resp.id})
+    })
+    .catch(next)
+})
 
 Order.getOrdersByUser = function (req) {
   return this.findAll({

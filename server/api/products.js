@@ -20,10 +20,10 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', async (req, res, next) => {
-  console.log('<><><><><><><><><>><><><><><><><>', req.params.id)
+  //console.log('<><><><><><><><><>><><><><><><><>', req.params.id)
   try {
     const product = await Product.findByPk(req.params.id, {include: Category})
-    console.log('from server side get products', product)
+    //console.log('from server side get products', product)
     res.json(product)
   } catch (err) {
     next(err)

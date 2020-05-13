@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import uuid from 'react-uuid'
-import {addToCart} from '../store'
+import {addOrder, addItems} from '../store'
 
 //ASSIGNED TO: Aleks
 
@@ -19,8 +19,8 @@ class Product extends Component {
     }
   }
   render() {
-    const {product} = this.props
-    console.log('<>><><<><><><><>><><><>inside render', product)
+    const {product, user, orders} = this.props
+    console.log('<>><><<><><><><>><><><>inside render', product, orders)
     if (product) {
       return (
         <Card className="text-center" style={{width: '18rem', margin: '10px'}}>
@@ -36,13 +36,23 @@ class Product extends Component {
               className="buttonInProduct"
               variant="success"
               onClick={() => {
-                console.log('add to cart')
+                console.log('add to cart', user.id)
                 const item = {
                   productId: product.id,
                   quantity: 1,
                   price: product.price,
+                  userId: user.id,
                 }
-                this.props.addToCart(item)
+                let found = orders.find((order) => {
+                  return order.userId === user.id
+                })
+                console.log('found found found', found)
+                if (!found) {
+                  this.props.addToCart(item)
+                  this.props.history.push('/orders')
+                } else {
+                  this.props.addToItem(found.id, product.id)
+                }
               }}
             >
               add to cart
@@ -74,14 +84,17 @@ class Product extends Component {
         </div> */
 }
 
-const mapState = ({product}) => {
+const mapState = ({product, user, orders}) => {
   return {
     product,
+    user,
+    orders,
   }
 }
 const mapDispatch = (dispatch) => {
   return {
-    addToCart: (item) => dispatch(addToCart(item)),
+    addToCart: (item) => dispatch(addOrder(item)),
+    addToItem: (orderId, productId) => dispatch(addItems(orderId, productId)),
   }
 }
 // export default connect(mapState, mapDispatch)(Products)
