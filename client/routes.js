@@ -12,6 +12,7 @@ import {
   DisplayByCategory,
 } from './components'
 import Orders from './components/orders'
+import {Home} from './components/home'
 // import uuid from 'react-uuid'
 // import Axios from 'axios'
 import {me, getCategories, getProducts, getOrders, loadPage} from './store'
@@ -47,7 +48,7 @@ class Routes extends Component {
       <div>
         <Switch>
           {/* Routes placed here are available to all visitors */}
-          <Route exact path="/" component={Signup} />
+          <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
