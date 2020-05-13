@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import {updateUser, removeUser} from '../../../store'
+import orders from '../../../store/orders'
 
 /**
  * COMPONENT
@@ -33,6 +34,7 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
         <Button
           inline="true"
           variant="danger"
+          disabled={userToUpdate.orders.length || userToUpdate.admin}
           onClick={(evt) => handleDelete(userToUpdate.id, evt.target)}
         >
           Delete User
