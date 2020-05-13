@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 //app.use(cookieParser())
 app.use(session({secret: 'Shh, its a secret!'}))
-
+//console.log(sessionStore.create())
 /**
  * In your development environment, you can keep all of your
  * app's secret API keys in a file called `secrets.js`, in your project
@@ -54,19 +54,19 @@ const createApp = () => {
   app.use(compression())
 
   // session middleware with passport
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET || 'my best friend is Cody',
-      store: sessionStore,
-      resave: true,
-      saveUninitialized: false,
-    })
-  )
+  // app.use(
+  //   session({
+  //     secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+  //     store: sessionStore,
+  //     resave: true,
+  //     saveUninitialized: false,
+  //   })
+  // )
   app.use(passport.initialize())
   app.use(passport.session())
 
-  // app.get('/blah', function (req, res) {
-  //   console.log(req.cookies, '.,.,.,.,.,..,,.,.,..,.,,.,.,.,.,.')
+  // app.get('/', function (req, res) {
+  //   sessionStore.create({sid:'hello'})
   //   //Sessions.create(req.ssesion)
   //   //res.send(req.session.id)
   //   if (req.session.page_views) {
