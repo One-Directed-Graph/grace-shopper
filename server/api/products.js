@@ -51,6 +51,15 @@ router.put('/:id', (req, res, next) => {
     .catch(next)
 })
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Product.destroy({where: {id: req.params.id}})
+    res.status(204).end()
+  } catch (ex) {
+    next(ex)
+  }
+})
+
 // router.get('/:page?', (req, res, next) => {
 //   const resultsPerPage = 8
 //   // pageNum is zero indexed

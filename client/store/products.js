@@ -38,6 +38,7 @@ const _aToz = (products) => ({type: A_Z, products})
 const _zToa = (products) => ({type: Z_A, products})
 const _createProduct = (product) => ({type: CREATE_PRODUCT, product})
 const _updateProduct = (product) => ({type: UPDATE_PRODUCT, product})
+const _removeProduct = (id) => ({type: REMOVE_PRODUCT, id})
 
 /**
  * THUNK CREATORS
@@ -98,6 +99,13 @@ export const updateProduct = (product) => async (dispatch) => {
   const newProduct = (await axios.put(`/api/products/${product.id}`, product))
     .data
   dispatch(_updateProduct(newProduct))
+}
+
+export const removeProduct = (id) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/products/${id}`)
+    dispatch(removeProduct(id))
+  }
 }
 
 // export const lowToHigh = () => {
@@ -185,6 +193,10 @@ export default function (state = defaultProducts, action) {
       if (product.id === action.product.id) return action.product
       return product
     })
+  }
+
+  if (action.type === REMOVE_PRODUCT) {
+    return [...state].filter((product) => product.id !== action.id)
   }
 
   return state
