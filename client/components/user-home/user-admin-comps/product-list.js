@@ -7,7 +7,6 @@ import Card from 'react-bootstrap/Card'
 import {ProductUpdate} from '../user-actions/product-create-update'
 import Search from '../../Search'
 import {Link, Route} from 'react-router-dom'
-// import {getProduct} from '../../../store'
 
 /**
  * COMPONENT
@@ -15,12 +14,7 @@ import {Link, Route} from 'react-router-dom'
 
 const ProductList = ({products, history}) => {
   const rootDir = '/account/product-list'
-  let product
-  const findProduct = (id) => {
-    product = products.find((_product) => _product.id === id)
-    return product
-  }
-  // const products = props.products ? props.products : []
+
   return (
     <div className="user-home-comps">
       <div id="user-home-product-title">
@@ -40,28 +34,17 @@ const ProductList = ({products, history}) => {
               />
               <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
-                {/* <Link to={`${rootDir}/${product.id}`}> */}
-                <Button
-                  variant="primary"
-                  type="submit"
-                  onClick={() => {
-                    findProduct(product.id)
-                    console.log(product)
-                    history.push(`${rootDir}/${product.id}`)
-                  }}
-                >
-                  Update
-                </Button>
-                {/* </Link> */}
+                <Link to={`${rootDir}/${product.id}`}>
+                  <Button variant="primary" type="submit">
+                    Update
+                  </Button>
+                </Link>
+                <Button variant="danger">Delete</Button>
               </Card.Body>
             </Card>
           ))}
         </ListGroup>
-        <Route
-          exact
-          path={`${rootDir}/:id`}
-          render={(props) => <ProductUpdate {...props} product={product} />}
-        />
+        <Route exact path={`${rootDir}/:id`} component={ProductUpdate} />
       </div>
     </div>
   )

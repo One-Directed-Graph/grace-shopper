@@ -121,6 +121,16 @@ label {
   background-size: cover;
 }
 
+.product-form-image {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 0.5rem;
+  border-radius: 2px;
+  background-color: white;
+  background-position: center;
+  background-size: cover;
+}
+
 .product-form-div {
   flex: 1;
 }
