@@ -14,17 +14,17 @@ class ProductForm extends Component {
   }
 
   componentDidMount() {
-    console.log('in product-form mount', this.props, this.state)
-    const product = this.props.products.find(
-      (_product) => _product.id === this.props.match.params.id
-    )
-    const {id, title, description, price, quantity, img, categoryId} = product
-    this.setState({id, title, description, price, quantity, img, categoryId})
+    if (this.props.action === 'update' && this.props.match.params.id) {
+      this.setStateToProduct()
+    }
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id !== this.props.match.params.id) {
-      console.log('in comp update', prevProps.product, this.props.product)
+    if (
+      prevProps.match.params.id !== this.props.match.params.id &&
+      this.props.match.params.id
+    ) {
+      this.setStateToProduct()
     }
   }
 
@@ -37,6 +37,15 @@ class ProductForm extends Component {
     img: '',
     categoryId: null,
     error: '',
+  }
+
+  setStateToProduct = () => {
+    const product = this.props.products.find(
+      (_product) => _product.id === this.props.match.params.id
+    )
+
+    const {id, title, description, price, quantity, img, categoryId} = product
+    this.setState({id, title, description, price, quantity, img, categoryId})
   }
 
   change = (ev) => {
@@ -86,14 +95,26 @@ class ProductForm extends Component {
       img,
       error,
     } = this.state
-    const {categories, action, displayName} = this.props
+    const {categories, action, displayName, history} = this.props
 
     return (
       <div id="product-create-form-div">
+        {img && (
+          <div
+            className="product-form-image"
+            style={{
+              backgroundImage: 'url(' + img + ')',
+              margin: '1rem',
+            }}
+          />
+        )}
         <Form
           id="product-form"
           name={action}
-          onSubmit={(ev) => ev.preventDefault()}
+          onSubmit={(ev) => {
+            ev.preventDefault()
+            if (!error) history.push('/account/product-list')
+          }}
         >
           <Form.Group controlId="productForm.title">
             <Form.Label>Title</Form.Label>
@@ -150,13 +171,13 @@ class ProductForm extends Component {
             <Form.Control
               as="select"
               name="categoryId"
-              defaultValue={categoryId === null ? 'null' : categoryId}
+              value={categoryId === null ? 'null' : categoryId}
               onChange={change}
             >
               <option value="null">-- Choose Category --</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
-                  {category.description}
+                  {category.name} - {category.description}
                 </option>
               ))}
             </Form.Control>
@@ -197,7 +218,7 @@ const mapUpdateState = ({products, categories}) => ({
 const mapDispatch = (dispatch) => {
   return {
     save: (product, action) => {
-      console.log('sending to thunk', product)
+      console.log(`${action} product`, product)
       if (action === 'create') dispatch(createProduct(product))
       if (action === 'update') dispatch(updateProduct(product))
     },

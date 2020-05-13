@@ -39,10 +39,11 @@ class Routes extends Component {
   }
   render() {
     const {isLoggedIn} = this.props
-
-    // sessionId().then((res) => {
-    //   console.log('ididididididididid', res)
-    // })
+    console.log('User: ')
+    console.log('routes---user logged in ', isLoggedIn, this.props)
+    //sessionId().then((res) => {
+    //  console.log('ididididididididid', res)
+    //})
 
     return (
       <div>
@@ -81,6 +82,7 @@ class Routes extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
+  console.log('User: ', state.user)
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
@@ -97,11 +99,10 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData: () => {
-      console.log(1)
       dispatch(me())
       // dispatch(getProducts('load'))
       dispatch(getCategories())
-      dispatch(getOrders())
+      // dispatch(getOrders())
       //dispatch(loadPage(1))
     },
   }
