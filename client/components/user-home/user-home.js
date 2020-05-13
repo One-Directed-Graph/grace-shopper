@@ -47,7 +47,7 @@ export class UserHome extends Component {
 
   render() {
     const rootDir = '/account'
-    const {id, email, admin} = this.props.user
+    const {email, admin} = this.props.user
     const adminLinkTo = [
       {path: 'user-list', name: 'Users', component: UserList},
       {path: 'order-list', name: 'Orders', component: OrderList},
