@@ -17,6 +17,7 @@ const Cart = require('./cart')
 Product.belongsTo(Category)
 Category.hasMany(Product)
 User.hasMany(Review)
+User.hasMany(Order)
 Review.belongsTo(User)
 Review.belongsTo(Product)
 
