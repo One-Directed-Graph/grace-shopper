@@ -8,12 +8,12 @@ import Image from 'react-bootstrap/Image'
 //ASSIGNED TO: Vinayak
 
 class Cart extends Component {
-  constructor() {
+  /*   constructor() {
     super()
-  }
-  componentDidMount() {
+  } */
+  /* componentDidMount() {
     this.props.load()
-  }
+  } */
   render() {
     console.log(this.props)
     const cart = this.props.cart
@@ -68,17 +68,20 @@ class Cart extends Component {
   }
 }
 
-const mapState = ({cart, products}) => {
+const mapState = ({cart, products, user}) => {
+  // console.log('in cart mapstate ', state)
+  //const {cart,products,user} = state
   return {
     cart,
     products,
+    user,
   }
 }
 const mapDispatch = (dispatch) => {
   return {
     load: () => {
-      dispatch(getProducts('load'))
-      dispatch(getCart())
+      // dispatch(getProducts('load'))
+      //  dispatch(getCart())
     },
   }
 }
