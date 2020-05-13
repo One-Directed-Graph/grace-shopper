@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {getOrders} from '../store'
 import {connect} from 'react-redux'
-import {Modal, Button} from 'react-bootstrap'
+import {Modal, Button, ListGroup} from 'react-bootstrap'
 import {MyVerticallyCenteredModal} from './modelPopup'
 class Orders extends Component {
   constructor() {
@@ -20,7 +20,16 @@ class Orders extends Component {
     this.props.load()
   }
   render() {
-    return <hr />
+    const {orders, user} = this.props
+
+    const userOrders = user.id
+      ? orders.filter((ord) => ord.userId === user.id)
+      : ''
+
+    const orderItems = userOrders
+      ? userOrders.map((item) => item.orderitems)
+      : ''
+
     //     const {modalShow} = this.props
     //     const {setModalShow} = this
     //     return (
@@ -35,11 +44,47 @@ class Orders extends Component {
     //         />
     //       </div>
     //     )
+    return (
+      <div>
+        <h1> Cart ({orderItems.length} )</h1>
+        <ul className="listgrp">
+          {orderItems
+            ? orderItems.map((item, idx) => {
+                console.log(item[idx])
+                let el = item[idx]
+                return (
+                  <ListGroup horizontal="sm" className="my-2" key={el.id}>
+                    <ListGroup.Item>
+                      {
+                        <img
+                          src={el.product.img}
+                          alt="..loading"
+                          className="thumbnail"
+                        />
+                      }
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <p>Quantity</p>
+                      {el.quantity}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <p>Price</p>
+                      {el.price}
+                    </ListGroup.Item>
+                  </ListGroup>
+                )
+              })
+            : ''}
+        </ul>
+      </div>
+    )
   }
 }
-const mapState = ({orders}) => {
+
+const mapState = ({orders, user}) => {
   return {
     orders,
+    user,
   }
 }
 const mapDispatch = (dispatch) => {
