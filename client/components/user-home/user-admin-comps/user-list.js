@@ -4,7 +4,8 @@ import {connect} from 'react-redux'
 import ListGroup from 'react-bootstrap/ListGroup'
 import {UserUpdate} from '../index'
 
-//TODO: Disable delete if user has orders
+//TODO: Error handling
+//TODO: Disable delete if user has order or reviews
 
 /**
  * COMPONENT

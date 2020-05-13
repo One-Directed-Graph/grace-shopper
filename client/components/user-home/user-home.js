@@ -14,7 +14,7 @@ import {
 import {getUserList} from '../../store/users'
 import Nav from 'react-bootstrap/Nav'
 
-//TODO: highlight selected tab
+//TODO: Load orders and reviews?
 
 /**
  * COMPONENT
@@ -25,28 +25,29 @@ export class UserHome extends Component {
     this.chooseLoad = this.chooseLoad.bind(this)
   }
   componentDidMount() {
-    this.chooseLoad(this.props.admin)
+    const {admin, id} = this.props.user
+    this.chooseLoad(admin, id)
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.email !== this.props.email) {
-      this.chooseLoad(this.props.admin)
+    if (prevProps.user.id !== this.props.user.id) {
+      const {admin, id} = this.props.user
+      this.chooseLoad(admin, id)
     }
   }
 
-  async chooseLoad(admin) {
+  async chooseLoad(admin, id) {
     if (admin) {
-      await this.props.loadAdmin()
+      await this.props.loadAdmin(id)
     } else if (!admin) {
       console.log('non-admin')
-      // this.props.loadUser()
+      this.props.loadUser(id)
     }
   }
 
   render() {
-    console.log('in user-home', this.props)
     const rootDir = '/account'
-    const {email, admin} = this.props
+    const {email, admin} = this.props.user
     const adminLinkTo = [
       {path: 'user-list', name: 'Users', component: UserList},
       {path: 'order-list', name: 'Orders', component: OrderList},
@@ -103,13 +104,13 @@ export class UserHome extends Component {
 /**
  * CONTAINER
  */
-const mapState = ({user}) => ({email: user.email, admin: user.admin})
+const mapState = ({user}) => ({user})
 
 const mapDispatch = (dispatch) => {
   return {
     loadUser: () => console.log('user reviews & orders'),
-    loadAdmin: () => {
-      dispatch(getUserList())
+    loadAdmin: (id) => {
+      dispatch(getUserList(id))
     },
   }
 }

@@ -113,9 +113,9 @@ label {
 }
 
 .product-list-image {
-  width: 80px;
+  width: 100px;
   height: 80px;
-  margin-bottom: 0.5rem;
+  margin: 1rem;
   border-radius: 2px;
   background-color: white;
   background-position: center;
@@ -123,9 +123,10 @@ label {
 }
 
 .product-form-image {
-  width: 200px;
+  width: 250px;
   height: 200px;
-  margin-bottom: 0.5rem;
+
+  margin: 1rem;
   border-radius: 2px;
   background-color: white;
   background-position: center;
@@ -167,6 +168,11 @@ label {
   padding: 0.5rem;
   margin: 10px;
   /* align-items: center; */
+}
+
+#user-home-products .card-body > button {
+  margin: 0.5rem;
+  align-self: end;
 }
 
 .product-item {

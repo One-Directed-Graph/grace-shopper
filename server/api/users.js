@@ -1,6 +1,7 @@
 const express = require('express')
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {Op} = require('sequelize')
+const {User, Order, Review} = require('../db/models')
 module.exports = router
 
 router.use(express.json())
@@ -20,11 +21,20 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/user-list', (req, res, next) => {
+router.get('/user-list/:id', (req, res, next) => {
   console.log('getting user list for admin')
   User.findAll({
-    where: {admin: false},
+    where: {
+      id: {
+        [Op.ne]: req.params.id,
+      },
+    },
     attributes: ['id', 'email', 'admin', 'pwReset'],
+    order: [
+      ['admin', 'ASC'],
+      ['email', 'ASC'],
+    ],
+    // include: [{model: Order}, {model: Review}],
   })
     .then((users) => res.send(users))
     .catch(next)

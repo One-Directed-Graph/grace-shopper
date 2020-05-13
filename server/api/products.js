@@ -6,7 +6,12 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   //console.log('<><><><><><><><><>><><><><><><><>')
   try {
-    const products = await Product.findAll()
+    const products = await Product.findAll({
+      order: [
+        ['categoryId', 'ASC'],
+        ['title', 'ASC'],
+      ],
+    })
     // console.log('from server side get products', products)
     res.json(products)
   } catch (err) {
@@ -44,6 +49,15 @@ router.put('/:id', (req, res, next) => {
     .then((product) => product.update(req.body))
     .then((product) => res.json(product))
     .catch(next)
+})
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Product.destroy({where: {id: req.params.id}})
+    res.status(204).end()
+  } catch (ex) {
+    next(ex)
+  }
 })
 
 // router.get('/:page?', (req, res, next) => {

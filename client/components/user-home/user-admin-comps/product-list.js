@@ -4,15 +4,18 @@ import {connect} from 'react-redux'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import {ProductUpdate} from '../user-actions/product-create-update'
-import Search from '../../Search'
+import {ProductUpdate} from '../'
+import {removeProduct} from '../../../store'
 import {Link, Route} from 'react-router-dom'
+
+//TODO: Add search and sorting
+//FIX: Infinite delete
 
 /**
  * COMPONENT
  */
 
-const ProductList = ({products, history}) => {
+const ProductList = ({products, history, handleDelete}) => {
   const rootDir = '/account/product-list'
 
   return (
@@ -29,17 +32,25 @@ const ProductList = ({products, history}) => {
                 className="product-list-image"
                 style={{
                   backgroundImage: 'url(' + product.img + ')',
-                  margin: '1rem',
                 }}
               />
               <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
-                <Link to={`${rootDir}/${product.id}`}>
-                  <Button variant="primary" type="submit">
-                    Update
-                  </Button>
-                </Link>
-                <Button variant="danger">Delete</Button>
+                <Button
+                  variant="primary"
+                  // type="submit"
+                  onClick={() => {
+                    history.push(`${rootDir}/${product.id}`)
+                  }}
+                >
+                  Update
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => handleDelete(product.id)}
+                >
+                  Delete
+                </Button>
               </Card.Body>
             </Card>
           ))}
@@ -55,7 +66,16 @@ const ProductList = ({products, history}) => {
  */
 const mapState = ({products}) => ({products})
 
-export default connect(mapState)(ProductList)
+const mapDispatch = (dispatch) => {
+  return {
+    handleDelete(id) {
+      console.log(`deleting product ${id}`)
+      dispatch(removeProduct(id))
+    },
+  }
+}
+
+export default connect(mapState, mapDispatch)(ProductList)
 
 /**
  * PROP TYPES
