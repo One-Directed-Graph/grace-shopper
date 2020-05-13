@@ -5,63 +5,49 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import {ProductUpdate} from '../user-actions/product-create-update'
+import Search from '../../Search'
+import {Link, Route} from 'react-router-dom'
 
 /**
  * COMPONENT
  */
 
-const ProductList = (props) => {
-  const products = props.products ? props.products : []
+const ProductList = ({products, history}) => {
+  const rootDir = '/account/product-list'
+
   return (
     <div className="user-home-comps">
-      <h3>Products</h3>
+      <div id="user-home-product-title">
+        <h3>Products</h3>
+        {/* <Search /> */}
+      </div>
       <div id="user-home-products-page">
         <ListGroup id="user-home-products">
           {products.map((product) => (
-            <Card
-              key={product.id}
-              style={{width: '10rem', alignItems: 'center'}}
-            >
+            <Card key={product.id}>
               <div
                 className="product-list-image"
                 style={{
                   backgroundImage: 'url(' + product.img + ')',
+                  margin: '1rem',
                 }}
               />
               <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  onClick={(ev) => console.log(ev.target)}
-                >
-                  Update
-                </Button>
+                <Link to={`${rootDir}/${product.id}`}>
+                  <Button variant="primary" type="submit">
+                    Update
+                  </Button>
+                </Link>
+                <Button variant="danger">Delete</Button>
               </Card.Body>
             </Card>
           ))}
         </ListGroup>
-        <ProductUpdate />
+        <Route exact path={`${rootDir}/:id`} component={ProductUpdate} />
       </div>
     </div>
   )
-}
-
-{
-  /* <ListGroupItem key={product.id} className="mx-auto">
-<h6>{product.title}</h6>
-<div
-  className="product-list-image"
-  style={{backgroundImage: 'url(' + product.img + ')'}}
-/>
-<Button
-  variant="primary"
-  type="submit"
-  onClick={(ev) => console.log(ev.target)}
->
-  Update
-</Button>
-</ListGroupItem> */
 }
 
 /**

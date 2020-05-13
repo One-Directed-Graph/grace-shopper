@@ -4,7 +4,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #38495e;
+  /* color: #38495e; */
 }
 
 h1,
@@ -121,19 +121,51 @@ label {
   background-size: cover;
 }
 
+.product-form-image {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 0.5rem;
+  border-radius: 2px;
+  background-color: white;
+  background-position: center;
+  background-size: cover;
+}
+
+.product-form-div {
+  flex: 1;
+}
+
+.user-home-product-title {
+  display: flex;
+  flex-direction: row;
+}
+
 #user-home-products-page {
+  flex: 1;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 #user-home-products {
+  border: solid #c28867 1px;
+  border-radius: 2px;
+  padding: 0.5rem;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-evenly;
-  width: 40%;
-  /* border: 2px solid #c28867; */
+  flex: 1;
+  justify-content: space-around;
   margin: 1rem;
+  max-height: 600px;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+#user-home-products .card {
+  width: 12rem;
+  padding: 0.5rem;
+  margin: 10px;
+  /* align-items: center; */
 }
 
 .product-item {
