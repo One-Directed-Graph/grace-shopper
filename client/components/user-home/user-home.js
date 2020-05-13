@@ -14,7 +14,7 @@ import {
 import {getUserList} from '../../store/users'
 import Nav from 'react-bootstrap/Nav'
 
-//TODO: highlight selected tab
+//TODO: Load orders and reviews?
 
 /**
  * COMPONENT

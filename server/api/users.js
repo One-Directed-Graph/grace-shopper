@@ -1,7 +1,7 @@
 const express = require('express')
 const router = require('express').Router()
 const {Op} = require('sequelize')
-const {User} = require('../db/models')
+const {User, Order, Review} = require('../db/models')
 module.exports = router
 
 router.use(express.json())
@@ -34,6 +34,7 @@ router.get('/user-list/:id', (req, res, next) => {
       ['admin', 'ASC'],
       ['email', 'ASC'],
     ],
+    // include: [{model: Order}, {model: Review}],
   })
     .then((users) => res.send(users))
     .catch(next)

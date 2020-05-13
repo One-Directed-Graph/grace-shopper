@@ -5,7 +5,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import {UserUpdate} from '../index'
 
 //TODO: Error handling
-//TODO: Disable delete if user has reviews
+//TODO: Disable delete if user has order or reviews
 
 /**
  * COMPONENT

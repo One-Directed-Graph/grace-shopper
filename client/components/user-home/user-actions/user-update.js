@@ -33,7 +33,7 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
         <Button
           inline="true"
           variant="danger"
-          disabled={userToUpdate.orders.length || userToUpdate.admin}
+          disabled={userToUpdate.orders || userToUpdate.admin}
           onClick={() => handleDelete(userToUpdate.id)}
         >
           Delete User
@@ -49,12 +49,6 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
  */
 
 const mapState = null
-// (state) => {
-//   console.log('in user-update state', state)
-//   return {
-//     state,
-//   }
-// }
 
 const mapDispatch = (dispatch) => {
   return {
