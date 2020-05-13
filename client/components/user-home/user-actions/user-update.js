@@ -33,7 +33,8 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
         <Button
           inline="true"
           variant="danger"
-          onClick={(evt) => handleDelete(userToUpdate.id, evt.target)}
+          disabled={userToUpdate.orders || userToUpdate.admin}
+          onClick={() => handleDelete(userToUpdate.id)}
         >
           Delete User
         </Button>
@@ -48,12 +49,6 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
  */
 
 const mapState = null
-// (state) => {
-//   console.log('in user-update state', state)
-//   return {
-//     state,
-//   }
-// }
 
 const mapDispatch = (dispatch) => {
   return {
@@ -63,9 +58,8 @@ const mapDispatch = (dispatch) => {
       const newValue = evtName === 'admin' ? !admin : !pwReset
       dispatch(updateUser({id, change: {[evtName]: newValue}}))
     },
-    handleDelete(id, evt) {
-      console.log('targer', evt.target)
-      console.log(`updating user ${id}`)
+    handleDelete(id) {
+      console.log(`deleting user ${id}`)
       dispatch(removeUser(id))
     },
   }
