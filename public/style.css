@@ -175,6 +175,10 @@ label {
   align-self: end;
 }
 
+#user-home-email {
+  margin: 1rem;
+}
+
 .product-item {
   width: 150px;
   height: 250px;

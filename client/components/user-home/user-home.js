@@ -69,7 +69,7 @@ export class UserHome extends Component {
     return (
       <div id="user-home">
         <h4>Account Info</h4>
-        <h6>Logged in as {email}</h6>
+        <h6 id="user-home-email">Logged in as {email}</h6>
         <hr />
         <Nav variant="tabs" id="user-home-nav" defaultActiveKey="/user-list">
           {linkToList.map((link) => {
