@@ -104,7 +104,8 @@ label {
   width: 50%;
 }
 .listgrp {
-  width: 400px;
+  border: solid black 2px;
+  width: 500px;
   height: 200px;
 }
 .plusminus {

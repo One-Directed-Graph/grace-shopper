@@ -35,8 +35,13 @@ export const getCart = () => {
 export const addToCart = (item) => {
   return async (dispatch) => {
     console.log('addToCart thunk')
-    const {productId, quantity, price} = item
-    const newItem = await axios.post('/api/cart', {productId, quantity, price})
+    const {productId, quantity, price, userId} = item
+    const newItem = await axios.post('/api/cart', {
+      productId,
+      quantity,
+      price,
+      userId,
+    })
 
     console.log('addToCart thunk', newItem.data)
     dispatch(_addToCart(newItem.data))

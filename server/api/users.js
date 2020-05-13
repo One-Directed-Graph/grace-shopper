@@ -6,7 +6,7 @@ module.exports = router
 router.use(express.json())
 
 router.get('/', async (req, res, next) => {
-  console.log('nmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmn')
+  //console.log('nmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmn')
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
