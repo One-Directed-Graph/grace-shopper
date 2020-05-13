@@ -25,8 +25,8 @@ const updatedUser = (user) => ({type: UPDATED_USER, user})
 /**
  * THUNK CREATORS
  */
-export const getUserList = () => async (dispatch) => {
-  const users = (await axios.get('/api/users/user-list')).data
+export const getUserList = (id) => async (dispatch) => {
+  const users = (await axios.get(`/api/users/user-list/${id}`)).data
   dispatch(gotUserList(users))
 }
 
