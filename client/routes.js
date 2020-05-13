@@ -101,7 +101,7 @@ const mapDispatch = (dispatch) => {
       dispatch(me())
       // dispatch(getProducts('load'))
       dispatch(getCategories())
-      dispatch(getOrders())
+      // dispatch(getOrders())
       //dispatch(loadPage(1))
     },
   }
