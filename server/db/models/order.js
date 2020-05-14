@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-
 //ASSIGNED TO: Vinayak
 
 //TODO: define properties
@@ -32,6 +31,10 @@ module.exports = Order
 /**
  * instanceMethods
  */
+
+Order.prototype.getAllOrderItems = function () {
+  return db.OrderItem.findAll({where: {orderId: this.id}})
+}
 
 /**
  * classMethods
