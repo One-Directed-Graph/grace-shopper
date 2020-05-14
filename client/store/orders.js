@@ -10,11 +10,14 @@ const ADD_ORDER = 'ADD_ORDER'
  * INITIAL STATE
  */
 
+const defaultOrders = []
+
 /**
  * ACTION CREATORS
  */
 const _getOrders = (orders) => ({type: GET_ORDERS, orders})
 const _addToOrder = (item) => ({type: ADD_ORDER, item})
+
 /**
  * THUNK CREATORS
  */
@@ -44,7 +47,7 @@ export const addOrder = (item) => {
 /**
  * REDUCER
  */
-export default function (state = {}, action) {
+export default function (state = defaultOrders, action) {
   switch (action.type) {
     case GET_ORDERS:
       return action.orders
