@@ -196,6 +196,7 @@ class ProductForm extends Component {
               ))}
             </Form.Control>
           </Form.Group>
+
           <Form.Group controlId="productForm.image">
             <Form.Label>Product Image</Form.Label>
             <Form.Control
@@ -206,6 +207,7 @@ class ProductForm extends Component {
               placeholder="URL of image"
             />
           </Form.Group>
+
           <Button variant="primary" type="submit" onClick={submit}>
             {displayName}
           </Button>

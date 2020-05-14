@@ -11,7 +11,8 @@ import {
   OrderList,
   WelcomeUser,
 } from './'
-import {getUserList} from '../../store/users'
+// import {Orders} from '../'
+import {getUserList} from '../../store/'
 import Nav from 'react-bootstrap/Nav'
 
 //TODO: Load orders and reviews?
@@ -63,8 +64,6 @@ export class UserHome extends Component {
       {path: 'orders', name: 'Orders', component: Orders},
     ]
     const linkToList = admin ? adminLinkTo : userLinkTo
-
-    // <Nav.Link as={Link} to="/">
 
     return (
       <div id="user-home">
