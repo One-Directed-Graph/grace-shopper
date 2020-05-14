@@ -43,15 +43,16 @@ class Product extends Component {
                   price: product.price,
                   userId: user.id,
                 }
+                console.log('Product inside addtocart button', product, item)
                 let found = orders.find((order) => {
                   return order.userId === user.id
                 })
-                console.log('found found found', found)
+                console.log('found found found', found, 'item ', item)
                 if (!found) {
                   this.props.addToCart(item)
                   this.props.history.push('/orders')
                 } else {
-                  this.props.addToItem(found.id, product.id)
+                  this.props.addToItem(found.id, item)
                 }
               }}
             >

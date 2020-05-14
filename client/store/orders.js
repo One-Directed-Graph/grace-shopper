@@ -38,7 +38,7 @@ export const addOrder = (item) => {
     })
     console.log('addToCart thunk', newItem.data)
     dispatch(_addToOrder(newItem.data))
-    dispatch(addItems(newItem.data.id, productId))
+    dispatch(addItems(newItem.data.id, productId, quantity, price))
   }
 }
 /**

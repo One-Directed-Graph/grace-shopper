@@ -47,11 +47,13 @@ class Orders extends Component {
     return (
       <div>
         <h1> Cart ({orderItems.length} )</h1>
-        {/* <ul className="listgrp">
+        <ul className="listgrp">
           {orderItems
             ? orderItems.map((item, idx) => {
-                console.log(item[idx])
+                console.log('inside display cart', item)
                 let el = item[idx]
+                console.log('inside item ', idx)
+                console.log('price & quantity', el.quantity, el.price)
                 return (
                   <ListGroup horizontal="sm" className="my-2" key={el.id}>
                     <ListGroup.Item>
@@ -76,7 +78,7 @@ class Orders extends Component {
               })
             : ''}
           <Button>add</Button>
-        </ul> */}
+        </ul>
       </div>
     )
   }

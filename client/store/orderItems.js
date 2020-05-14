@@ -29,13 +29,16 @@ export const getItems = () => {
   }
 }
 
-export const addItems = (orderId, productId) => {
+export const addItems = (orderId, item) => {
   return async (dispatch) => {
+    const {productId, quantity, price} = item
     console.log('items thunk 22222222', orderId, productId)
-    //const {productId, quantity, price, userId,orderId} = item
+
     const newItem = await axios.post('/api/items', {
       orderId: orderId,
       productId: productId,
+      price: price,
+      quantity: quantity,
     })
     console.log('addToCart thunk 656565666565656565', newItem.data)
     dispatch(_addItems(newItem.data))
