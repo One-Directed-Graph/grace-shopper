@@ -11,7 +11,7 @@ class Orders extends Component {
     this.state = {
       quantity: 1,
     }
-    // this.setModalShow = this.setModalShow.bind(this)
+    this.itemsForUser = this.itemsForUser.bind(this)
   }
   // setModalShow(input) {
   //   console.log(input)
@@ -22,56 +22,43 @@ class Orders extends Component {
     if (prevProps.orderItems.length !== this.props.orderItems.length) {
       this.props.load()
     }
-    console.log(prevProps.orderItems.length, this.props.orderItems.length)
+  }
+  itemsForUser() {
+    const {orders, user} = this.props
+    let arrayOfItems = []
+    if (orders && user) {
+      let userOrders = user.id
+        ? orders.filter((ord) => ord.userId === user.id)
+        : ''
+      arrayOfItems = userOrders[0]
+    }
+    return arrayOfItems
+  }
+  total() {
+    let orders = this.itemsForUser()
+    let total = 0
+    if (orders) {
+      let arrayOfPrice = orders.orderitems.map((order) => {
+        total += order.price * 1 * order.quantity * 1
+
+        return total * 0.0825
+      })
+    }
+    return total.toFixed(2)
   }
   componentDidMount() {
     this.props.load()
   }
   render() {
-    const {orders, user} = this.props
     const {quantity} = this.state
-    let arrayOfItems = []
-    //const {orderitems} = this.props.orders
-    if (orders && user) {
-      console.log('gfgfgfgfgfgfgfgfgf', orders.id, orders)
-      let userOrders = user.id
-        ? orders.filter((ord) => ord.userId === user.id)
-        : ''
-
-      //userOrders ? userOrders.map((item) => item.orderitems) : ''
-      console.log('ordersitems 1111', orders[0])
-      console.log('userorders 222222', userOrders.length, userOrders[0])
-      arrayOfItems = userOrders[0]
-      //   if (arrayOfItems) {
-      //     console.log(
-      //       'aaaaaaaaaaaaaaaaaaaa',
-      //       arrayOfItems.orderitems.length,
-      //       typeof a
-      //     )
-      //   }
-    }
-    //const {modalShow} = this.props
-    //const {setModalShow} = this
-    // return (
-    //   <div>
-    //     <Button variant="primary" onClick={() => setModalShow(true)}>
-    //       Launch vertically centered modal
-    //     </Button>
-
-    //     <MyVerticallyCenteredModal
-    //       show={modalShow}
-    //       onHide={() => setModalShow(false)}
-    //     />
-    //   </div>
-    // )
+    const arrayOfItems = this.itemsForUser()
+    this.total()
     return (
       <div>
         {arrayOfItems ? <h1> Cart ({arrayOfItems.orderitems.length} )</h1> : ''}
         <ul>
           {arrayOfItems
             ? arrayOfItems.orderitems.map((item, idx) => {
-                //console.log('lalalala', item[idx])
-
                 return (
                   <ListGroup
                     horizontal="sm"
@@ -87,6 +74,13 @@ class Orders extends Component {
                           className="thumbnail"
                         />
                       }
+                      <Button
+                        onClick={() => {
+                          this.props.destroyItems(item.id)
+                        }}
+                      >
+                        Remove Item
+                      </Button>
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <p>Quantity</p>
@@ -99,10 +93,11 @@ class Orders extends Component {
                         <Button
                           onClick={(e) => {
                             if (quantity * 1 > 0) {
-                              this.setState({quantity: quantity - 1})
+                              this.setState({quantity: item.quantity * 1 - 1})
+                              this.props.change(item.id, item.quantity * 1 - 1)
+                              this.setState({quantity: 1})
                             }
                             if (quantity * 1 <= 0) {
-                              console.log('quantityt', quantity, item.id)
                               return this.props.destroyItems(item.id)
                             }
                           }}
@@ -112,6 +107,7 @@ class Orders extends Component {
                         <Form.Control
                           style={{width: '50px'}}
                           type="number"
+                          value={quantity}
                           placeholder="add qvantity"
                           onChange={(e) => {
                             this.setState({quantity: e.target.value})
@@ -119,7 +115,8 @@ class Orders extends Component {
                         />
                         <Button
                           onClick={(e) => {
-                            this.props.change(item.id, quantity)
+                            this.props.change(item.id, item.quantity * 1 + 1)
+                            this.setState({quantity: 1})
                           }}
                         >
                           +
@@ -128,13 +125,16 @@ class Orders extends Component {
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <p>Price</p>
-                      {item.price}
+                      <p>{item.price}</p>
+                      <p>Total Item Price</p>
+                      <p>{(item.price * 1 * item.quantity * 1).toFixed(2)}</p>
                     </ListGroup.Item>
                   </ListGroup>
                 )
               })
             : ''}
         </ul>
+        <h2>TOTAL: {this.total()}</h2>
       </div>
     )
   }
