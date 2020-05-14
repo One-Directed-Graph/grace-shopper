@@ -103,9 +103,9 @@ label {
 .thumbnail {
   width: 50%;
 }
-.listgrp {
+#listgrp {
   border: solid black 2px;
-  width: 500px;
+  width: 700px;
   height: 200px;
 }
 .plusminus {
