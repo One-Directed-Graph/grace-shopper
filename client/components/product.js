@@ -52,7 +52,8 @@ class Product extends Component {
                   this.props.addToCart(item)
                   this.props.history.push('/orders')
                 } else {
-                  this.props.addToItem(found.id, item)
+                  this.props.addToItem(found.id, product.id, product.price, 1)
+                  this.props.history.push('/orders')
                 }
               }}
             >
@@ -95,7 +96,8 @@ const mapState = ({product, user, orders}) => {
 const mapDispatch = (dispatch) => {
   return {
     addToCart: (item) => dispatch(addOrder(item)),
-    addToItem: (orderId, productId) => dispatch(addItems(orderId, productId)),
+    addToItem: (orderId, productId, price, qv) =>
+      dispatch(addItems(orderId, productId, price, qv)),
   }
 }
 // export default connect(mapState, mapDispatch)(Products)

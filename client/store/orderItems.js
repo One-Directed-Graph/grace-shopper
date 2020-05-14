@@ -29,7 +29,7 @@ export const getItems = () => {
   }
 }
 
-export const addItems = (orderId, item) => {
+export const addItems = (orderId, productId, price, qv) => {
   return async (dispatch) => {
     const {productId, quantity, price} = item
     console.log('items thunk 22222222', orderId, productId)
@@ -38,7 +38,7 @@ export const addItems = (orderId, item) => {
       orderId: orderId,
       productId: productId,
       price: price,
-      quantity: quantity,
+      quantity: qv,
     })
     console.log('addToCart thunk 656565666565656565', newItem.data)
     dispatch(_addItems(newItem.data))

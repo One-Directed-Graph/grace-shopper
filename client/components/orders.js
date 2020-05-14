@@ -21,45 +21,50 @@ class Orders extends Component {
   }
   render() {
     const {orders, user} = this.props
-    console.log(orders, user)
-    const userOrders = user.id
-      ? orders.filter((ord) => ord.userId === user.id)
-      : ''
+    let a = []
+    //const {orderitems} = this.props.orders
+    if (orders && user) {
+      console.log('gfgfgfgfgfgfgfgfgf', orders.id, orders)
+      let userOrders = user.id
+        ? orders.filter((ord) => ord.userId === user.id)
+        : ''
 
-    const orderItems = userOrders
-      ? userOrders.map((item) => item.orderitems)
-      : ''
-    console.log('orders 1111', orderItems, userOrders)
-    //     const {modalShow} = this.props
-    //     const {setModalShow} = this
-    //     return (
-    //       <div>
-    //         <Button variant="primary" onClick={() => setModalShow(true)}>
-    //           Launch vertically centered modal
-    //         </Button>
+      //userOrders ? userOrders.map((item) => item.orderitems) : ''
+      //console.log('ordersitems 1111', orderItems)
+      console.log('userorders 222222', userOrders.length, userOrders[0])
+      a = userOrders[0]
+      if (a) {
+        console.log('aaaaaaaaaaaaaaaaaaaa', a.orderitems.length, typeof a)
+      }
+    }
+    //const {modalShow} = this.props
+    //const {setModalShow} = this
+    // return (
+    //   <div>
+    //     <Button variant="primary" onClick={() => setModalShow(true)}>
+    //       Launch vertically centered modal
+    //     </Button>
 
-    //         <MyVerticallyCenteredModal
-    //           show={modalShow}
-    //           onHide={() => setModalShow(false)}
-    //         />
-    //       </div>
-    //     )
+    //     <MyVerticallyCenteredModal
+    //       show={modalShow}
+    //       onHide={() => setModalShow(false)}
+    //     />
+    //   </div>
+    // )
     return (
       <div>
-        <h1> Cart ({orderItems.length} )</h1>
+        {a ? <h1> Cart ({a.orderitems.length} )</h1> : ''}
         <ul className="listgrp">
-          {orderItems
-            ? orderItems.map((item, idx) => {
-                console.log('inside display cart', item)
-                let el = item[idx]
-                console.log('inside item ', idx)
-                console.log('price & quantity', el.quantity, el.price)
+          {a
+            ? a.orderitems.map((item, idx) => {
+                //console.log('lalalala', item[idx])
+
                 return (
-                  <ListGroup horizontal="sm" className="my-2" key={el.id}>
+                  <ListGroup horizontal="sm" className="my-2" key={item.id}>
                     <ListGroup.Item>
                       {
                         <img
-                          src={el.product.img}
+                          src={item.product.img}
                           alt="..loading"
                           className="thumbnail"
                         />
@@ -67,11 +72,11 @@ class Orders extends Component {
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <p>Quantity</p>
-                      {el.quantity}
+                      {item.quantity}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <p>Price</p>
-                      {el.price}
+                      {item.price}
                     </ListGroup.Item>
                   </ListGroup>
                 )
