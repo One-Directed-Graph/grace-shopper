@@ -196,3 +196,7 @@ label {
   font-weight: '900';
   font-size: '150%';
 }
+
+.home-carousel {
+  margin: 1rem, 0, 0, 1rem;
+}

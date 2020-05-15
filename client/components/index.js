@@ -6,6 +6,7 @@
 export {default as Navbarclass} from './navbar'
 export {default as CategoryBar} from './cateogrybar'
 export {default as UserHome} from './user-home'
+export {HomeCarousel} from './HomeCarousel'
 export {Login, Signup} from './auth-form'
 export {default as Products} from './products'
 export {default as Product} from './product'
