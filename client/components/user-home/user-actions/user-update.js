@@ -5,9 +5,13 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import {updateUser, removeUser} from '../../../store'
 
+//TODO: Error handling
+//TODO: Disable delete if user has order or reviews
+
 /**
  * COMPONENT
  */
+
 const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
   return (
     <div id="user-update-form-div">
@@ -33,7 +37,7 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
         <Button
           inline="true"
           variant="danger"
-          disabled={userToUpdate.orders || userToUpdate.admin}
+          // disabled={userToUpdate.orders || userToUpdate.admin}
           onClick={() => handleDelete(userToUpdate.id)}
         >
           Delete User

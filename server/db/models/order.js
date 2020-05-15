@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-
 //ASSIGNED TO: Vinayak
 
 //TODO: define properties
@@ -12,7 +11,7 @@ const Order = db.define('order', {
     primaryKey: true,
   },
   status: {
-    type: Sequelize.ENUM('Created', 'Processing', 'Completed'),
+    type: Sequelize.ENUM('Cart', 'Processing', 'Completed', 'Cancelled'),
   },
   dateOfPurchase: {
     type: Sequelize.DATE,
@@ -32,6 +31,10 @@ module.exports = Order
 /**
  * instanceMethods
  */
+
+Order.prototype.getAllOrderItems = function () {
+  return db.OrderItem.findAll({where: {orderId: this.id}})
+}
 
 /**
  * classMethods

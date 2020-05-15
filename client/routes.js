@@ -15,7 +15,7 @@ import Orders from './components/orders'
 import {Home} from './components/home'
 // import uuid from 'react-uuid'
 // import Axios from 'axios'
-import {me, getCategories, getProducts, getOrders, loadPage} from './store'
+import {me, getCategories, getProducts, getOrder, loadPage} from './store'
 import {getItems} from './store/orderItems'
 /**
  * COMPONENT
@@ -102,7 +102,7 @@ const mapDispatch = (dispatch) => {
       dispatch(me())
       // dispatch(getProducts('load'))
       dispatch(getCategories())
-      dispatch(getOrders())
+      dispatch(getOrder())
       dispatch(getItems())
     },
   }

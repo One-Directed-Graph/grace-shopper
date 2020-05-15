@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-import {getOrders} from './orders'
+import {getOrder} from './orders'
 /**
  * ACTION TYPES
  */
