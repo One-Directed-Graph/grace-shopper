@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {getOrders} from '../store'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {Form, Modal, Button, ListGroup} from 'react-bootstrap'
 import {MyVerticallyCenteredModal} from './modelPopup'
 import {destroyItem, getItems, editItem} from '../store/orderItems'
@@ -41,7 +42,7 @@ class Orders extends Component {
       let arrayOfPrice = orders.orderitems.map((order) => {
         total += order.price * 1 * order.quantity * 1
 
-        return total * 0.0825
+        return (total = total + total * 0.0825)
       })
     }
     return total.toFixed(2)
@@ -67,13 +68,15 @@ class Orders extends Component {
                     id="listgrp"
                   >
                     <ListGroup.Item>
-                      {
-                        <img
-                          src={item.product.img}
-                          alt="..loading"
-                          className="thumbnail"
-                        />
-                      }
+                      <Link to="/products">
+                        {
+                          <img
+                            src={item.product.img}
+                            alt="..loading"
+                            className="thumbnail"
+                          />
+                        }
+                      </Link>
                       <Button
                         onClick={() => {
                           this.props.destroyItems(item.id)
@@ -106,8 +109,8 @@ class Orders extends Component {
                         </Button>
                         <Form.Control
                           style={{width: '50px'}}
-                          type="number"
-                          value={quantity}
+                          type="text"
+                          value={item.quantity}
                           placeholder="add qvantity"
                           onChange={(e) => {
                             this.setState({quantity: e.target.value})
