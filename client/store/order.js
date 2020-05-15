@@ -11,11 +11,11 @@ const ADD_ORDER = 'ADD_ORDER'
  */
 
 const defaultOrders = {
-  // id: '',
-  // status: '',
-  // dateOfPurchase: '',
-  // subTotal: 0,
-  // orderitems: [],
+  id: '',
+  status: '',
+  dateOfPurchase: '',
+  subTotal: 0,
+  orderitems: [],
 }
 
 /**
@@ -72,7 +72,7 @@ export default function (state = defaultOrders, action) {
       //     }
       //   })
       // } else {
-      return {state, orderitems: [...action.item]}
+      return {...state, orderitems: [...action.item]}
     //}
     default:
       return state

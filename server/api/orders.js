@@ -10,6 +10,7 @@ router.get('/cart/:userId', async (req, res, next) => {
       where: {userId: req.params.userId, status: 'Cart'},
       include: {model: OrderItem, include: {model: Product}},
     })
+    console.log(orders)
     res.json(orders)
   } catch (err) {
     next(err)

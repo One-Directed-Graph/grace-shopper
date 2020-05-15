@@ -102,7 +102,7 @@ const mapDispatch = (dispatch) => {
       dispatch(me())
       // dispatch(getProducts('load'))
       dispatch(getCategories())
-      dispatch(getOrder())
+      //dispatch(getOrder())
       dispatch(getItems())
     },
   }
