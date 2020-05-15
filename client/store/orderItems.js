@@ -31,7 +31,7 @@ export const getItems = () => {
 
 export const addItems = (orderId, productId, price, qv) => {
   return async (dispatch) => {
-    const {productId, quantity, price} = item
+    // const {productId, quantity, price} = item
     console.log('items thunk 22222222', orderId, productId)
 
     const newItem = await axios.post('/api/items', {

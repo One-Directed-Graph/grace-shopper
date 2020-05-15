@@ -83,6 +83,7 @@ class Orders extends Component {
               })
             : ''}
           <Button>add</Button>
+          <Button onClick={() => console.log()}>Checkout</Button>
         </ul>
       </div>
     )

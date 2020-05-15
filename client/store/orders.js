@@ -54,7 +54,7 @@ export default function (state = {}, action) {
       // const existingItem = state.find(
       //   (item) => item.productId === action.item.productId
       // )
-      console.log('Inside ADD_CART reducer: ', action.item, existingItem)
+      //    console.log('Inside ADD_CART reducer: ', action.item, existingItem)
       // if (existingItem) {
       //   existingItem.quantity += action.item.quantity
       //   return state.map((item) => {
