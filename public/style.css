@@ -103,9 +103,9 @@ label {
 .thumbnail {
   width: 50%;
 }
-.listgrp {
+#listgrp {
   border: solid black 2px;
-  width: 500px;
+  width: 700px;
   height: 200px;
 }
 .plusminus {
@@ -173,6 +173,10 @@ label {
 #user-home-products .card-body > button {
   margin: 0.5rem;
   align-self: end;
+}
+
+#user-home-email {
+  margin: 1rem;
 }
 
 .product-item {

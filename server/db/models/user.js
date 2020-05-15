@@ -55,6 +55,18 @@ User.prototype.correctPassword = function (candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
+User.prototype.getAllOrders = function () {
+  return db.Order.findAll({where: {userId: this.id}})
+}
+
+User.prototype.getAllReviews = function () {
+  return db.Reviews.findAll({where: {userId: this.id}})
+}
+
+User.prototype.getCart = function () {
+  return db.Order.findOne({where: {userId: this.id, status: 'Created'}})
+}
+
 /**
  * classMethods
  */

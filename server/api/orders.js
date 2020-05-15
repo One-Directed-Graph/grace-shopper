@@ -4,16 +4,27 @@ const Order = require('../db/models/order')
 const OrderItem = require('../db/models/orderitem')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/cart/:userId', async (req, res, next) => {
   try {
-    const orders = await Order.findAll({
-      include: [{model: OrderItem, include: {model: Product}}],
+    const orders = await Order.findOne({
+      where: {userId: req.params.userId, status: 'Cart'},
+      include: {model: OrderItem, include: {model: Product}},
     })
     res.json(orders)
   } catch (err) {
     next(err)
   }
 })
+
+router.get('/order-list', async (req, res, next) => {
+  try {
+    const orders = await Order.findAll({where: {status: 'Processing'}})
+    res.json(orders)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.post('/', (req, res, next) => {
   //console.log(',.,.,.,.,.,.,.,.,.,.,', req.body)
   Order.create(req.body)

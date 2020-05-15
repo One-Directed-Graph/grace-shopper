@@ -2,10 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import ListGroup from 'react-bootstrap/ListGroup'
-import {UserUpdate} from '../index'
-
-//TODO: Error handling
-//TODO: Disable delete if user has order or reviews
+import {UserUpdate} from '../'
 
 /**
  * COMPONENT

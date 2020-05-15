@@ -14,6 +14,16 @@ module.exports = router
 //     next(err)
 //   }
 // })
+router.delete('/:id', (req, res, next) => {
+  //console.log('<><><><><><><><><><><><><><><><>', req.params.id)
+  OrderItem.findByPk(req.params.id)
+    .then((item) => {
+      res.sendStatus(204)
+      item.destroy()
+    })
+    .catch(next)
+})
+
 router.get('/', async (req, res, next) => {
   try {
     const items = await OrderItem.findAll()
@@ -34,6 +44,16 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+router.put('/:id', (req, res, next) => {
+  //console.log(".,.,.,.,.,.,.,.,.,.,.", req.params.id);
+  OrderItem.findByPk(req.params.id)
+    .then((item) => {
+      //console.log("<><><><><><><><><><><<<>>", req.body);
+      item.update(req.body).then((employee) => res.send(employee))
+    })
+
+    .catch(next)
+})
 // Order.getOrdersByUser = function (req) {
 //   return this.findAll({
 //     where: {
