@@ -64,7 +64,7 @@ User.prototype.getAllReviews = function () {
 }
 
 User.prototype.getCart = function () {
-  return db.Order.findOne({where: {userId: this.id, status: 'Created'}})
+  return db.Order.findOne({where: {userId: this.id, status: 'Cart'}})
 }
 
 /**
