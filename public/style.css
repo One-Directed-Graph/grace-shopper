@@ -1,5 +1,5 @@
 body {
-  background-color: #e2dad1;
+  /* background-color: #e2dad1; */
 }
 
 a {
@@ -195,4 +195,8 @@ label {
   color: '#38495e';
   font-weight: '900';
   font-size: '150%';
+}
+
+.home-carousel {
+  margin: 1rem, 0, 0, 1rem;
 }
