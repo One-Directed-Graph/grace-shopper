@@ -305,20 +305,11 @@ async function seed() {
 
   console.log(`seeded ${orders.length} orders`)
 
-  const order = await Promise.all([
-    Order.create({
-      dateOfPurchase: '05/01/2020',
-      status: 'Cart',
-      subtotal: 14.0,
-      userId: users[0].id,
-    }),
-  ])
-
   const orderItems = await Promise.all(
-    orders.map((order) => {
+    orders.map((_order) => {
       const randProduct = products[Math.floor(Math.random() * products.length)]
       return OrderItem.create({
-        orderId: order.id,
+        orderId: _order.id,
         productId: randProduct.id,
         quantity: Math.floor(Math.random() * (10 - 1 + 1)) + 1,
         price: randProduct.price,
@@ -328,20 +319,36 @@ async function seed() {
 
   console.log(`seeded ${orderItems.length} orderItems`)
 
-  await Promise.all([
+  const [codyOrder] = await Promise.all([
+    Order.create({
+      dateOfPurchase: '05/01/2020',
+      status: 'Cart',
+      subtotal: 14.0,
+      userId: users[0].id,
+    }),
+  ])
+
+  const codyOrderItems = await Promise.all([
     OrderItem.create({
-      orderId: order.id,
+      orderId: codyOrder.id,
       productId: products[2].id,
       quantity: 4,
       price: 1.25,
     }),
     OrderItem.create({
-      orderId: order.id,
+      orderId: codyOrder.id,
       productId: products[1].id,
       quantity: 10,
       price: 1.9,
     }),
   ])
+
+  console.log(
+    'cody orders',
+    users[0].email,
+    codyOrder.id,
+    codyOrderItems.map((item) => item.orderId)
+  )
 
   orders.forEach((order) => {
     let subTotal = 0
