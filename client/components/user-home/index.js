@@ -14,6 +14,5 @@ export {
   ProductCreate,
   ProductUpdate,
 } from './user-actions/product-create-update'
-
-//forms
 export {default as UserUpdate} from './user-actions/user-update'
+export {default as OrderUpdate} from './user-actions/order-update'

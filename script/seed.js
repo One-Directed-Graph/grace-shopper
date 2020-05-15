@@ -289,7 +289,7 @@ async function seed() {
 
   //ORDERS & ORDERITEMS
 
-  const randStatus = ['Created', 'Processing', 'Completed']
+  const randStatus = ['Cart', 'Processing', 'Completed']
 
   const orders = await Promise.all(
     users
@@ -305,10 +305,10 @@ async function seed() {
 
   console.log(`seeded ${orders.length} orders`)
 
-  await Promise.all([
+  const order = await Promise.all([
     Order.create({
       dateOfPurchase: '05/01/2020',
-      status: 'Completed',
+      status: 'Cart',
       subtotal: 14.0,
       userId: users[0].id,
     }),
@@ -330,13 +330,13 @@ async function seed() {
 
   await Promise.all([
     OrderItem.create({
-      orderId: orders[0].id,
+      orderId: order.id,
       productId: products[2].id,
       quantity: 4,
       price: 1.25,
     }),
     OrderItem.create({
-      orderId: orders[0].id,
+      orderId: order.id,
       productId: products[1].id,
       quantity: 10,
       price: 1.9,
