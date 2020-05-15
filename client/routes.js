@@ -12,7 +12,7 @@ import {
   DisplayByCategory,
 } from './components'
 import Orders from './components/orders'
-import {Home} from './components/home'
+import {Home} from './components/home/home'
 // import uuid from 'react-uuid'
 // import Axios from 'axios'
 import {me, getCategories, getProducts, getOrder, loadPage} from './store'
