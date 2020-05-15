@@ -11,7 +11,13 @@ const Order = db.define('order', {
     primaryKey: true,
   },
   status: {
-    type: Sequelize.ENUM('Cart', 'Processing', 'Completed', 'Cancelled'),
+    type: Sequelize.ENUM(
+      'Cart',
+      'Processing',
+      'Completed',
+      'Cancelled',
+      'Shipped'
+    ),
   },
   dateOfPurchase: {
     type: Sequelize.DATE,
