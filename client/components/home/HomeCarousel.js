@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import Carousel from 'react-bootstrap/Carousel'
+import {Carousel, Nav} from 'react-bootstrap'
 
 export const HomeCarousel = () => {
   return (

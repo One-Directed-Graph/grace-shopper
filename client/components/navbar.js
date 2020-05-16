@@ -14,6 +14,7 @@ class Navbarclass extends Component {
     this.props.load()
   }
   render() {
+    const navStyle = {backgroundColor: '#38495e'}
     //console.log('documenta cookie', document.cookie)
     const {handleClick, isLoggedIn, user} = this.props
     console.log('documenta cookie', user)
