@@ -1,28 +1,51 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import {loadStripe} from '@stripe/stripe-js'
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
-const Checkout = () => {
-  const handleClick = async (event) => {
-    // Call your backend to create the Checkout session.
-    const {sessionId} = await fetchCheckoutSession()
-    // When the customer clicks on the button, redirect them to Checkout.
-    const stripe = await stripePromise
-    const {error} = await stripe.redirectToCheckout({
-      sessionId,
+import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js'
+
+import CardSection from './CardSection'
+
+export default function CheckoutForm() {
+  const stripe = useStripe()
+  const elements = useElements()
+
+  const handleSubmit = async (event) => {
+    // We don't want to let default form submission happen here,
+    // which would refresh the page.
+    event.preventDefault()
+
+    if (!stripe || !elements) {
+      // Stripe.js has not yet loaded.
+      // Make sure to disable form submission until Stripe.js has loaded.
+      return
+    }
+
+    const result = await stripe.confirmCardPayment('{CLIENT_SECRET}', {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: 'Jenny Rosen',
+        },
+      },
     })
-    // If `redirectToCheckout` fails due to a browser or network
-    // error, display the localized error message to your customer
-    // using `error.message`.
+
+    if (result.error) {
+      // Show error to your customer (e.g., insufficient funds)
+      console.log(result.error.message)
+    } else {
+      // The payment has been processed!
+      if (result.paymentIntent.status === 'succeeded') {
+        // Show a success message to your customer
+        // There's a risk of the customer closing the window before callback
+        // execution. Set up a webhook or plugin to listen for the
+        // payment_intent.succeeded event that handles any business critical
+        // post-payment actions.
+      }
+    }
   }
+
   return (
-    <div>
-      <button onClick={() => handleClick}>Checkout</button>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <CardSection />
+      <button disabled={!stripe}>Confirm order</button>
+    </form>
   )
 }
-//ReactDOM.render(<Checkout />);
-
-export default Checkout

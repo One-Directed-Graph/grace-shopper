@@ -113,7 +113,23 @@ const createApp = () => {
     res.status(err.status || 500).send(err.message || 'Internal server error.')
   })
 }
+//*************************Stripe  */
+app.get('/secret', async (req, res) => {
+  // Set your secret key. Remember to switch to your live secret key in production!
+  // See your keys here: https://dashboard.stripe.com/account/apikeys
+  const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
 
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 1099,
+    currency: 'usd',
+    // Verify your integration in this guide by including this parameter
+    metadata: {integration_check: 'accept_a_payment'},
+  })
+
+  const intent = paymentIntent
+  res.json({client_secret: intent.client_secret})
+})
+//*************************** */
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
   const server = app.listen(PORT, () =>
