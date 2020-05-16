@@ -48,13 +48,13 @@ export const editItem = (userId, id, qv) => {
     const newItem = await axios.put(`/api/items/${id}`, {
       quantity: qv,
     })
-    console.log('fgfgfgfgfgfgfgfgfgfgfgffggffggfgfgfgfgfgf', newItem.data)
+    //console.log('fgfgfgfgfgfgfgfgfgfgfgffggffggfgfgfgfgfgf', newItem.data)
     dispatch(_editItems(newItem.data))
     dispatch(getOrder(userId))
   }
 }
 
-export const addItems = (orderId, productId, price, qv) => {
+export const addItems = (userId, orderId, productId, price, qv, push) => {
   return async (dispatch) => {
     //console.log('items thunk 22222222', orderId, productId)
     //const {productId, quantity, price, userId,orderId} = item
@@ -64,9 +64,11 @@ export const addItems = (orderId, productId, price, qv) => {
       price: price,
       quantity: qv,
     })
+
     //console.log('addToCart thunk 656565666565656565', newItem.data)
     dispatch(_addItems(newItem.data))
-    dispatch(getOrder())
+    //dispatch(getOrder())
+    // push(`/orders/cart/${userId}`)
   }
 }
 /**
@@ -81,7 +83,7 @@ export default function (state = [], action) {
       return [...state, action.item]
     case DESTROY_ITEMS:
       return state.filter((item) => {
-        console.log('hello from reducer for delete', item.id, action.id, state)
+        //console.log('hello from reducer for delete', item.id, action.id, state)
         return item.id !== action.id ? item : ''
       })
     case EDIT_ITEMS:

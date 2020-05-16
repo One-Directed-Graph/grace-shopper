@@ -11,27 +11,27 @@ import axios from 'axios'
 
 class Product extends Component {
   constructor(props) {
-    console.log('33333333333333333333', props)
+    //console.log('33333333333333333333', props)
     super()
   }
   async goToCart() {
-    const {user, order, product, isLoggedIn} = this.props
-    console.log('add to cart', user.id, order)
+    const {user, order, product, isLoggedIn, cartExist} = this.props
+    //console.log('add to cart', user.id, order)
     const item = {
       productId: product.id,
       quantity: 1,
       price: product.price,
       userId: user.id,
     }
-    console.log('hghghdhfghsdhfhdjcfbhdjcvbfdhcvnbf', isLoggedIn)
+    //console.log('hghghdhfghsdhfhdjcfbhdjcvbfdhcvnbf', isLoggedIn, cartExist)
     if (isLoggedIn === false) {
       let res = await axios.post(`/api/orders/session/${product.id}`)
-      console.log('in theeeee prrrroducts session', res.data)
+      //console.log('in theeeee prrrroducts session', res.data)
     } else {
-      console.log('this.props.history.push', order)
+      //console.log('this.props.history.push', order)
       const push = this.props.history.push
-      if (order.orderitems.length === 0) {
-        console.log('hello from if if if if if fif ', user.id)
+      if (cartExist === false) {
+        //console.log('hello from if if if if if fif ', user.id)
         await this.props.addCart(
           user.id,
           product.id,
@@ -44,8 +44,15 @@ class Product extends Component {
         //await this.props.addToItem(order.id, product.id, product.price, 1)
         //this.props.history.push(`/orders/cart/${user.id}`)
       } else {
-        console.log('hello from else else else ', user.id)
-        this.props.addToItem(order.id, product.id, product.price, 1)
+        //console.log('hello from else else else ', user.id, order.id)
+        this.props.addToItem(
+          user.id,
+          order.id,
+          product.id,
+          product.price,
+          1,
+          push
+        )
         //this.props.history.push(`/orders/cart/${user.id}`)
       }
     }
@@ -66,7 +73,7 @@ class Product extends Component {
   }
   render() {
     const {product, user, order} = this.props
-    console.log('<>><><<><><><><>><><><>inside render', product, order)
+    // console.log('<>><><<><><><><>><><><>inside render', product, order)
     if (product) {
       return (
         <Card className="text-center" style={{width: '18rem', margin: '10px'}}>
@@ -121,17 +128,19 @@ const mapState = (state) => {
     user,
     order,
     isLoggedIn: !!state.user.id,
+    cartExist: !!state.order.id,
   }
 }
 const mapDispatch = (dispatch) => {
   return {
     addCart: (id, productid, productprice, qv, push, product) => {
-      console.log('from dispatch from dispatch', id)
+      //console.log('from dispatch from dispatch', id)
       dispatch(createCart(id, productid, productprice, qv, push, product))
       //dispatch(addItems(orderid, productid, productprice, qv))
     },
-    addToItem: (orderId, productId, price, qv) => {
-      dispatch(addItems(orderId, productId, price, qv))
+    addToItem: (userId, orderId, productId, price, qv, push) => {
+      dispatch(addItems(userId, orderId, productId, price, qv, push))
+      dispatch(getOrder(userId))
     },
     load: (id, productId, push) => {
       dispatch(getProduct(productId, push))

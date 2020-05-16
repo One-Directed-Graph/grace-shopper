@@ -30,14 +30,14 @@ const _createCart = (item) => ({type: CREATE_CART, item})
  * THUNK CREATORS
  */
 export const getOrder = (id) => {
-  console.log('id from getOrder idcfrom getOrder', id)
+  //console.log('id from getOrder idcfrom getOrder', id)
   return async (dispatch) => {
     const res = await axios.get(`/api/orders/cart/${id}`)
     if (res === null) {
-      console.log('create create create create', id)
+      //console.log('create create create create', id)
       createCart(id)
     } else {
-      console.log('in getOrder thunk', res.data)
+      //console.log('in getOrder thunk', res.data)
       dispatch(_getOrder(res.data))
     }
   }
@@ -47,20 +47,20 @@ export const createCart = (id, productid, productprice, qv, push, product) => {
   return async (dispatch) => {
     const res = await axios.post(`/api/orders`, {
       userId: id,
-      orderItems: [...product] || [],
     })
-    push(`/orders/cart/${res.data.userId}`)
+
     // console.log('post post post post in getOrder thunk', res.data),
     dispatch(_createCart(res.data))
-    if (productid) {
-      dispatch(addItems(res.data.id, productid, productprice, qv))
-    }
+
+    dispatch(addItems(id, res.data.id, productid, productprice, qv, push))
+
+    //push(`/orders/cart/${res.data.userId}`)
   }
 }
 
 export const addOrder = (item) => {
   return async (dispatch) => {
-    console.log('addToorder thunk 222222222111111111', item)
+    //console.log('addToorder thunk 222222222111111111', item)
     const {productId, quantity, price, userId, orderId} = item
     const newItem = await axios.post('/api/orders', {
       productId,

@@ -67,7 +67,6 @@ class Routes extends Component {
           <Route path="/products/:page?" component={Products} />
           <Route exact path="/product/:id" component={Product} />
           <Route
-            exact
             path="/category/:category/:page"
             component={DisplayByCategory}
           />
