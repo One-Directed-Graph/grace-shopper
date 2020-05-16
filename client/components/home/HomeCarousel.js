@@ -1,12 +1,10 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {Image} from 'react-bootstrap'
 import Carousel from 'react-bootstrap/Carousel'
-import {Nav} from 'react-bootstrap'
-export function Home() {
-  console.log('hello from home')
+
+export const HomeCarousel = () => {
   return (
-    <div>
+    <div id="home-carousel">
       <Link to="/products/1/AtoZ">
         <Carousel>
           <Carousel.Item>
@@ -33,7 +31,7 @@ export function Home() {
             <img
               className="d-block w-100"
               src="/images/good-homepage2.jpg"
-              alt="Third slide"
+              alt="Second slide"
             />
 
             <h2 style={{color: '#38495e'}}>
@@ -53,31 +51,6 @@ export function Home() {
           </Carousel.Item>
         </Carousel>
       </Link>
-      <Nav
-        style={{
-          backgroundColor: '#38495e',
-          height: '100px',
-          marginTop: '200px',
-        }}
-        className="footer"
-        activeKey="/home"
-        onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
-      >
-        <Nav.Item>
-          <Nav.Link to="/">Home</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link to="/products">Products</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link to="/login">login</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link to="/sighup" disabled>
-            signup
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
     </div>
   )
 }
