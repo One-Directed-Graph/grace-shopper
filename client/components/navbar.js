@@ -23,8 +23,8 @@ class Navbarclass extends Component {
 
   render() {
     console.log('documenta cookie', document.cookie)
-    const {handleClick, isLoggedIn} = this.props
-
+    const {handleClick, isLoggedIn, user} = this.props
+    console.log('documenta cookie', user)
     return (
       <div>
         <Navbar
@@ -123,7 +123,7 @@ class Navbarclass extends Component {
             <Search />
           </Navbar.Collapse>
 
-          <Navbar.Brand as={Link} to="/orders">
+          <Navbar.Brand as={Link} to={`/orders/cart/${user.id}`}>
             <img
               src="/images/shop.png"
               width="40px"
@@ -179,9 +179,11 @@ class Navbarclass extends Component {
  */
 const mapState = (state) => {
   const {products} = state
+  const {user} = state
   return {
     isLoggedIn: !!state.user.id,
     products,
+    user,
   }
 }
 

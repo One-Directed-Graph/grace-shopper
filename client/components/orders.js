@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
-import {getOrder} from '../store'
+import {getOrder} from '../store/order.js'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Form, Modal, Button, ListGroup} from 'react-bootstrap'
 import {MyVerticallyCenteredModal} from './modelPopup'
 import {destroyItem, getItems, editItem} from '../store/orderItems'
+
 class Orders extends Component {
   constructor(props) {
     console.log('propspropsprops', props)
@@ -28,6 +29,7 @@ class Orders extends Component {
 
   total() {
     const {order} = this.props
+    console.log('ordersordersorder', order)
     let total = 0
     if (order) {
       let arrayOfPrice = order.orderitems.map((order) => {
@@ -39,16 +41,17 @@ class Orders extends Component {
     return total.toFixed(2)
   }
   componentDidMount() {
-    const {id} = this.props.user
-    console.log('in mount', id)
-    this.props.load(id)
+    const {user} = this.props
+    console.log('in mount', this.props.match.params.userId)
+    this.props.load(this.props.match.params.userId)
   }
   render() {
-    const {order} = this.props
-    console.log('in orders render = props', order.orderitems.length)
+    const {order, user} = this.props
+    const {userId} = this.props.match.params
+    console.log('in orders render = props<><><><><><><', userId, order, user.id)
     const {quantity} = this.state
 
-    this.total()
+    //this.total()
 
     return (
       <div>
@@ -72,7 +75,7 @@ class Orders extends Component {
                   }
                   <Button
                     onClick={() => {
-                      this.props.destroyItems(item.id)
+                      this.props.destroyItems(userId, item.id)
                     }}
                   >
                     Remove Item
@@ -90,11 +93,15 @@ class Orders extends Component {
                       onClick={(e) => {
                         if (quantity * 1 > 0) {
                           this.setState({quantity: item.quantity * 1 - 1})
-                          this.props.change(item.id, item.quantity * 1 - 1)
+                          this.props.change(
+                            userId,
+                            item.id,
+                            item.quantity * 1 - 1
+                          )
                           this.setState({quantity: 1})
                         }
                         if (quantity * 1 <= 0) {
-                          return this.props.destroyItems(item.id)
+                          return this.props.destroyItems(userId, item.id)
                         }
                       }}
                     >
@@ -103,7 +110,7 @@ class Orders extends Component {
                     <Form.Control
                       style={{width: '50px'}}
                       type="number"
-                      value={quantity}
+                      value={item.quantity}
                       placeholder="add qvantity"
                       onChange={(e) => {
                         this.setState({quantity: e.target.value})
@@ -111,7 +118,11 @@ class Orders extends Component {
                     />
                     <Button
                       onClick={(e) => {
-                        this.props.change(item.id, item.quantity * 1 + 1)
+                        this.props.change(
+                          userId,
+                          item.id,
+                          item.quantity * 1 + 1
+                        )
                         this.setState({quantity: 1})
                       }}
                     >
@@ -135,15 +146,14 @@ class Orders extends Component {
   }
 }
 
-// const mapState = ({orders, user, orderItems}) => {
-//   return {
-//     orders,
-//     user,
-//     orderItems,
-//   }
-// }
+const mapState = ({order, user}) => {
+  return {
+    order,
+    user,
+  }
+}
 
-const mapState = (state) => state
+//const mapState = (state) => state
 
 const mapDispatch = (dispatch) => {
   return {
@@ -151,12 +161,15 @@ const mapDispatch = (dispatch) => {
       dispatch(getOrder(id))
       dispatch(getItems())
     },
-    destroyItems: (id) => {
+    destroyItems: (userId, id) => {
+      dispatch(getOrder(userId))
       console.log('gogoggogogogogog')
       dispatch(destroyItem(id))
     },
-    change: (id, qv) => {
-      dispatch(editItem(id, qv))
+    change: (userId, id, qv) => {
+      console.log('177 177 177', userId)
+      dispatch(getOrder(userId))
+      dispatch(editItem(userId, id, qv))
     },
   }
 }

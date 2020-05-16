@@ -34,11 +34,19 @@ class Routes extends Component {
   constructor() {
     super()
   }
-  componentDidMount() {
+  async componentDidMount() {
+    const {user} = this.props
+    console.log(
+      'ididididididididididi',
+      this.props.location.pathname.slice(13),
+      user
+    )
     this.props.loadInitialData()
   }
   render() {
-    const {isLoggedIn} = this.props
+    const {isLoggedIn, user} = this.props
+    console.log('user in render hshshsh', isLoggedIn)
+    this.props.load(user.Id)
     // console.log('User: ')
     // console.log('routes---user logged in ', isLoggedIn, this.props)
     //sessionId().then((res) => {
@@ -54,7 +62,7 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/products" component={Products} />
-          <Route exact path="/orders" component={Orders} />
+          <Route exact path="/orders/cart/:userId" component={Orders} />
 
           <Route path="/products/:page?" component={Products} />
           <Route exact path="/product/:id" component={Product} />
@@ -82,11 +90,14 @@ class Routes extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
-  // console.log('User: ', state.user)
+  console.log('statestatestate', state)
+  const {user} = state
+  console.log('User: ', user)
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
+    user,
   }
 }
 
@@ -101,9 +112,16 @@ const mapDispatch = (dispatch) => {
     loadInitialData: () => {
       dispatch(me())
       // dispatch(getProducts('load'))
+      // dispatch(getCategories())
+      // dispatch(getOrder(id))
+      // dispatch(getItems())
+    },
+    load: (id) => {
+      dispatch(getProducts('load'))
       dispatch(getCategories())
-      //dispatch(getOrder())
-      dispatch(getItems())
+      console.log('dispatch left the building', id)
+      //dispatch(getOrder(id))
+      //dispatch(getItems())
     },
   }
 }

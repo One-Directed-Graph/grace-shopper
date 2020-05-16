@@ -5,16 +5,32 @@ const OrderItem = require('../db/models/orderitem')
 module.exports = router
 
 router.get('/cart/:userId', async (req, res, next) => {
+  console.log('route.POPOPOPOPOPOPOPOPOPOPOPOPOPO', req.params, req.session.id)
   try {
     const orders = await Order.findOne({
-      where: {userId: req.params.userId, status: 'Cart'},
+      where: {userId: req.params.userId}, //, status: 'Cart'
       include: {model: OrderItem, include: {model: Product}},
     })
-    console.log(orders)
+    // if (!orders) {
+    //   Order.create({userId: req.params.userId, orderItems: []}).then(
+    //     (response) => {
+    //       res.status(200).send(response)
+    //     }
+    //   )
+    // }
+    console.log(',.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,,.', orders)
     res.json(orders)
   } catch (err) {
     next(err)
   }
+})
+router.post('/session/:prodId', async (req, res, next) => {
+  console.log('<><><><><><><><><><><>>', req.session.id, req.params.prodId)
+  Order.create({sessionId: req.session.id})
+    .then((resp) => {
+      res.status(200).send(resp)
+    })
+    .catch(next)
 })
 
 router.get('/order-list', async (req, res, next) => {
