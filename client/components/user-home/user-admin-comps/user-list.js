@@ -10,6 +10,7 @@ import {UserUpdate} from '../'
 
 const UserList = (props) => {
   const users = props.users ? props.users : []
+
   return (
     <div className="user-home-comps">
       <h3>Users</h3>
@@ -18,6 +19,7 @@ const UserList = (props) => {
           <ListGroup.Item key={user.id}>
             <h6>{user.email}</h6>
             {user.orders && <p># of orders: {user.orders.length}</p>}
+            {user.reviews && <p># of reviews: {user.reviews.length}</p>}
             <UserUpdate userToUpdate={user} />
           </ListGroup.Item>
         ))}
@@ -29,13 +31,8 @@ const UserList = (props) => {
 /**
  * CONTAINER
  */
-const mapState = ({users, orders}) => {
-  const processedUsers = users.map((user) => {
-    user.orders = orders.filter((order) => order.userId === user.id)
-    return user
-  })
-  return {users: processedUsers}
-}
+
+const mapState = ({users}) => ({users})
 
 export default connect(mapState)(UserList)
 
