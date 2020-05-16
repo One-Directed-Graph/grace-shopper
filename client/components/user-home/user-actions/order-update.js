@@ -5,16 +5,14 @@ import Form from 'react-bootstrap/Form'
 // import Button from 'react-bootstrap/Button'
 import {updateOrderStatus} from '../../../store'
 
-//TODO: Error handling
-//TODO: Disable delete if user has order or reviews
-
 /**
  * COMPONENT
  */
 
 const OrderUpdate = ({orderToUpdate, handleChange, error}) => {
-  const statuses = ['Created', 'Processing', 'Completed', 'Cancelled']
+  const statuses = ['Processing', 'Completed', 'Cancelled', 'Shipped']
   const {id, status} = orderToUpdate
+
   return (
     <div id="order-update-form-div">
       <div id="order-udpdate-elements"></div>
@@ -24,7 +22,9 @@ const OrderUpdate = ({orderToUpdate, handleChange, error}) => {
           as="select"
           name="status"
           value={status}
-          onChange={(evt) => handleChange(orderToUpdate, evt.target.value)}
+          onChange={(evt) => {
+            handleChange(id, evt.target.value)
+          }}
         >
           {statuses.map((_status) => (
             <option key={_status} value={_status}>
@@ -46,9 +46,8 @@ const mapState = null
 
 const mapDispatch = (dispatch) => {
   return {
-    handleChange(id, evtValue) {
-      console.log(`updating order ${id} with ${evtValue}`)
-      //   dispatch(updateOrderStatus({id, status: evtValue}))
+    handleChange(id, evtVal) {
+      dispatch(updateOrderStatus({id, status: evtVal}))
     },
   }
 }

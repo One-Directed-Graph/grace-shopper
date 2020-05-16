@@ -8,9 +8,7 @@ import {OrderUpdate} from '../'
  * COMPONENT
  */
 
-const OrderList = (props) => {
-  console.log('in order list - props', props)
-  const orders = props.orders ? props.orders : []
+const OrderList = ({orders}) => {
   return (
     <div className="user-home-comps">
       <h3>Orders</h3>
@@ -18,7 +16,7 @@ const OrderList = (props) => {
         {orders.map((order) => (
           <ListGroup.Item key={order.id}>
             <h6>Order Id: {order.id}</h6>
-            <p>Date of Purchase: {order.dateOfPurchase}</p>
+            <p>Date of Purchase:{order.dateOfPurchase}</p>
             <p>Total: {order.subTotal}</p>
             <OrderUpdate orderToUpdate={order} />
           </ListGroup.Item>
