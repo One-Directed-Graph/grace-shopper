@@ -15,7 +15,9 @@ const GET_USER_ORDERS = 'GET_USER_ORDERS'
 /**
  * INITIAL STATE
  */
-const defaultOrders = [{id: '', status: '', dateOfPurchase: '', subTotal: 0}]
+const defaultOrders = [
+  {id: '', status: '', dateOfPurchase: '', subTotal: 0, orderitems: []},
+]
 
 /**
  * ACTION CREATORS
@@ -44,7 +46,7 @@ export const updateOrderStatus = (order) => async (dispatch) => {
 
 export const getUserOrders = (userId) => async (dispatch) => {
   console.log('in getUserOrders thunk')
-  const orders = (await axios.get(`/api/orders/:userId`)).data
+  const orders = (await axios.get(`/api/orders/${userId}`)).data
   dispatch(_getUserOrders(orders))
 }
 
@@ -71,6 +73,8 @@ export default function (state = defaultOrders, action) {
       return [...state].map((order) =>
         order.id === action.order.id ? action.order : order
       )
+    case GET_USER_ORDERS:
+      return action.orders
     // case ADD_ORDER:
     //   return [...state, action.order]
     // case REMOVE_ORDER:

@@ -36,7 +36,10 @@ router.get('/order-list', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   console.log('in getOrders api')
   try {
-    const orders = await Order.findAll({where: {userId: req.params.userId}})
+    const orders = await Order.findAll({
+      where: {userId: req.params.userId},
+      include: [{model: OrderItem}],
+    })
     res.json(orders)
   } catch (err) {
     next(err)
