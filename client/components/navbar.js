@@ -7,22 +7,14 @@ import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Image from 'react-bootstrap/Image'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import FormControl from 'react-bootstrap/FormControl'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-
-// import {render} from 'enzyme' - REMOVE?
+import {CategoryBar} from './'
 
 class Navbarclass extends Component {
   componentDidMount() {
     this.props.load()
   }
-
   render() {
-    console.log('documenta cookie', document.cookie)
+    //console.log('documenta cookie', document.cookie)
     const {handleClick, isLoggedIn, user} = this.props
     console.log('documenta cookie', user)
     return (
@@ -42,34 +34,19 @@ class Navbarclass extends Component {
               alt="Maskerade logo"
             />
           </Navbar.Brand>
-          {/* <Navbar.Brand as={Link} to="/">
-            Maskerade
-          </Navbar.Brand> */}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
               {isLoggedIn ? (
                 <Nav className="mr-auto">
                   {/* This nav links will show these links after you log in */}
-                  <Nav.Link
-                    as={Link}
-                    to="/account"
-                    style={{
-                      color: ' #38495e',
-                      fontWeight: '500',
-                      fontSize: '120%',
-                    }}
-                  >
+                  <Nav.Link as={Link} to="/account" style={navStyle}>
                     Account
                   </Nav.Link>
                   <Nav.Link
                     as={Link}
                     to="#"
-                    style={{
-                      color: ' #38495e',
-                      fontWeight: '500',
-                      fontSize: '120%',
-                    }}
+                    style={navStyle}
                     onClick={() => {
                       handleClick()
                     }}
@@ -81,26 +58,10 @@ class Navbarclass extends Component {
               ) : (
                 <Nav className="mr-auto">
                   {/* This nav links will show these links if you are not logged in */}
-                  <Nav.Link
-                    as={Link}
-                    to="/login"
-                    style={{
-                      color: ' #38495e',
-                      fontWeight: '500',
-                      fontSize: '120%',
-                    }}
-                  >
+                  <Nav.Link as={Link} to="/login" style={navStyle}>
                     Login
                   </Nav.Link>
-                  <Nav.Link
-                    as={Link}
-                    to="/signup"
-                    style={{
-                      color: ' #38495e',
-                      fontWeight: '500',
-                      fontSize: '120%',
-                    }}
-                  >
+                  <Nav.Link as={Link} to="/signup" style={navStyle}>
                     Signup
                   </Nav.Link>
                 </Nav>
@@ -111,11 +72,7 @@ class Navbarclass extends Component {
                   this.props.history.push(`/products/1?sortBy=AtoZ`)
                   this.props.loadPages(1)
                 }}
-                style={{
-                  color: ' #38495e',
-                  fontWeight: '500',
-                  fontSize: '120%',
-                }}
+                style={navStyle}
               >
                 Products
               </Nav.Link>
@@ -137,37 +94,7 @@ class Navbarclass extends Component {
           <Image src="/images/long3.jpg" fluid style={{width: '100%'}} />
         </div>
         <hr />
-        <Container fluid>
-          <Row className="hello">
-            <Col md={4} className="colpic">
-              <Link to="/category/fashion/1" className="linksInNavBar">
-                <Image
-                  src="/images/manuPic3.jpeg"
-                  roundedCircle
-                  className="roundImages"
-                />
-              </Link>
-            </Col>
-            <Col md={4} className="colpic">
-              <Link to="/category/handmade/1" className="linksInNavBar">
-                <Image
-                  src="/images/manuHMpic1.jpg"
-                  roundedCircle
-                  className="roundImages"
-                />
-              </Link>
-            </Col>
-            <Col md={4} className="colpic">
-              <Link to="/category/medical/1" className="linksInNavBar">
-                <Image
-                  src="/images/menuMed.jpeg"
-                  roundedCircle
-                  className="roundImages"
-                />
-              </Link>
-            </Col>
-          </Row>
-        </Container>
+        <CategoryBar />
         <hr />
       </div>
     )

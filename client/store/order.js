@@ -11,7 +11,7 @@ const CREATE_CART = 'CREATE_CART'
  * INITIAL STATE
  */
 
-const defaultOrders = {
+const defaultOrder = {
   id: '',
   status: '',
   dateOfPurchase: '',
@@ -76,7 +76,7 @@ export const addOrder = (item) => {
 /**
  * REDUCER
  */
-export default function (state = defaultOrders, action) {
+export default function (state = defaultOrder, action) {
   switch (action.type) {
     case GET_ORDER:
       return action.order

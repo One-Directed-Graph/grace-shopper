@@ -289,7 +289,7 @@ async function seed() {
 
   //ORDERS & ORDERITEMS
 
-  const randStatus = ['Cart', 'Processing', 'Completed']
+  const randStatus = ['Cart', 'Processing', 'Completed', 'Cancelled', 'Shipped']
 
   const orders = await Promise.all(
     users
@@ -297,7 +297,6 @@ async function seed() {
       .map((user) =>
         Order.create({
           status: randStatus[Math.floor(Math.random() * randStatus.length)],
-          subtotal: 0,
           userId: user.id,
         })
       )
@@ -323,7 +322,6 @@ async function seed() {
     Order.create({
       dateOfPurchase: '05/01/2020',
       status: 'Cart',
-      subtotal: 14.0,
       userId: users[0].id,
     }),
   ])
@@ -333,13 +331,13 @@ async function seed() {
       orderId: codyOrder.id,
       productId: products[2].id,
       quantity: 4,
-      price: 1.25,
+      price: products[2].price,
     }),
     OrderItem.create({
       orderId: codyOrder.id,
       productId: products[1].id,
       quantity: 10,
-      price: 1.9,
+      price: products[1].price,
     }),
   ])
 

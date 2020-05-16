@@ -4,7 +4,11 @@
  * having to figure out which file they belong to!
  */
 export {default as Navbarclass} from './navbar'
+export {default as CategoryBar} from './CategoryBar'
 export {default as UserHome} from './user-home'
+export {Home} from './home/home'
+export {HomeCarousel} from './home/HomeCarousel'
+export {HomeFooter} from './home/HomeFooter'
 export {Login, Signup} from './auth-form'
 export {default as Products} from './products'
 export {default as Product} from './product'

@@ -11,6 +11,7 @@ import searchItem from './searchItem'
 import categories from './categories'
 import cart from './cart'
 import divided from './divided'
+import orders from './orders'
 import order from './order'
 import orderItems from './orderItems'
 
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   categories,
   cart,
   divided,
+  orders,
   order,
   orderItems,
 })
@@ -44,5 +46,6 @@ export * from './searchItem'
 export * from './categories'
 export * from './cart'
 export * from './divided'
+export * from './orders'
 export * from './order'
 export * from './orderItems'
