@@ -41,7 +41,7 @@ export const getItems = () => {
   }
 }
 
-export const editItem = (id, qv) => {
+export const editItem = (userId, id, qv) => {
   return async (dispatch) => {
     //console.log('items thunk 22222222', orderId, productId)
     //const {productId, quantity, price, userId,orderId} = item
@@ -50,6 +50,7 @@ export const editItem = (id, qv) => {
     })
     console.log('fgfgfgfgfgfgfgfgfgfgfgffggffggfgfgfgfgfgf', newItem.data)
     dispatch(_editItems(newItem.data))
+    dispatch(getOrder(userId))
   }
 }
 
@@ -65,7 +66,7 @@ export const addItems = (orderId, productId, price, qv) => {
     })
     //console.log('addToCart thunk 656565666565656565', newItem.data)
     dispatch(_addItems(newItem.data))
-    dispatch(getOrders())
+    dispatch(getOrder())
   }
 }
 /**

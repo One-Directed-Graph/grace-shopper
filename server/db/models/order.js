@@ -10,6 +10,9 @@ const Order = db.define('order', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true,
   },
+  sessionId: {
+    type: Sequelize.TEXT,
+  },
   status: {
     type: Sequelize.ENUM(
       'Cart',

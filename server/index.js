@@ -66,18 +66,20 @@ const createApp = () => {
   app.use(passport.session())
 
   // app.get('/', function (req, res) {
-  //   sessionStore.create({sid:'hello'})
+  //   // sessionStore.create({sid: 'hello'})
   //   //Sessions.create(req.ssesion)
-  //   //res.send(req.session.id)
-  //   if (req.session.page_views) {
-  //     console.log(req.session.page_views)
-  //     req.session.page_views++
-  //     res.send('You visited this page ' + req.session.page_views + ' times')
-  //   } else {
-  //     console.log(req.session.page_views)
-  //     req.session.page_views = 1
-  //     res.send('Welcome to this page for the first time!')
-  //   }
+  //   //req.session.alex = 'goodboy'
+  //   //console.log(',.,.,.,.,.,.,.,.,.,.,.,.', req.session.id)
+  //   //console.log(req.session.alex)
+  //   // if (req.session.page_views) {
+  //   //   console.log(req.session.page_views)
+  //   //   req.session.page_views++
+  //   //   res.send('You visited this page ' + req.session.page_views + ' times')
+  //   // } else {
+  //   //console.log(req.session.page_views)
+  //   //req.session.page_views = 1
+  //   //   res.send('Welcome to this page for the first time!')
+  //   // }
   // })
 
   // auth and api routes
