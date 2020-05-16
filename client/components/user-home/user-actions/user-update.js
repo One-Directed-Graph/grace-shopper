@@ -37,7 +37,9 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
         <Button
           inline="true"
           variant="danger"
-          // disabled={userToUpdate.orders || userToUpdate.admin}
+          disabled={
+            userToUpdate.orders || userToUpdate.reviews || userToUpdate.admin
+          }
           onClick={() => handleDelete(userToUpdate.id)}
         >
           Delete User
