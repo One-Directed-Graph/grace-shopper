@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import uuid from 'react-uuid'
 import {addOrder, addItems} from '../store'
+import Checkout from './Checkout'
 
 //ASSIGNED TO: Aleks
 
@@ -62,9 +63,7 @@ class Product extends Component {
             <Button
               className="buttonInProduct"
               variant="success"
-              onClick={() => {
-                console.log('hello')
-              }}
+              onClick={() => <Checkout />}
             >
               checkout
             </Button>

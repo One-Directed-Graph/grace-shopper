@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import {Form, Modal, Button, ListGroup} from 'react-bootstrap'
 import {MyVerticallyCenteredModal} from './modelPopup'
 import {destroyItem, getItems, editItem} from '../store/orderItems'
+import Checkout from './Checkout'
+
 class Orders extends Component {
   constructor(props) {
     console.log('propspropsprops', props)
@@ -57,7 +59,7 @@ class Orders extends Component {
     // const {} = this.state
     // const arrayOfItems = this.itemsForUser()
     // this.total()
-    return <hr />
+    return <Checkout />
     //   return (
     //     <div>
     //       {arrayOfItems ? <h1> Cart ({arrayOfItems.orderitems.length} )</h1> : ''}
