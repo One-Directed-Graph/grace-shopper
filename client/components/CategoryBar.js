@@ -8,15 +8,15 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 const CategoryBar = ({categories}) => {
-  const imagePaths = ['/manuPic3.jpeg', '/manuHMpic1.jpg', '/menuMed.jpeg']
+  // const imagePaths = ['/manuPic3.jpeg', '/manuHMpic1.jpg', '/menuMed.jpeg']
   return (
     <Container fluid>
       <Row className="hello">
-        {categories.map((category, idx) => (
+        {categories.map((category) => (
           <Col key={category.id} md={4} className="colpic">
             <Link to={`/category/${category.name}/1`} className="linksInNavBar">
               <Image
-                src={`/images${imagePaths[idx]}`}
+                src={`/images${category.img}`}
                 roundedCircle
                 className="roundImages"
               />

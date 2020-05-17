@@ -36,14 +36,17 @@ async function seed() {
     Category.create({
       name: 'medical',
       description: 'safety masks for everyday use',
+      img: '/menuMed.jpeg',
     }),
     Category.create({
       name: 'fashion',
       description: ' masks that are fashion-forward and chic',
+      img: '/manuPic3.jpeg',
     }),
     Category.create({
       name: 'handmade',
       description: 'handmade masks that are comfortable and fun',
+      img: '/manuHMpic1.jpg',
     }),
   ])
 
