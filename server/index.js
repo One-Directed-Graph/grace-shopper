@@ -10,6 +10,8 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
+
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -66,23 +68,39 @@ const createApp = () => {
   app.use(passport.session())
 
   // app.get('/', function (req, res) {
-  //   sessionStore.create({sid:'hello'})
+  //   // sessionStore.create({sid: 'hello'})
   //   //Sessions.create(req.ssesion)
-  //   //res.send(req.session.id)
-  //   if (req.session.page_views) {
-  //     console.log(req.session.page_views)
-  //     req.session.page_views++
-  //     res.send('You visited this page ' + req.session.page_views + ' times')
-  //   } else {
-  //     console.log(req.session.page_views)
-  //     req.session.page_views = 1
-  //     res.send('Welcome to this page for the first time!')
-  //   }
+  //   //req.session.alex = 'goodboy'
+  //   //console.log(',.,.,.,.,.,.,.,.,.,.,.,.', req.session.id)
+  //   //console.log(req.session.alex)
+  //   // if (req.session.page_views) {
+  //   //   console.log(req.session.page_views)
+  //   //   req.session.page_views++
+  //   //   res.send('You visited this page ' + req.session.page_views + ' times')
+  //   // } else {
+  //   //console.log(req.session.page_views)
+  //   //req.session.page_views = 1
+  //   //   res.send('Welcome to this page for the first time!')
+  //   // }
   // })
 
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
+
+  app.get('/secret', async (req, res) => {
+    // Set your secret key. Remember to switch to your live secret key in production!
+    // See your keys here: https://dashboard.stripe.com/account/apikeys
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: 1099,
+      currency: 'usd',
+      // Verify your integration in this guide by including this parameter
+      metadata: {integration_check: 'accept_a_payment'},
+    })
+
+    const intent = paymentIntent
+    res.json(intent)
+  })
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
@@ -114,21 +132,6 @@ const createApp = () => {
   })
 }
 //*************************Stripe  */
-app.get('/secret', async (req, res) => {
-  // Set your secret key. Remember to switch to your live secret key in production!
-  // See your keys here: https://dashboard.stripe.com/account/apikeys
-  const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
-
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 1099,
-    currency: 'usd',
-    // Verify your integration in this guide by including this parameter
-    metadata: {integration_check: 'accept_a_payment'},
-  })
-
-  const intent = paymentIntent
-  res.json({client_secret: intent.client_secret})
-})
 //*************************** */
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)

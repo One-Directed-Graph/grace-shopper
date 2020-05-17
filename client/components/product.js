@@ -1,27 +1,78 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import uuid from 'react-uuid'
-import {addOrder, addItems} from '../store'
 import Checkout from './Checkout'
+import {createCart, addItems, getOrder, getProduct} from '../store'
+import axios from 'axios'
 
 //ASSIGNED TO: Aleks
 
 class Product extends Component {
-  constructor() {
+  constructor(props) {
+    //console.log('33333333333333333333', props)
     super()
   }
-  componentDidMount() {
-    window.onload = () => {
-      let id = uuid()
-      console.log('hello', id)
+  async goToCart() {
+    const {user, order, product, isLoggedIn, cartExist} = this.props
+    //console.log('add to cart', user.id, order)
+    const item = {
+      productId: product.id,
+      quantity: 1,
+      price: product.price,
+      userId: user.id,
+    }
+    //console.log('hghghdhfghsdhfhdjcfbhdjcvbfdhcvnbf', isLoggedIn, cartExist)
+    if (isLoggedIn === false) {
+      let res = await axios.post(`/api/orders/session/${product.id}`)
+      //console.log('in theeeee prrrroducts session', res.data)
+    } else {
+      //console.log('this.props.history.push', order)
+      const push = this.props.history.push
+      if (cartExist === false) {
+        //console.log('hello from if if if if if fif ', user.id)
+        await this.props.addCart(
+          user.id,
+          product.id,
+          product.price,
+          1,
+          push,
+          product
+        )
+
+        //await this.props.addToItem(order.id, product.id, product.price, 1)
+        //this.props.history.push(`/orders/cart/${user.id}`)
+      } else {
+        //console.log('hello from else else else ', user.id, order.id)
+        this.props.addToItem(
+          user.id,
+          order.id,
+          product.id,
+          product.price,
+          1,
+          push
+        )
+        //this.props.history.push(`/orders/cart/${user.id}`)
+      }
     }
   }
+
+  // componentDidMount() {
+  //   window.onload = () => {
+  //     let id = uuid()
+  //     console.log('hello', id)
+  //   }
+  // }
+  componentDidMount() {
+    const push = this.props.history.push
+    const productId = this.props.match.params.id
+    const {user} = this.props
+    console.log('form products line 56', user.id)
+    this.props.load(user.id, productId, push)
+  }
   render() {
-    const {product, user, orders} = this.props
-    console.log('<>><><<><><><><>><><><>inside render', product, orders)
+    const {product, user, order} = this.props
+    // console.log('<>><><<><><><><>><><><>inside render', product, order)
     if (product) {
       return (
         <Card className="text-center" style={{width: '18rem', margin: '10px'}}>
@@ -37,25 +88,7 @@ class Product extends Component {
               className="buttonInProduct"
               variant="success"
               onClick={() => {
-                console.log('add to cart', user.id)
-                const item = {
-                  productId: product.id,
-                  quantity: 1,
-                  price: product.price,
-                  userId: user.id,
-                }
-                console.log('Product inside addtocart button', product, item)
-                let found = orders.find((order) => {
-                  return order.userId === user.id
-                })
-                console.log('found found found', found, 'item ', item)
-                if (!found) {
-                  this.props.addToCart(item)
-                  this.props.history.push('/orders')
-                } else {
-                  this.props.addToItem(found.id, product.id, product.price, 1)
-                  this.props.history.push('/orders')
-                }
+                this.goToCart()
               }}
             >
               add to cart
@@ -85,18 +118,31 @@ class Product extends Component {
         </div> */
 }
 
-const mapState = ({product, user, orders}) => {
+const mapState = (state) => {
+  const {product, user, order} = state
   return {
     product,
     user,
-    orders,
+    order,
+    isLoggedIn: !!state.user.id,
+    cartExist: !!state.order.id,
   }
 }
 const mapDispatch = (dispatch) => {
   return {
-    addToCart: (item) => dispatch(addOrder(item)),
-    addToItem: (orderId, productId, price, qv) =>
-      dispatch(addItems(orderId, productId, price, qv)),
+    addCart: (id, productid, productprice, qv, push, product) => {
+      //console.log('from dispatch from dispatch', id)
+      dispatch(createCart(id, productid, productprice, qv, push, product))
+      //dispatch(addItems(orderid, productid, productprice, qv))
+    },
+    addToItem: (userId, orderId, productId, price, qv, push) => {
+      dispatch(addItems(userId, orderId, productId, price, qv, push))
+      dispatch(getOrder(userId))
+    },
+    load: (id, productId, push) => {
+      dispatch(getProduct(productId, push))
+      //dispatch(getOrder(id))
+    },
   }
 }
 // export default connect(mapState, mapDispatch)(Products)

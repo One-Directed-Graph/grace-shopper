@@ -4,7 +4,7 @@
  * having to figure out which file they belong to!
  */
 export {default as Navbarclass} from './navbar'
-export {default as CategoryBar} from './cateogrybar'
+export {default as CategoryBar} from './CategoryBar'
 export {default as UserHome} from './user-home'
 export {Home} from './home/home'
 export {HomeCarousel} from './home/HomeCarousel'

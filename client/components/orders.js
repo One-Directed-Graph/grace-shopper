@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
-import {getOrder} from '../store'
+import {getOrder} from '../store/order.js'
 import {connect} from 'react-redux'
 import {Form, Modal, Button, ListGroup} from 'react-bootstrap'
-import {MyVerticallyCenteredModal} from './modelPopup'
 import {destroyItem, getItems, editItem} from '../store/orderItems'
 import Checkout from './Checkout'
 
@@ -26,136 +25,139 @@ class Orders extends Component {
   //     this.props.load(id)
   //   }
   // }
-  // itemsForUser() {
-  //   const {orders, user} = this.props
-  //   let arrayOfItems = []
-  //   if (orders && user) {
-  //     let userOrders = user.id
-  //       ? orders.filter((ord) => ord.userId === user.id)
-  //       : ''
-  //     arrayOfItems = userOrders[0]
-  //   }
-  //   return arrayOfItems
-  // }
-  // total() {
-  //   let orders = this.itemsForUser()
-  //   let total = 0
-  //   if (orders) {
-  //     let arrayOfPrice = orders.orderitems.map((order) => {
-  //       total += order.price * 1 * order.quantity * 1
 
-  //       return total * 0.0825
-  //     })
-  //   }
-  //   return total.toFixed(2)
-  // }
+  total() {
+    const {order} = this.props
+    console.log('ordersordersorder', order)
+    let total = 0
+    if (order) {
+      let arrayOfPrice = order.orderitems.map((order) => {
+        total += order.price * 1 * order.quantity * 1
+
+        return (total = total + total * 0.0825)
+      })
+    }
+    return total.toFixed(2)
+  }
   componentDidMount() {
-    const {id} = this.props.user
-    console.log('in mount', id)
-    this.props.load(id)
+    const {user} = this.props
+    console.log('in mount', this.props.match.params.userId)
+    this.props.load(this.props.match.params.userId)
   }
   render() {
-    console.log('in orders render = props', this.props)
-    // const {} = this.state
-    // const arrayOfItems = this.itemsForUser()
-    // this.total()
-    return <Checkout />
-    //   return (
-    //     <div>
-    //       {arrayOfItems ? <h1> Cart ({arrayOfItems.orderitems.length} )</h1> : ''}
-    //       <ul>
-    //         {arrayOfItems
-    //           ? arrayOfItems.orderitems.map((item, idx) => {
-    //               return (
-    //                 <ListGroup
-    //                   horizontal="sm"
-    //                   className="my-2"
-    //                   key={item.id}
-    //                   id="listgrp"
-    //                 >
-    //                   <ListGroup.Item>
-    //                     {
-    //                       <img
-    //                         src={item.product.img}
-    //                         alt="..loading"
-    //                         className="thumbnail"
-    //                       />
-    //                     }
-    //                     <Button
-    //                       onClick={() => {
-    //                         this.props.destroyItems(item.id)
-    //                       }}
-    //                     >
-    //                       Remove Item
-    //                     </Button>
-    //                   </ListGroup.Item>
-    //                   <ListGroup.Item>
-    //                     <p>Quantity</p>
-    //                     <p>{item.quantity}</p>
-    //                     <Form
-    //                       style={{width: '100%'}}
-    //                       onSubmit={(e) => e.preventDefault()}
-    //                       className="colpic"
-    //                     >
-    //                       <Button
-    //                         onClick={(e) => {
-    //                           if (quantity * 1 > 0) {
-    //                             this.setState({quantity: item.quantity * 1 - 1})
-    //                             this.props.change(item.id, item.quantity * 1 - 1)
-    //                             this.setState({quantity: 1})
-    //                           }
-    //                           if (quantity * 1 <= 0) {
-    //                             return this.props.destroyItems(item.id)
-    //                           }
-    //                         }}
-    //                       >
-    //                         -
-    //                       </Button>
-    //                       <Form.Control
-    //                         style={{width: '50px'}}
-    //                         type="number"
-    //                         value={quantity}
-    //                         placeholder="add qvantity"
-    //                         onChange={(e) => {
-    //                           this.setState({quantity: e.target.value})
-    //                         }}
-    //                       />
-    //                       <Button
-    //                         onClick={(e) => {
-    //                           this.props.change(item.id, item.quantity * 1 + 1)
-    //                           this.setState({quantity: 1})
-    //                         }}
-    //                       >
-    //                         +
-    //                       </Button>
-    //                     </Form>
-    //                   </ListGroup.Item>
-    //                   <ListGroup.Item>
-    //                     <p>Price</p>
-    //                     <p>{item.price}</p>
-    //                     <p>Total Item Price</p>
-    //                     <p>{(item.price * 1 * item.quantity * 1).toFixed(2)}</p>
-    //                   </ListGroup.Item>
-    //                 </ListGroup>
-    //               )
-    //             })
-    //           : ''}
-    //       </ul>
-    //       <h2>TOTAL: {this.total()}</h2>
-    //     </div>
-    //   )
+    const {order, user} = this.props
+    const {userId} = this.props.match.params
+    console.log('in orders render = props<><><><><><><', userId, order, user.id)
+    const {quantity} = this.state
+
+    //this.total()
+
+    return (
+      <div>
+        <h1> Cart ({order.orderitems.length} )</h1>
+        <ul>
+          {order.orderitems.map((item, idx) => {
+            return (
+              <ListGroup
+                horizontal="sm"
+                className="my-2"
+                key={item.id}
+                id="listgrp"
+              >
+                <ListGroup.Item>
+                  {
+                    <img
+                      src={item.product.img}
+                      alt="..loading"
+                      className="thumbnail"
+                    />
+                  }
+                  <Button
+                    onClick={() => {
+                      this.props.destroyItems(userId, item.id)
+                    }}
+                  >
+                    Remove Item
+                  </Button>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <p>Quantity</p>
+                  <p>{item.quantity}</p>
+                  <Form
+                    style={{width: '100%'}}
+                    onSubmit={(e) => e.preventDefault()}
+                    className="colpic"
+                  >
+                    <Button
+                      onClick={(e) => {
+                        if (quantity * 1 > 0) {
+                          this.setState({quantity: item.quantity * 1 - 1})
+                          this.props.change(
+                            userId,
+                            item.id,
+                            item.quantity * 1 - 1
+                          )
+                          this.setState({quantity: 1})
+                        }
+                        if (quantity * 1 <= 0) {
+                          return this.props.destroyItems(userId, item.id)
+                        }
+                      }}
+                    >
+                      -
+                    </Button>
+                    <Form.Control
+                      style={{width: '50px'}}
+                      type="number"
+                      value={item.quantity}
+                      placeholder="add qvantity"
+                      onChange={(e) => {
+                        this.setState({quantity: e.target.value})
+                      }}
+                    />
+                    <Button
+                      onClick={(e) => {
+                        this.props.change(
+                          userId,
+                          item.id,
+                          item.quantity * 1 + 1
+                        )
+                        this.setState({quantity: 1})
+                      }}
+                    >
+                      +
+                    </Button>
+                  </Form>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <p>Price</p>
+                  <p>{item.price}</p>
+                  <p>Total Item Price</p>
+                  <p>{(item.price * 1 * item.quantity * 1).toFixed(2)}</p>
+                </ListGroup.Item>
+              </ListGroup>
+            )
+          })}
+        </ul>
+        <h2>TOTAL: {this.total()}</h2>
+        <ElementsConsumer>
+          {({stripe, elements}) => (
+            <CheckoutForm stripe={stripe} elements={elements} />
+          )}
+        </ElementsConsumer>
+      </div>
+    )
   }
 }
 
-// const mapState = ({orders, user, orderItems}) => {
-//   return {
-//     orders,
-//     user,
-//     orderItems,
-//   }
-// }
+const mapState = ({order, user}) => {
+  return {
+    order,
+    user,
+  }
+}
 
-const mapState = (state) => state
+//const mapState = (state) => state
 
 const mapDispatch = (dispatch) => {
   return {
@@ -163,12 +165,15 @@ const mapDispatch = (dispatch) => {
       dispatch(getOrder(id))
       dispatch(getItems())
     },
-    destroyItems: (id) => {
+    destroyItems: (userId, id) => {
+      dispatch(getOrder(userId))
       console.log('gogoggogogogogog')
       dispatch(destroyItem(id))
     },
-    change: (id, qv) => {
-      dispatch(editItem(id, qv))
+    change: (userId, id, qv) => {
+      console.log('177 177 177', userId)
+      dispatch(getOrder(userId))
+      dispatch(editItem(userId, id, qv))
     },
   }
 }

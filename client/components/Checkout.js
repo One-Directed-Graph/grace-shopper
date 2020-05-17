@@ -1,20 +1,18 @@
 import React from 'react'
-import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js'
-
+import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js'
 import CardSection from './CardSection'
 
-export default function CheckoutForm() {
-  const stripe = useStripe()
-  const elements = useElements()
-
-  const handleSubmit = async (event) => {
+class Checkout extends React.Component {
+  handleSubmit = async (event) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
     event.preventDefault()
 
+    const {stripe, elements} = this.props
+
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
+      // Make  sure to disable form submission until Stripe.js has loaded.
       return
     }
 
@@ -42,10 +40,24 @@ export default function CheckoutForm() {
     }
   }
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <CardSection />
-      <button disabled={!stripe}>Confirm order</button>
-    </form>
-  )
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <CardSection />
+        <button disabled={!this.props.stripe}>Confirm order</button>
+      </form>
+    )
+  }
 }
+
+/*     export default function InjectedCheckoutForm() {
+      return (
+        <ElementsConsumer>
+          {({stripe, elements}) => (
+            <CheckoutForm  stripe={stripe} elements={elements} />
+          )}
+        </ElementsConsumer>
+      );
+    } */
+
+export default Checkout

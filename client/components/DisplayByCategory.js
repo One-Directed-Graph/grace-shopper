@@ -28,7 +28,11 @@ class DisplayByCategory extends Component {
     let {categories} = this.props
     const page = this.props.match.params.page || 1
     let categoryToDisplay = categories.find((cat) => {
-      console.log(cat.name, this.props.match.params.category)
+      console.log(
+        'hellloooooooooooo display categories i dispaly producer',
+        cat.name,
+        this.props.match.params.category
+      )
       return cat.name === this.props.match.params.category
     })
     if (categoryToDisplay) {
@@ -42,7 +46,11 @@ class DisplayByCategory extends Component {
     const {pagedCategory, categoryToDisplay} = this.displayProducer()
     const page = this.props.match.params.page
     if (categoryToDisplay) {
-      console.log(pagedCategory, categoryToDisplay.products.length)
+      console.log(
+        'hello in render dispaly categories',
+        pagedCategory,
+        categoryToDisplay.products.length
+      )
     }
     return (
       <div>

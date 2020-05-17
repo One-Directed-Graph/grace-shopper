@@ -34,7 +34,7 @@ router.get('/user-list/:id', (req, res, next) => {
       ['admin', 'ASC'],
       ['email', 'ASC'],
     ],
-    // include: [{model: Order}, {model: Review}],
+    include: [{model: Review}, {model: Order}],
   })
     .then((users) => res.send(users))
     .catch(next)
@@ -51,6 +51,7 @@ router.put('/user-list', (req, res, next) => {
   User.findByPk(req.body.id)
     .then((user) => user.update(change))
     .then((user) => res.send(user))
+    .catch(next)
 })
 
 router.delete('/user-list/:id', async (req, res, next) => {

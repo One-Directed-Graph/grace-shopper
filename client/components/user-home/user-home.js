@@ -11,8 +11,7 @@ import {
   OrderList,
   WelcomeUser,
 } from './'
-// import {Orders} from '../'
-import {getUserList} from '../../store/'
+import {getUserList, getOrderList} from '../../store/'
 import Nav from 'react-bootstrap/Nav'
 
 //TODO: Load orders and reviews?
@@ -110,6 +109,7 @@ const mapDispatch = (dispatch) => {
     loadUser: () => console.log('user reviews & orders'),
     loadAdmin: (id) => {
       dispatch(getUserList(id))
+      dispatch(getOrderList())
     },
   }
 }
