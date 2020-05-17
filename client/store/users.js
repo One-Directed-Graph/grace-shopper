@@ -59,8 +59,16 @@ export default function (state = defaultUsers, action) {
     case ADD_USER:
       return [...state, action.user]
     case UPDATE_USER:
-      return [...state].map((user) =>
-        user.id === action.user.id ? action.user : user
+      return [...state].map(
+        (user) => {
+          if (user.id === action.user.id) {
+            action.user.reviews = user.reviews
+            action.user.orders = user.orders
+            return action.user
+          }
+          return user
+        }
+        // user.id === action.user.id ? action.user : user
       )
     case REMOVE_USER:
       return [...state].filter((user) => user.id !== action.id)
