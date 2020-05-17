@@ -26,7 +26,7 @@ class Product extends Component {
     }
     //console.log('hghghdhfghsdhfhdjcfbhdjcvbfdhcvnbf', isLoggedIn, cartExist)
     if (isLoggedIn === false) {
-      let res = await axios.post(`/api/orders/session`)
+      let res = await axios.get(`/api/orders/session`)
       console.log(
         'in theeeee prrrroducts session',
         res.data,
