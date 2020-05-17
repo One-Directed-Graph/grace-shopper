@@ -49,13 +49,13 @@ export const getSessionCart = () => {
   }
 }
 
-export const createSessionCart = () => {
+export const createSessionCart = (userId, productId, price, qv, push) => {
   return async (dispatch) => {
     const res = await axios.post(`/api/orders/session`)
 
     // console.log('post post post post in getOrder thunk', res.data),
     dispatch(_createSessionCart(res.data))
-    dispatch(addItems(id, res.data.id, productid, productprice, qv, push))
+    dispatch(addItems(userId, res.data.id, productId, price, qv, push))
 
     //push(`/orders/cart/${res.data.userId}`)
   }
