@@ -44,6 +44,7 @@ class Orders extends Component {
   async componentDidMount() {
     const {user, isLoggedIn} = this.props
     let order = this.props
+    console.log(this.props.match.params.userId)
     this.props.load2()
     console.log('in mount', this.props.match.params.userId)
     if (isLoggedIn === false) {

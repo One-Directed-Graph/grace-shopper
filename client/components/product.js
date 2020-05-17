@@ -46,7 +46,7 @@ class Product extends Component {
       if (sessionCartexist === false) {
         this.props.addSessionCart(user.id, product.id, product.price, 1, push)
         //res3 = await axios.post(`/api/orders/session`)
-        console.log('res3 res3', res3.data, sessionCartexist)
+        //console.log('res3 res3', res3.data, sessionCartexist)
         // this.props.addToItem(
         //   user.id,
         //   res3.data.id,
