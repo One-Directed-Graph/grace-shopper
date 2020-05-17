@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
-import {getOrder} from '../store/order.js'
+import {getOrder, getSessionCart} from '../store/order.js'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Form, Modal, Button, ListGroup} from 'react-bootstrap'
 import {MyVerticallyCenteredModal} from './modelPopup'
 import {destroyItem, getItems, editItem} from '../store/orderItems'
 
+import axios from 'axios'
 class Orders extends Component {
   constructor(props) {
     console.log('propspropsprops', props)
@@ -40,13 +41,21 @@ class Orders extends Component {
     }
     return total.toFixed(2)
   }
-  componentDidMount() {
-    const {user} = this.props
+  async componentDidMount() {
+    const {user, isLoggedIn} = this.props
+    let order = this.props
     console.log('in mount', this.props.match.params.userId)
-    this.props.load(this.props.match.params.userId)
+    if (isLoggedIn === false) {
+      console.log('from false is log in false')
+      this.props.getSession()
+    } else {
+      console.log('from true is log in true')
+      this.props.load(this.props.match.params.userId)
+    }
   }
   render() {
-    const {order, user} = this.props
+    const {order, user, isLoggedIn} = this.props
+    console.log('is log in here we come', isLoggedIn, order)
     const {userId} = this.props.match.params
     console.log('in orders render = props<><><><><><><', userId, order, user.id)
     const {quantity} = this.state
@@ -146,10 +155,12 @@ class Orders extends Component {
   }
 }
 
-const mapState = ({order, user}) => {
+const mapState = (state) => {
+  let {order, user} = state
   return {
     order,
     user,
+    isLoggedIn: !!state.user.id,
   }
 }
 
@@ -170,6 +181,10 @@ const mapDispatch = (dispatch) => {
       console.log('177 177 177', userId)
       dispatch(getOrder(userId))
       dispatch(editItem(userId, id, qv))
+    },
+    getSession: () => {
+      console.log('in the dispatch mapdispatch')
+      dispatch(getSessionCart())
     },
   }
 }
