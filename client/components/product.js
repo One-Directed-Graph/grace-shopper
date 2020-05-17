@@ -15,6 +15,7 @@ class Product extends Component {
     super()
   }
   async goToCart() {
+    const push = this.props.history.push
     const {user, order, product, isLoggedIn, cartExist} = this.props
     //console.log('add to cart', user.id, order)
     const item = {
@@ -25,11 +26,28 @@ class Product extends Component {
     }
     //console.log('hghghdhfghsdhfhdjcfbhdjcvbfdhcvnbf', isLoggedIn, cartExist)
     if (isLoggedIn === false) {
-      let res = await axios.post(`/api/orders/session/${product.id}`)
-      //console.log('in theeeee prrrroducts session', res.data)
+      let res = await axios.get(`/api/orders/session`)
+      console.log(
+        'in theeeee prrrroducts session',
+        res.data,
+        user.id,
+        res.data.id,
+        product.id,
+        product.price
+      )
+      this.props.addToItem(
+        user.id,
+        res.data.id,
+        product.id,
+        product.price,
+        1,
+        push
+      )
+      let res2 = await axios.get(`/api/orders/session`)
+      console.log('response 2', res2.data)
     } else {
-      //console.log('this.props.history.push', order)
-      const push = this.props.history.push
+      console.log('this.props.history.push', order)
+
       if (cartExist === false) {
         //console.log('hello from if if if if if fif ', user.id)
         await this.props.addCart(
@@ -140,7 +158,7 @@ const mapDispatch = (dispatch) => {
     },
     addToItem: (userId, orderId, productId, price, qv, push) => {
       dispatch(addItems(userId, orderId, productId, price, qv, push))
-      dispatch(getOrder(userId))
+      //dispatch(getOrder(userId))
     },
     load: (id, productId, push) => {
       dispatch(getProduct(productId, push))
