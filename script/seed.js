@@ -321,13 +321,12 @@ async function seed() {
 
   console.log(`seeded ${orderItems.length} orderItems`)
 
-  const [codyOrder] = await Promise.all([
-    Order.create({
-      dateOfPurchase: '05/01/2020',
-      status: 'Cart',
-      userId: users[0].id,
-    }),
-  ])
+  //CODY ORDERS
+  const codyOrder = await Order.create({
+    dateOfPurchase: '05/01/2020',
+    status: 'Cart',
+    userId: users[0].id,
+  })
 
   const codyOrderItems = await Promise.all([
     OrderItem.create({
@@ -347,8 +346,8 @@ async function seed() {
   console.log(
     'cody orders',
     users[0].email,
-    codyOrder.id,
-    codyOrderItems.map((item) => item.orderId)
+    codyOrder.id
+    // codyOrderItems.map((item) => item.orderId)
   )
 
   orders.forEach((order) => {
@@ -362,6 +361,10 @@ async function seed() {
   })
 
   console.log(`updated ${orders.length} orders`)
+
+  //USER WITH NO ORDERS
+  const nobody = await User.create({email: 'nobody@email.com', password: '123'})
+  console.log(`created ${nobody.email} w no orders`)
 
   //REVIEWS
   const randDescriptions = [
