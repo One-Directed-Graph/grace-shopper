@@ -24,9 +24,23 @@ class Product extends Component {
       price: product.price,
       userId: user.id,
     }
+    let res3
+    let res
     //console.log('hghghdhfghsdhfhdjcfbhdjcvbfdhcvnbf', isLoggedIn, cartExist)
     if (isLoggedIn === false) {
-      let res = await axios.get(`/api/orders/session`)
+      res = await axios.get(`/api/orders/session`)
+      if (res) {
+        res3 = await axios.post(`/api/orders/session`)
+        console.log('res3 res3', res3.data)
+        this.props.addToItem(
+          user.id,
+          res3.data.id,
+          product.id,
+          product.price,
+          1,
+          push
+        )
+      }
       console.log(
         'in theeeee prrrroducts session',
         res.data,
