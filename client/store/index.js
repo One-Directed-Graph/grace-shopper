@@ -29,11 +29,6 @@ const reducer = combineReducers({
   orderItems,
 })
 
-// const middleware = composeWithDevTools(
-//   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
-// )
-// const store = createStore(reducer, middleware)
-
 const preloadedState = {
   cart: [{}],
   categories: [{}],
@@ -48,12 +43,19 @@ const preloadedState = {
   users: [{}],
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const store = createStore(
-  reducer,
-  preloadedState,
-  composeEnhancers(applyMiddleware(thunks, createLogger({collapsed: true})))
-)
+const middleware = applyMiddleware(thunks, createLogger({collapsed: true}))
+const store = createStore(reducer, preloadedState, middleware)
+
+// const middleware = composeWithDevTools(
+//   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
+// )
+
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+// const store = createStore(
+//   reducer,
+//   preloadedState,
+//   composeEnhancers(applyMiddleware(thunks, createLogger({collapsed: true})))
+// )
 
 export default store
 export * from './user'
