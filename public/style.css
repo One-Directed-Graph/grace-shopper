@@ -123,6 +123,16 @@ label {
   background-size: cover;
 }
 
+/* .product-image {
+  width: 16rem;
+  height: 12rem;
+  margin: 1rem;
+  border-radius: 2px;
+  background-color: white;
+  background-position: center;
+  background-size: cover;
+} */
+
 .product-form-image {
   width: 250px;
   height: 200px;
@@ -177,7 +187,13 @@ label {
 }
 
 #user-home-email {
-  margin: 1rem;
+  margin: 1rem, 0, 0, 1rem;
+}
+
+.list-group-item h6 {
+  color: #38495e;
+  background-color: #e2dad1;
+  padding: 0.5rem;
 }
 
 .product-item {
