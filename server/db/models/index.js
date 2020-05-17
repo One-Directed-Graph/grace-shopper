@@ -14,6 +14,8 @@ const Cart = require('./cart')
 //  */
 //Category.belongsTo(Product)
 
+OrderItem.belongsTo(Order, {otherKey: 'sessionId'})
+
 Product.belongsTo(Category)
 Category.hasMany(Product)
 User.hasMany(Review)
