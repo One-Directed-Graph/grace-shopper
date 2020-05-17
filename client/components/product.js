@@ -16,7 +16,14 @@ class Product extends Component {
   }
   async goToCart() {
     const push = this.props.history.push
-    const {user, order, product, isLoggedIn, cartExist} = this.props
+    const {
+      user,
+      order,
+      product,
+      isLoggedIn,
+      cartExist,
+      sessionCartexist,
+    } = this.props
     //console.log('add to cart', user.id, order)
     const item = {
       productId: product.id,
@@ -28,37 +35,42 @@ class Product extends Component {
     let res
     //console.log('hghghdhfghsdhfhdjcfbhdjcvbfdhcvnbf', isLoggedIn, cartExist)
     if (isLoggedIn === false) {
-      res = await axios.get(`/api/orders/session`)
-      if (res) {
-        res3 = await axios.post(`/api/orders/session`)
-        console.log('res3 res3', res3.data)
+      //res = await axios.get(`/api/orders/session`)
+      if (sessionCartexist === false) {
+        this.props.addSessionCart(user.idproduct.id, product.price, 1, push)
+        //res3 = await axios.post(`/api/orders/session`)
+        console.log('res3 res3', res3.data, sessionCartexist)
+        // this.props.addToItem(
+        //   user.id,
+        //   res3.data.id,
+        //   product.id,
+        //   product.price,
+        //   1,
+        //   push
+        // )
+      }
+      if (sessionCartexist === true) {
+        res = await axios.get(`/api/orders/session`)
+        console.log(
+          'in theeeee prrrroducts session',
+          sessionCartexist,
+          res.data,
+          user.id,
+          res.data.id,
+          product.id,
+          product.price
+        )
         this.props.addToItem(
           user.id,
-          res3.data.id,
+          res.data.id,
           product.id,
           product.price,
           1,
           push
         )
       }
-      console.log(
-        'in theeeee prrrroducts session',
-        res.data,
-        user.id,
-        res.data.id,
-        product.id,
-        product.price
-      )
-      this.props.addToItem(
-        user.id,
-        res.data.id,
-        product.id,
-        product.price,
-        1,
-        push
-      )
-      let res2 = await axios.get(`/api/orders/session`)
-      console.log('response 2', res2.data)
+      //let res2 = await axios.get(`/api/orders/session`)
+      //console.log('response 2', res2.data)
     } else {
       console.log('this.props.history.push', order)
 
@@ -161,6 +173,7 @@ const mapState = (state) => {
     order,
     isLoggedIn: !!state.user.id,
     cartExist: !!state.order.id,
+    sessionCartexist: !!state.order,
   }
 }
 const mapDispatch = (dispatch) => {
@@ -177,6 +190,9 @@ const mapDispatch = (dispatch) => {
     load: (id, productId, push) => {
       dispatch(getProduct(productId, push))
       //dispatch(getOrder(id))
+    },
+    addSessionCart: () => {
+      dispatch(addSessionCart())
     },
   }
 }
