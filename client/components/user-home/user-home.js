@@ -11,10 +11,10 @@ import {
   OrderList,
   WelcomeUser,
 } from './'
-import {getUserList, getOrderList} from '../../store/'
+import {getUserList, getOrderList, getUserOrders} from '../../store/'
 import Nav from 'react-bootstrap/Nav'
 
-//TODO: Load orders and reviews?
+//TODO: Load orders and reviews
 
 /**
  * COMPONENT
@@ -106,7 +106,10 @@ const mapState = ({user}) => ({user})
 
 const mapDispatch = (dispatch) => {
   return {
-    loadUser: () => console.log('user reviews & orders'),
+    loadUser: (id) => {
+      console.log('in loadUser', id)
+      dispatch(getUserOrders(id))
+    },
     loadAdmin: (id) => {
       dispatch(getUserList(id))
       dispatch(getOrderList())
