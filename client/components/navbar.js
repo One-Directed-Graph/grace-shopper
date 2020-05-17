@@ -8,18 +8,36 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Image from 'react-bootstrap/Image'
 import {CategoryBar} from './'
+import order, {getSessionCart} from '../store/order'
+
+function NavLinkCart({order}) {
+  console.log('i am the link cart function ', order)
+  return (
+    <div>
+      <hr />
+      <hr />
+    </div>
+  )
+}
 
 class Navbarclass extends Component {
   componentDidMount() {
-    this.props.load()
+    const isLoggedIn = this.state
+    if (isLoggedIn === false) {
+      this.props.getSession()
+    } else {
+      this.props.load()
+    }
   }
   render() {
-    const navStyle = {backgroundColor: '#38495e'}
+    const navStyle = {color: ' #38495E', fontWeight: '500', fontSize: '120%'}
     //console.log('documenta cookie', document.cookie)
-    const {handleClick, isLoggedIn, user} = this.props
+    const {handleClick, isLoggedIn, user, order} = this.props
+
     console.log('documenta cookie', user)
     return (
       <div>
+        <NavLinkCart />
         <Navbar
           collapseOnSelect
           expand="lg"
@@ -81,7 +99,7 @@ class Navbarclass extends Component {
             <Search />
           </Navbar.Collapse>
 
-          <Navbar.Brand as={Link} to={`/orders/cart/${user.id}`}>
+          <Navbar.Brand as={Link} to={`/orders/cart/${user.id || 'session'}`}>
             <img
               src="/images/shop.png"
               width="40px"
@@ -107,11 +125,13 @@ class Navbarclass extends Component {
  */
 const mapState = (state) => {
   const {products} = state
-  const {user} = state
+  const {user, order} = state
+
   return {
     isLoggedIn: !!state.user.id,
     products,
     user,
+    order,
   }
 }
 
@@ -125,6 +145,9 @@ const mapDispatch = (dispatch) => {
     },
     load: () => {
       dispatch(getProducts('load'))
+    },
+    getSession: () => {
+      dispatch(getSessionCart())
     },
   }
 }

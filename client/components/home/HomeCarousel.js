@@ -49,32 +49,6 @@ export const HomeCarousel = () => {
           </h2>
         </Carousel.Item>
       </Carousel>
-
-      <Nav
-        style={{
-          backgroundColor: '#38495e',
-          height: '100px',
-          marginTop: '200px',
-        }}
-        className="footer"
-        activeKey="/home"
-        onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
-      >
-        <Nav.Item>
-          <Nav.Link to="/">Home</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link to="/products">Products</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link to="/login">login</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link to="/sighup" disabled>
-            signup
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
     </div>
   )
 }

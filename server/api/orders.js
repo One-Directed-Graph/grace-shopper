@@ -25,11 +25,32 @@ router.get('/cart/:userId', async (req, res, next) => {
     next(err)
   }
 })
-router.post('/session/:prodId', async (req, res, next) => {
+router.post('/session', async (req, res, next) => {
   console.log('<><><><><><><><><><><>>', req.session.id, req.params.prodId)
-  Order.create({sessionId: req.session.id})
+
+  Order.create({sessionId: req.session.id, orderitems: []})
     .then((resp) => {
+      console.log(resp)
       res.status(200).send(resp)
+    })
+    .catch(next)
+
+  // Order.findOne({
+  //   where: {sessionId: req.session.id},
+  //   include: {model: OrderItem, include: {model: Product}},
+  // }).then((response) => {
+  //   console.log('><><><><><><><><><><<><><><><>><><><>><><', response)
+  // })
+})
+
+router.get('/session', async (req, res, next) => {
+  Order.findOne({
+    where: {sessionId: req.session.id},
+    include: {model: OrderItem, include: {model: Product}}, //include: {model: Product}
+  })
+    .then((response) => {
+      console.log('><><><><><><><><><><<><><><><>><><><>><><', response)
+      res.send(response)
     })
     .catch(next)
 })
@@ -53,7 +74,10 @@ router.get('/order-list', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   console.log('in getOrders api')
   try {
-    const orders = await Order.findAll({where: {userId: req.params.userId}})
+    const orders = await Order.findAll({
+      where: {userId: req.params.userId},
+      include: [{model: OrderItem}],
+    })
     res.json(orders)
   } catch (err) {
     next(err)
