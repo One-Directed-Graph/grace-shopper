@@ -20,6 +20,9 @@ const Category = db.define('category', {
     type: STRING,
     allowNull: false,
   },
+  img: {
+    type: STRING,
+  },
 })
 
 module.exports = Category
