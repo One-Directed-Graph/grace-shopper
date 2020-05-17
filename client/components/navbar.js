@@ -99,10 +99,7 @@ class Navbarclass extends Component {
             <Search />
           </Navbar.Collapse>
 
-          <Navbar.Brand
-            as={Link}
-            to={`/orders/cart/${user.id || order.sessionId}`}
-          >
+          <Navbar.Brand as={Link} to={`/orders/cart/${user.id || 'session'}`}>
             <img
               src="/images/shop.png"
               width="40px"
