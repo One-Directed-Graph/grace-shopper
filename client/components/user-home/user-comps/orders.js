@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, HashRouter, Route, Switch} from 'react-router-dom'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Button from 'react-bootstrap/Button'
+import OrderDetails from './order-details'
 
-const Orders = ({orders}) => {
+const Orders = (props) => {
+  const orders = props.orders || []
   return (
     <div className="user-home-comps">
       <h3>My Orders</h3>
@@ -12,10 +15,10 @@ const Orders = ({orders}) => {
         {orders.map((order) => (
           <ListGroup.Item key={order.id}>
             <h6>Order Id: {order.id}</h6>
-            <p>Date of Purchase:{order.dateOfPurchase}</p>
+            <p>Date of Purchase: {order.dateOfPurchase}</p>
             <p>Total: {order.subTotal}</p>
             <p>Status: {order.status}</p>
-            {/* <OrderDetails order={order} /> */}
+            <OrderDetails order={order} />
           </ListGroup.Item>
         ))}
       </ListGroup>
@@ -27,22 +30,20 @@ const mapState = ({orders, products}) => {
   const processedOrders = orders.map((order) => {
     if (order.orderitems) {
       order.orderitems.map((item) => {
-        item.productImg = products.find(
-          (product) => product.id === item.productId
-        ).img
+        const product = products.find(
+          (_product) => _product.id === item.productId
+        )
+        item.productTitle = product.title
+        item.productImg = product.img
       })
     }
     return order
   })
-
-  console.log('in mapState', processedOrders)
   return {orders: processedOrders}
 }
 
-const mapDispatch = null
-
-export default connect(mapState, mapDispatch)(Orders)
+export default connect(mapState)(Orders)
 
 Orders.propTypes = {
-  orders: PropTypes.array,
+  orders: PropTypes.array.isRequired,
 }

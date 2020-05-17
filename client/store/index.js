@@ -1,8 +1,8 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {createLogger} from 'redux-logger'
-import thunkMiddleware from 'redux-thunk'
+// import thunkMiddleware from 'redux-thunk'
 import thunks from 'redux-thunk'
-import {composeWithDevTools} from 'redux-devtools-extension'
+// import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import users from './users'
 import products from './products'
@@ -28,15 +28,33 @@ const reducer = combineReducers({
   order,
   orderItems,
 })
+
 // const middleware = composeWithDevTools(
 //   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 // )
 // const store = createStore(reducer, middleware)
 
+const preloadedState = {
+  cart: [{}],
+  categories: [{}],
+  divided: [],
+  order: {},
+  orderItems: [],
+  orders: [{}],
+  product: [],
+  products: [{}],
+  searchItem: [],
+  user: {},
+  users: [{}],
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
   reducer,
-  applyMiddleware(thunks, createLogger({collapsed: true}))
+  preloadedState,
+  composeEnhancers(applyMiddleware(thunks, createLogger({collapsed: true})))
 )
+
 export default store
 export * from './user'
 export * from './users'
