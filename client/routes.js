@@ -36,18 +36,14 @@ class Routes extends Component {
   }
   async componentDidMount() {
     const {user} = this.props
-    console.log(
-      'ididididididididididi',
-      this.props.location.pathname.slice(13),
-      user
-    )
+
     this.props.loadInitialData()
-    this.props.load(user.Id)
+    //this.props.load(user.Id)
   }
   render() {
     const {isLoggedIn, user} = this.props
     console.log('user in render hshshsh', isLoggedIn)
-    this.props.load(user.Id)
+    //this.props.load(user.Id)
     // console.log('User: ')
     // console.log('routes---user logged in ', isLoggedIn, this.props)
     //sessionId().then((res) => {
@@ -112,10 +108,10 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData: () => {
       dispatch(me())
-      // dispatch(getProducts('load'))
-      // dispatch(getCategories())
-      // dispatch(getOrder(id))
-      // dispatch(getItems())
+      dispatch(getProducts('load'))
+      dispatch(getCategories())
+      //dispatch(getOrder(id))
+      //dispatch(getItems())
     },
     load: (id) => {
       dispatch(getProducts('load'))

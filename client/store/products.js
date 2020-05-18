@@ -43,8 +43,8 @@ const _removeProduct = (id) => ({type: REMOVE_PRODUCT, id})
 /**
  * THUNK CREATORS
  */
-export const getProducts = (str, sortBy, page) => {
-  console.log('from getProducts', sortBy, str, page)
+export const getProducts = (str, sortBy, page, push) => {
+  console.log('from getProducts', sortBy, str, page, push)
   //page = page || 1
   return async (dispatch) => {
     if (str === 'load') {
@@ -53,35 +53,38 @@ export const getProducts = (str, sortBy, page) => {
 
       dispatch(_getProducts(products.data))
       //dispatch(_aToz(products.data))
-      dispatch(loadPage(page))
+      //dispatch(loadPage(page))
     }
     if (sortBy === 'Categories') {
       const products = await store.getState().products
       const categories = await store.getState().categories
       dispatch(_Categories(products, categories))
-      dispatch(loadPage(page))
+      //dispatch(loadPage(page))
     }
     if (sortBy === 'LowToHigh') {
       const products = await store.getState().products
 
       dispatch(_LowToHigh(products))
-      dispatch(loadPage(page))
+      //dispatch(loadPage(page))
     }
     if (sortBy === 'HighToLow') {
       const products = await store.getState().products
+      //push(`/products/${page}?${sortBy}`)
       dispatch(_highToLow(products))
       console.log('from low to high', products)
-      dispatch(loadPage(page))
+
+      //dispatch(loadPage(page))
     }
+
     if (sortBy === 'AtoZ') {
       const products = await store.getState().products
       dispatch(_aToz(products))
-      dispatch(loadPage(page))
+      //dispatch(loadPage(page))
     }
     if (sortBy === 'ZtoA') {
       const products = await store.getState().products
       dispatch(_zToa(products))
-      dispatch(loadPage(page))
+      //dispatch(loadPage(page))
     }
     if (str === 'do nothing') {
       let products = store.getState().products
