@@ -37,6 +37,13 @@ class Navbarclass extends Component {
   }
   render() {
     const navStyle = {color: ' #38495E', fontWeight: '500', fontSize: '120%'}
+    const navStyle2 = {
+      color: ' #38495E',
+      fontWeight: '500',
+
+      fontSize: '150%',
+      margin: '0',
+    }
     //console.log('documenta cookie', document.cookie)
     const {handleClick, isLoggedIn, user, order} = this.props
 
@@ -59,7 +66,10 @@ class Navbarclass extends Component {
               alt="Maskerade logo"
             />
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Toggle
+            aria-controls="responsive-navbar-nav"
+            style={{backgroundColor: ' #38495E'}}
+          />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
               {isLoggedIn ? (
@@ -107,19 +117,24 @@ class Navbarclass extends Component {
 
           <Navbar.Brand as={Link} to={`/orders/cart/${user.id || 'session'}`}>
             <img
+              //style={{width: '20%'}}
               src="/images/shop.png"
               width="40px"
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
+
+            <span style={navStyle2}>
+              {order.orderitems ? order.orderitems.length : 0}
+            </span>
           </Navbar.Brand>
-          <i className="fas fa-cart-arrow-down"></i>
+          {/* <i className="fas fa-cart-arrow-down"></i> */}
         </Navbar>
         <div className="hello2">
           <Image src="/images/long3.jpg" fluid style={{width: '100%'}} />
         </div>
         <hr />
-        <CategoryBar />
+        <CategoryBar className="credit" />
         <hr />
       </div>
     )
