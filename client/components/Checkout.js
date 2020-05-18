@@ -2,7 +2,7 @@ import React from 'react'
 import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js'
 import CardSection from './CardSection'
 import axios from 'axios'
-import '../../public/common.css'
+// import '../../public/common.css'
 
 class Checkout extends React.Component {
   constructor() {
@@ -74,9 +74,13 @@ class Checkout extends React.Component {
 
 export default function InjectedCheckoutForm() {
   return (
-    <ElementsConsumer>
-      {({stripe, elements}) => <Checkout stripe={stripe} elements={elements} />}
-    </ElementsConsumer>
+    <div id="stripe-checkout">
+      <ElementsConsumer>
+        {({stripe, elements}) => (
+          <Checkout stripe={stripe} elements={elements} />
+        )}
+      </ElementsConsumer>
+    </div>
   )
 }
 
