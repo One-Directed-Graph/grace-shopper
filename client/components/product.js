@@ -110,6 +110,7 @@ class Product extends Component {
         //this.props.history.push(`/orders/cart/${user.id}`)
       }
     }
+    push('/products/1?sortBy=AtoZ')
   }
 
   // componentDidMount() {

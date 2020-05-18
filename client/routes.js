@@ -15,7 +15,14 @@ import Orders from './components/orders'
 import {Home} from './components/home/home'
 // import uuid from 'react-uuid'
 // import Axios from 'axios'
-import {me, getCategories, getProducts, getOrder, loadPage} from './store'
+import {
+  me,
+  getCategories,
+  getProducts,
+  getOrder,
+  loadPage,
+  getSessionCart,
+} from './store'
 import {getItems} from './store/orderItems'
 /**
  * COMPONENT
@@ -33,6 +40,19 @@ import {getItems} from './store/orderItems'
 class Routes extends Component {
   constructor() {
     super()
+    this.getOrder = this.getOrder.bind(this)
+  }
+
+  getOrder(userId) {
+    const {isLoggedIn, user} = this.props
+    console.log('getoreder function', userId, user.id)
+    if (isLoggedIn) {
+      console.log('getoreder function inside', userId, user.id)
+      this.props.loadOrder(userId)
+    }
+    if (isLoggedIn === false) {
+      this.props.loadSessionCart()
+    }
   }
   async componentDidMount() {
     const {user} = this.props
@@ -43,6 +63,7 @@ class Routes extends Component {
   render() {
     const {isLoggedIn, user} = this.props
     console.log('user in render hshshsh', isLoggedIn)
+    this.getOrder(user.id)
     //this.props.load(user.Id)
     // console.log('User: ')
     // console.log('routes---user logged in ', isLoggedIn, this.props)
@@ -113,12 +134,11 @@ const mapDispatch = (dispatch) => {
       //dispatch(getOrder(id))
       //dispatch(getItems())
     },
-    load: (id) => {
-      dispatch(getProducts('load'))
-      dispatch(getCategories())
-      console.log('dispatch left the building', id)
-      //dispatch(getOrder(id))
-      //dispatch(getItems())
+    loadOrder: (id) => {
+      dispatch(getOrder(id))
+    },
+    loadSessionCart: () => {
+      dispatch(getSessionCart())
     },
   }
 }

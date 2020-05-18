@@ -63,9 +63,9 @@ class Checkout extends React.Component {
   render() {
     console.log('In checkout ', this.props)
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="credit">
         <CardSection />
-        <button>Confirm order</button>
+        <button className="credit">Confirm order</button>
         {/* disabled={!this.props.stripe} */}
       </form>
     )
