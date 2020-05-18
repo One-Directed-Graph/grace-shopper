@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import Moment from 'react-moment'
 import ListGroup from 'react-bootstrap/ListGroup'
 import {OrderUpdate} from '../'
 
@@ -16,8 +17,13 @@ const OrderList = ({orders}) => {
         {orders.map((order) => (
           <ListGroup.Item key={order.id}>
             <h6>Order Id: {order.id}</h6>
-            <p>Date of Purchase:{order.dateOfPurchase}</p>
-            <p>Total: {order.subTotal}</p>
+            <p>
+              Date of Purchase:{' '}
+              <Moment format="MMMM D, YYYY h:mma">
+                {order.dateOfPurchase}
+              </Moment>
+            </p>
+            <p>Total: ${order.subTotal}</p>
             <OrderUpdate orderToUpdate={order} />
           </ListGroup.Item>
         ))}

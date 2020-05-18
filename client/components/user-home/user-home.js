@@ -11,7 +11,12 @@ import {
   OrderList,
   WelcomeUser,
 } from './'
-import {getUserList, getOrderList, getUserOrders} from '../../store/'
+import {
+  getUserList,
+  getOrderList,
+  getUserOrders,
+  getUserReviews,
+} from '../../store/'
 import Nav from 'react-bootstrap/Nav'
 
 //TODO: Load orders and reviews
@@ -109,6 +114,7 @@ const mapDispatch = (dispatch) => {
     loadUser: (id) => {
       console.log('in loadUser', id)
       dispatch(getUserOrders(id))
+      dispatch(getUserReviews(id))
     },
     loadAdmin: (id) => {
       dispatch(getUserList(id))
