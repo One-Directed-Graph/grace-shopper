@@ -8,7 +8,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Image from 'react-bootstrap/Image'
 import {CategoryBar} from './'
-import order, {getSessionCart} from '../store/order'
+import order, {getSessionCart, getOrder} from '../store/order'
 
 function NavLinkCart({order}) {
   console.log('i am the link cart function ', order)
@@ -21,12 +21,18 @@ function NavLinkCart({order}) {
 }
 
 class Navbarclass extends Component {
+  constructor(props) {
+    super()
+    console.log(props)
+  }
   componentDidMount() {
+    const {user} = this.props
+    console.log('userisdididididididid', user.id)
     const isLoggedIn = this.state
     if (isLoggedIn === false) {
       this.props.getSession()
     } else {
-      this.props.load()
+      this.props.load(user.id)
     }
   }
   render() {
@@ -141,10 +147,11 @@ const mapDispatch = (dispatch) => {
       dispatch(logout())
     },
     loadPages: (pg, push) => {
-      dispatch(loadPage(pg, push))
+      //dispatch(loadPage(pg, push))
     },
-    load: () => {
+    load: (userId) => {
       dispatch(getProducts('load'))
+      dispatch(getOrder(userId))
     },
     getSession: () => {
       dispatch(getSessionCart())

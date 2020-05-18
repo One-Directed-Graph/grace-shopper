@@ -7,6 +7,8 @@ import Checkout from './Checkout'
 
 import {me} from '../store'
 import axios from 'axios'
+import {withRouter} from 'react-router-dom'
+
 class Orders extends Component {
   constructor(props) {
     console.log('propspropsprops', props)
@@ -52,7 +54,7 @@ class Orders extends Component {
       this.props.getSession()
     } else if (isLoggedIn === true) {
       console.log('from true is log in true')
-      this.props.load(this.props.match.params.userId)
+      await this.props.load(this.props.match.params.userId)
     }
   }
   render() {
@@ -66,90 +68,92 @@ class Orders extends Component {
 
     return (
       <div>
-        <h1> Cart ({order.orderitems.length} )</h1>
+        <h1> Cart ({order.orderitems ? order.orderitems.length : 0} )</h1>
         <ul>
-          {order.orderitems.map((item, idx) => {
-            return (
-              <ListGroup
-                horizontal="sm"
-                className="my-2"
-                key={item.id}
-                id="listgrp"
-              >
-                <ListGroup.Item>
-                  {
-                    <img
-                      src={item.product.img}
-                      alt="..loading"
-                      className="thumbnail"
-                    />
-                  }
-                  <Button
-                    onClick={() => {
-                      this.props.destroyItems(userId, item.id)
-                    }}
+          {order.orderitems
+            ? order.orderitems.map((item, idx) => {
+                return (
+                  <ListGroup
+                    horizontal="sm"
+                    className="my-2"
+                    key={item.id}
+                    id="listgrp"
                   >
-                    Remove Item
-                  </Button>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <p>Quantity</p>
-                  <p>{item.quantity}</p>
-                  <Form
-                    style={{width: '100%'}}
-                    onSubmit={(e) => e.preventDefault()}
-                    className="colpic"
-                  >
-                    <Button
-                      onClick={(e) => {
-                        if (quantity * 1 > 0) {
-                          this.setState({quantity: item.quantity * 1 - 1})
-                          this.props.change(
-                            userId,
-                            item.id,
-                            item.quantity * 1 - 1
-                          )
-                          this.setState({quantity: 1})
-                        }
-                        if (quantity * 1 <= 0) {
-                          return this.props.destroyItems(userId, item.id)
-                        }
-                      }}
-                    >
-                      -
-                    </Button>
-                    <Form.Control
-                      style={{width: '50px'}}
-                      type="number"
-                      value={item.quantity}
-                      placeholder="add qvantity"
-                      onChange={(e) => {
-                        this.setState({quantity: e.target.value})
-                      }}
-                    />
-                    <Button
-                      onClick={(e) => {
-                        this.props.change(
-                          userId,
-                          item.id,
-                          item.quantity * 1 + 1
-                        )
-                        this.setState({quantity: 1})
-                      }}
-                    >
-                      +
-                    </Button>
-                  </Form>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <p>Price</p>
-                  <p>{item.price}</p>
-                  <p>Total Item Price</p>
-                  <p>{(item.price * 1 * item.quantity * 1).toFixed(2)}</p>
-                </ListGroup.Item>
-              </ListGroup>
-            )
-          })}
+                    <ListGroup.Item>
+                      {
+                        <img
+                          src={item.product.img}
+                          alt="..loading"
+                          className="thumbnail"
+                        />
+                      }
+                      <Button
+                        onClick={() => {
+                          this.props.destroyItems(userId, item.id)
+                        }}
+                      >
+                        Remove Item
+                      </Button>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <p>Quantity</p>
+                      <p>{item.quantity}</p>
+                      <Form
+                        style={{width: '100%'}}
+                        onSubmit={(e) => e.preventDefault()}
+                        className="colpic"
+                      >
+                        <Button
+                          onClick={(e) => {
+                            if (quantity * 1 > 0) {
+                              this.setState({quantity: item.quantity * 1 - 1})
+                              this.props.change(
+                                userId,
+                                item.id,
+                                item.quantity * 1 - 1
+                              )
+                              this.setState({quantity: 1})
+                            }
+                            if (quantity * 1 <= 0) {
+                              return this.props.destroyItems(userId, item.id)
+                            }
+                          }}
+                        >
+                          -
+                        </Button>
+                        <Form.Control
+                          style={{width: '50px'}}
+                          type="number"
+                          value={item.quantity}
+                          placeholder="add qvantity"
+                          onChange={(e) => {
+                            this.setState({quantity: e.target.value})
+                          }}
+                        />
+                        <Button
+                          onClick={(e) => {
+                            this.props.change(
+                              userId,
+                              item.id,
+                              item.quantity * 1 + 1
+                            )
+                            this.setState({quantity: 1})
+                          }}
+                        >
+                          +
+                        </Button>
+                      </Form>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <p>Price</p>
+                      <p>{item.price}</p>
+                      <p>Total Item Price</p>
+                      <p>{(item.price * 1 * item.quantity * 1).toFixed(2)}</p>
+                    </ListGroup.Item>
+                  </ListGroup>
+                )
+              })
+            : []}
         </ul>
         <h2>TOTAL: {this.total()}</h2>
         <ElementsConsumer>
@@ -197,4 +201,4 @@ const mapDispatch = (dispatch) => {
     },
   }
 }
-export default connect(mapState, mapDispatch)(Orders)
+export default withRouter(connect(mapState, mapDispatch)(Orders))

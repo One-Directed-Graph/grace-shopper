@@ -82,7 +82,7 @@ class Product extends Component {
       console.log('this.props.history.push', order)
 
       if (cartExist === false) {
-        console.log('hello from if if if if if fif ', user.id)
+        console.log('hello from if if if if if fif ', order, cartExist)
         console.log('from products and  cart exist false')
         await this.props.addCart(
           user.id,
@@ -95,7 +95,8 @@ class Product extends Component {
 
         //await this.props.addToItem(order.id, product.id, product.price, 1)
         //this.props.history.push(`/orders/cart/${user.id}`)
-      } else {
+      }
+      if (cartExist === true) {
         console.log('hello from else else else ', user.id, order.id)
         this.props.addToItem(
           user.id,
@@ -119,8 +120,8 @@ class Product extends Component {
   componentDidMount() {
     const push = this.props.history.push
     const productId = this.props.match.params.id
-    const {user} = this.props
-    console.log('form products line 56', user.id)
+    const {user, order} = this.props
+    console.log('form products line 56', order.userId)
     this.props.load(user.id, productId, push)
   }
   render() {
