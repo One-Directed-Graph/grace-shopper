@@ -2,16 +2,13 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadPage} from '../store/divided'
 import {getProducts} from '../store/products'
-import {getProduct} from '../store/product'
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Pagination from 'react-bootstrap/Pagination'
 import queryString from 'query-string'
 import {getOrder, getSessionCart} from '../store'
 import {getPages} from './paginationFunction'
 import {withRouter} from 'react-router-dom'
-import {ratingStars} from './helpers'
+import {ProductCard} from '.'
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
@@ -99,43 +96,11 @@ class Products extends Component {
           <div className="container">
             {getPages(page, products).map((prod) => {
               return (
-                <Card
+                <ProductCard
                   key={prod.id}
-                  className="text-center"
-                  style={{width: '18rem', margin: '10px'}}
-                >
-                  <Card.Header>
-                    <div
-                      className="product-image"
-                      style={{
-                        backgroundImage: 'url(' + prod.img + ')',
-                      }}
-                    />
-                  </Card.Header>
-                  {/* <Card.Img variant="top" src={prod.img} /> */}
-                  <Card.Body>
-                    <Card.Title>{prod.title}</Card.Title>
-                    <p>
-                      {prod.reviews &&
-                        ratingStars(prod.reviews).map((star, idx) => (
-                          <span key={idx} className={star}></span>
-                        ))}
-                    </p>
-                    <Card.Text>
-                      Product Description: {prod.description}
-                    </Card.Text>
-                    <Card.Text>Price: ${prod.price}</Card.Text>
-
-                    <Button
-                      variant="success"
-                      onClick={(e) => {
-                        this.props.loadProduct(prod.id, push)
-                      }}
-                    >
-                      Select Product
-                    </Button>
-                  </Card.Body>
-                </Card>
+                  product={prod}
+                  history={this.props.history}
+                />
               )
             })}
             <br />
@@ -197,10 +162,6 @@ const mapDispatch = (dispatch) => {
     load: (str, sortBy = 'AtoZ', page = 1, userId, push) => {
       dispatch(getProducts(str, sortBy, page, push))
       //dispatch(getOrder(userId))
-    },
-
-    loadProduct: (id, push) => {
-      dispatch(getProduct(id, push))
     },
     loadPages: (page, push) => {
       //dispatch(loadPage(page, push))
