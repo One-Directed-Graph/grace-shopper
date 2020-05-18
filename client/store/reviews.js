@@ -10,7 +10,14 @@ const GET_USER_REVIEWS = 'GET_USER_REVIEWS'
  * INITIAL STATE
  */
 
-const defaultReviews = [{id: '', description: '', productId: '', userId: ''}]
+const defaultReviews = [
+  {
+    id: '',
+    description: '',
+    productId: '',
+    userId: '',
+  },
+]
 
 /**
  * ACTION CREATORS
