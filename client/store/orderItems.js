@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-import {getOrder} from './order'
+import {getOrder, _removeFromOrder, _addToOrder, _editOrder} from './order'
 /**
  * ACTION TYPES
  */
@@ -21,35 +21,33 @@ const _addItems = (item) => ({type: ADD_ITEMS, item})
 const _getItems = (item) => ({type: GET_ITEMS, item})
 const _destroyItems = (id) => ({type: DESTROY_ITEMS, id})
 const _editItems = (item) => ({type: EDIT_ITEMS, item})
+
 /**
  * THUNK CREATORS
  */
 export const destroyItem = (id) => {
-  console.log('heklelelelelelelel', id)
   return async (dispatch) => {
     await axios.delete(`/api/items/${id}`)
-    //console.log(',.,.,.,.,.,.,.,.,.,.,.,.,.,.', res.data)
     dispatch(_destroyItems(id))
+    dispatch(_removeFromOrder(id))
   }
 }
 
 export const getItems = () => {
   return async (dispatch) => {
     const res = await axios.get('/api/items')
-    //console.log(',.,.,.,.,.,.,.,.,.,.,.,.,.,.', res.data)
     dispatch(_getItems(res.data))
   }
 }
 
 export const editItem = (userId, id, qv) => {
   return async (dispatch) => {
-    //console.log('items thunk 22222222', orderId, productId)
     //const {productId, quantity, price, userId,orderId} = item
     const newItem = await axios.put(`/api/items/${id}`, {
       quantity: qv,
     })
-    //console.log('fgfgfgfgfgfgfgfgfgfgfgffggffggfgfgfgfgfgf', newItem.data)
     dispatch(_editItems(newItem.data))
+    dispatch(_editOrder(newItem.data))
     //dispatch(getOrder(userId))
   }
 }
@@ -64,9 +62,10 @@ export const addItems = (userId, orderId, productId, price, qv, push) => {
       price: price,
       quantity: qv,
     })
-    dispatch(getOrder(userId))
+    // dispatch(getOrder(userId))
     //console.log('addToCart thunk 656565666565656565', newItem.data)
     dispatch(_addItems(newItem.data))
+    dispatch(_addToOrder(newItem.data))
     //dispatch(getOrder())
     // push(`/orders/cart/${userId}`)
   }
@@ -87,12 +86,13 @@ export default function (state = [], action) {
         return item.id !== action.id ? item : ''
       })
     case EDIT_ITEMS:
-      return [
-        ...state,
-        state.map((item) => {
+      const newState = [
+        ...state.map((item) => {
           return item.id === action.item.id ? action.item : item
         }),
       ]
+      console.log('in EDIT ITEMS', newState)
+      return newState
     default:
       return state
   }
