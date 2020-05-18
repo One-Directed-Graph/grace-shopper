@@ -13,6 +13,7 @@ import {
 } from '../store'
 import axios from 'axios'
 import {createSessionCart} from '../store'
+import {ratingStars} from './helpers'
 
 //ASSIGNED TO: Aleks
 
@@ -130,9 +131,23 @@ class Product extends Component {
     if (product) {
       return (
         <Card className="text-center" style={{width: '18rem', margin: '10px'}}>
-          <Card.Img variant="top" src={product.img} />
+          <Card.Header>
+            <div
+              className="product-image"
+              style={{
+                backgroundImage: 'url(' + product.img + ')',
+              }}
+            />
+          </Card.Header>
+          {/* <Card.Img variant="top" src={product.img} /> */}
           <Card.Body>
             <Card.Title>{product.title}</Card.Title>
+            <p>
+              {product.reviews &&
+                ratingStars(product.reviews).map((star, idx) => (
+                  <span key={idx} className={star}></span>
+                ))}
+            </p>
             <Card.Text>Product Description: {product.description}</Card.Text>
             <Card.Text>Price: ${product.price}</Card.Text>
             <Card.Text>
