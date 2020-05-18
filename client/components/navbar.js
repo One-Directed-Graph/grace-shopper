@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
-import {logout, getProducts, loadPage} from '../store'
+import {logout, getProducts, loadPage, combineItem} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Image from 'react-bootstrap/Image'
 import {CategoryBar} from './'
 import order, {getSessionCart, getOrder} from '../store/order'
-
+import axios from 'axios'
 function NavLinkCart({order}) {
   console.log('i am the link cart function ', order)
   return (
@@ -23,7 +23,22 @@ function NavLinkCart({order}) {
 class Navbarclass extends Component {
   constructor(props) {
     super()
-    console.log(props)
+
+    this.combineCarts = this.combineCarts.bind(this)
+  }
+  async combineCarts() {
+    const {order, isLoggedIn, isOrderIn, user} = this.props
+    if (isLoggedIn === true && isOrderIn === true) {
+      const res = await axios.get('/api/orders/session')
+
+      if (res.data.orderitems.length > 0) {
+        const orderId = order.orderitems[0].orderId
+        res.data.orderitems.map((orderitem) => {
+          this.props.editItem(orderitem.id, orderId)
+        })
+      }
+      // this.props.load(user.id)
+    }
   }
   componentDidMount() {
     const {user} = this.props
@@ -33,6 +48,14 @@ class Navbarclass extends Component {
       this.props.getSession()
     } else {
       this.props.load(user.id)
+    }
+  }
+  componentDidUpdate(prevProp) {
+    const {order, isOrderIn, isLoggedIn, user} = this.props
+    if (isOrderIn === true && isLoggedIn === true) {
+      if (prevProp.order.orderitems.length !== order.orderitems.length) {
+        this.props.load(user.id)
+      }
     }
   }
   render() {
@@ -46,8 +69,8 @@ class Navbarclass extends Component {
     }
     //console.log('documenta cookie', document.cookie)
     const {handleClick, isLoggedIn, user, order} = this.props
+    this.combineCarts()
 
-    console.log('documenta cookie', user)
     return (
       <div>
         <NavLinkCart />
@@ -150,6 +173,7 @@ const mapState = (state) => {
 
   return {
     isLoggedIn: !!state.user.id,
+    isOrderIn: !!order.orderitems,
     products,
     user,
     order,
@@ -170,6 +194,9 @@ const mapDispatch = (dispatch) => {
     },
     getSession: () => {
       dispatch(getSessionCart())
+    },
+    editItem: (orderitemId, orderId) => {
+      dispatch(combineItem(orderitemId, orderId))
     },
   }
 }

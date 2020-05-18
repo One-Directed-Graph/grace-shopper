@@ -11,11 +11,11 @@ import {withRouter} from 'react-router-dom'
 
 class Orders extends Component {
   constructor(props) {
-    console.log('propspropsprops', props)
     super()
     this.state = {
       quantity: 1,
     }
+    this.total = this.total.bind(this)
     // this.itemsForUser = this.itemsForUser.bind(this)
   }
   // setModalShow(input) {
@@ -32,7 +32,7 @@ class Orders extends Component {
 
   total() {
     const {order} = this.props
-    console.log('ordersordersorder', order)
+
     let total = 0
     if (order.orderitems) {
       let arrayOfPrice = order.orderitems.map((order) => {
@@ -46,22 +46,20 @@ class Orders extends Component {
   async componentDidMount() {
     const {user, isLoggedIn} = this.props
     let order = this.props
-    console.log(this.props.match.params.userId)
+
     this.props.load2()
-    console.log('in mount', this.props.match.params.userId)
+
     if (isLoggedIn === false) {
-      console.log('from false is log in false')
       this.props.getSession()
     } else if (isLoggedIn === true) {
-      console.log('from true is log in true')
       await this.props.load(this.props.match.params.userId)
     }
   }
   render() {
     const {order, user, isLoggedIn} = this.props
-    console.log('is log in here we come', isLoggedIn, order)
+
     const {userId} = this.props.match.params
-    console.log('in orders render = props<><><><><><><', userId, order, user.id)
+
     const {quantity} = this.state
 
     //this.total()
@@ -182,16 +180,14 @@ const mapDispatch = (dispatch) => {
     },
     destroyItems: (userId, id) => {
       dispatch(getOrder(userId))
-      console.log('gogoggogogogogog')
+
       dispatch(destroyItem(id))
     },
     change: (userId, id, qv) => {
-      console.log('177 177 177', userId)
       dispatch(getOrder(userId))
       dispatch(editItem(userId, id, qv))
     },
     getSession: () => {
-      console.log('in the dispatch mapdispatch')
       dispatch(getSessionCart())
     },
   }
