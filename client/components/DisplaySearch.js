@@ -17,7 +17,15 @@ class DisplaySearch extends React.Component {
               className="text-center"
               style={{width: '18rem', margin: '10px'}}
             >
-              <Card.Img variant="top" src={product.img} />
+              <Card.Header>
+                <div
+                  className="product-image"
+                  style={{
+                    backgroundImage: 'url(' + product.img + ')',
+                  }}
+                />
+              </Card.Header>
+              {/* <Card.Img variant="top" src={product.img} /> */}
               <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>

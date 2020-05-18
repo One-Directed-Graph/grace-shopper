@@ -11,6 +11,8 @@ import queryString from 'query-string'
 import {getOrder, getSessionCart} from '../store'
 import {getPages} from './paginationFunction'
 import {withRouter} from 'react-router-dom'
+import {ratingStars} from './helpers'
+
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
@@ -103,9 +105,23 @@ class Products extends Component {
                   className="text-center"
                   style={{width: '18rem', margin: '10px'}}
                 >
-                  <Card.Img variant="top" src={prod.img} />
+                  <Card.Header>
+                    <div
+                      className="product-image"
+                      style={{
+                        backgroundImage: 'url(' + prod.img + ')',
+                      }}
+                    />
+                  </Card.Header>
+                  {/* <Card.Img variant="top" src={prod.img} /> */}
                   <Card.Body>
                     <Card.Title>{prod.title}</Card.Title>
+                    <p>
+                      {prod.reviews &&
+                        ratingStars(prod.reviews).map((star, idx) => (
+                          <span key={idx} className={star}></span>
+                        ))}
+                    </p>
                     <Card.Text>
                       Product Description: {prod.description}
                     </Card.Text>

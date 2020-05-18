@@ -20,7 +20,18 @@ const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
  * INITIAL STATE
  */
 
-const defaultProducts = []
+const defaultProducts = [
+  {
+    id: '',
+    title: '',
+    description: '',
+    price: 0,
+    quantity: 0,
+    img: '',
+    categoryId: '',
+    reviews: [],
+  },
+]
 
 /**
  * ACTION CREATORS
@@ -193,7 +204,11 @@ export default function (state = defaultProducts, action) {
 
   if (action.type === UPDATE_PRODUCT) {
     return state.map((product) => {
-      if (product.id === action.product.id) return action.product
+      if (product.id === action.product.id) {
+        const processedProduct = {...action.product}
+        processedProduct.reviews = product.reviews
+        return processedProduct
+      }
       return product
     })
   }

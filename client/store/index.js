@@ -11,6 +11,7 @@ import searchItem from './searchItem'
 import categories from './categories'
 import cart from './cart'
 import divided from './divided'
+import reviews from './reviews'
 import orders from './orders'
 import order from './order'
 import orderItems from './orderItems'
@@ -18,6 +19,7 @@ import orderItems from './orderItems'
 const reducer = combineReducers({
   user,
   users,
+  reviews,
   products,
   product,
   searchItem,
@@ -41,6 +43,7 @@ const preloadedState = {
   searchItem: [],
   user: {},
   users: [{}],
+  reviews: [{}],
 }
 
 const middleware = applyMiddleware(thunks, createLogger({collapsed: true}))
@@ -69,3 +72,4 @@ export * from './divided'
 export * from './orders'
 export * from './order'
 export * from './orderItems'
+export * from './reviews'

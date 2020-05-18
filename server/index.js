@@ -10,6 +10,8 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
+
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -86,6 +88,20 @@ const createApp = () => {
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
 
+  app.get('/secret', async (req, res) => {
+    // Set your secret key. Remember to switch to your live secret key in production!
+    // See your keys here: https://dashboard.stripe.com/account/apikeys
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: 1099,
+      currency: 'usd',
+      // Verify your integration in this guide by including this parameter
+      metadata: {integrationCheck: 'accept_a_payment'},
+    })
+
+    const intent = paymentIntent
+    res.json(intent)
+  })
+
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
   //app.use(express.static(path.join(__dirname, './assets/images')))
@@ -115,7 +131,8 @@ const createApp = () => {
     res.status(err.status || 500).send(err.message || 'Internal server error.')
   })
 }
-
+//*************************Stripe  */
+//*************************** */
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
   const server = app.listen(PORT, () =>
