@@ -13,6 +13,14 @@ import {updateUser, removeUser} from '../../../store'
  */
 
 const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
+  const disabled = () => {
+    if (userToUpdate.admin) return true
+    if (userToUpdate.orders && userToUpdate.reviews) {
+      if (userToUpdate.orders.length > 0 || userToUpdate.reviews.length > 0)
+        return true
+    }
+  }
+
   return (
     <div id="user-update-form-div">
       <div id="user-udpdate-elements">
@@ -37,9 +45,7 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
         <Button
           inline="true"
           variant="danger"
-          disabled={
-            userToUpdate.orders || userToUpdate.reviews || userToUpdate.admin
-          }
+          disabled={disabled()}
           onClick={() => handleDelete(userToUpdate.id)}
         >
           Delete User

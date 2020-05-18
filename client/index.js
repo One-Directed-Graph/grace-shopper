@@ -8,6 +8,7 @@ import App from './app'
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
 //import 'bootstrap/dist/css/bootstrap.min.css'
+
 // establishes socket connection
 import './socket'
 

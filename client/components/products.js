@@ -8,6 +8,8 @@ import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Pagination from 'react-bootstrap/Pagination'
 import queryString from 'query-string'
+import {getOrder, getSessionCart} from '../store'
+import {ratingStars} from './helpers'
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
@@ -33,10 +35,17 @@ class Products extends Component {
   }
 
   componentDidMount() {
+    const {user, isLogedIn} = this.props
+    console.log('user from productssssss', user, isLogedIn)
     const sortBy = queryString.parse(this.props.location.search).sortBy
     const page = this.props.match.params.page || 1
     const push = this.props.history.push
-    this.props.load(sortBy, page)
+    if (isLogedIn === true) {
+      this.props.load(sortBy, page, user.id)
+    }
+    if (isLogedIn === false) {
+      this.props.loadSession(sortBy, page)
+    }
   }
 
   urlProducer(p) {
@@ -80,9 +89,23 @@ class Products extends Component {
                   className="text-center"
                   style={{width: '18rem', margin: '10px'}}
                 >
-                  <Card.Img variant="top" src={prod.img} />
+                  <Card.Header>
+                    <div
+                      className="product-image"
+                      style={{
+                        backgroundImage: 'url(' + prod.img + ')',
+                      }}
+                    />
+                  </Card.Header>
+                  {/* <Card.Img variant="top" src={prod.img} /> */}
                   <Card.Body>
                     <Card.Title>{prod.title}</Card.Title>
+                    <p>
+                      {prod.reviews &&
+                        ratingStars(prod.reviews).map((star, idx) => (
+                          <span key={idx} className={star}></span>
+                        ))}
+                    </p>
                     <Card.Text>
                       Product Description: {prod.description}
                     </Card.Text>
@@ -146,16 +169,19 @@ class Products extends Component {
   }
 }
 
-const mapState = ({products, divided}) => {
+const mapState = ({products, divided, user}) => {
   return {
     products,
     divided,
+    user,
+    isLogedIn: !!user.id,
   }
 }
 const mapDispatch = (dispatch) => {
   return {
-    load: (sortBy = 'AtoZ', page = 1) => {
+    load: (sortBy = 'AtoZ', page = 1, userId) => {
       dispatch(getProducts('load', sortBy, page))
+      dispatch(getOrder(userId))
     },
 
     loadProduct: (id, push) => {
@@ -163,6 +189,10 @@ const mapDispatch = (dispatch) => {
     },
     loadPages: async (page, push) => {
       await dispatch(loadPage(page, push))
+    },
+    loadSession: (sortBy, page) => {
+      dispatch(getProducts('load', sortBy, page))
+      dispatch(getSessionCart())
     },
   }
 }

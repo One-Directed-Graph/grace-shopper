@@ -3,6 +3,7 @@ import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
 
 import {Navbarclass, Checkout} from './components'
+import {HomeFooter} from './components/home/HomeFooter'
 import Routes from './routes'
 
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
@@ -16,6 +17,7 @@ const App = () => {
         {' '}
         <Checkout />
       </Elements>
+      <HomeFooter />
     </div>
   )
 }

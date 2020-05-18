@@ -42,6 +42,7 @@ class Routes extends Component {
       user
     )
     this.props.loadInitialData()
+    this.props.load(user.Id)
   }
   render() {
     const {isLoggedIn, user} = this.props
@@ -62,8 +63,8 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/products" component={Products} />
-          <Route exact path="/orders/cart/session " component={Orders} />
           <Route exact path="/orders/cart/:userId" component={Orders} />
+          {/* //<Route exact path="/orders/cart/session " component={Orders} /> */}
 
           <Route path="/products/:page?" component={Products} />
           <Route exact path="/product/:id" component={Product} />
@@ -90,9 +91,9 @@ class Routes extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
-  console.log('statestatestate', state)
+  //console.log('statestatestate', state)
   const {user} = state
-  console.log('User: ', user)
+  //console.log('User: ', user)
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey

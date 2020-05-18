@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link, HashRouter, Route, Switch} from 'react-router-dom'
 import ListGroup from 'react-bootstrap/ListGroup'
-import Button from 'react-bootstrap/Button'
+import Moment from 'react-moment'
 import OrderDetails from './order-details'
 
 const Orders = (props) => {
@@ -15,7 +14,12 @@ const Orders = (props) => {
         {orders.map((order) => (
           <ListGroup.Item key={order.id}>
             <h6>Order Id: {order.id}</h6>
-            <p>Date of Purchase: {order.dateOfPurchase}</p>
+            <p>
+              Date of Purchase:{' '}
+              <Moment format="MMMM D, YYYY h:mma">
+                {order.dateOfPurchase}
+              </Moment>
+            </p>
             <p>Total: {order.subTotal}</p>
             <p>Status: {order.status}</p>
             <OrderDetails order={order} />

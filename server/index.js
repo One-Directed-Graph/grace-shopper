@@ -95,7 +95,7 @@ const createApp = () => {
       amount: 1099,
       currency: 'usd',
       // Verify your integration in this guide by including this parameter
-      metadata: {integration_check: 'accept_a_payment'},
+      metadata: {integrationCheck: 'accept_a_payment'},
     })
 
     const intent = paymentIntent

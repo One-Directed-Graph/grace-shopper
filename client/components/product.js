@@ -3,8 +3,16 @@ import {connect} from 'react-redux'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Checkout from './Checkout'
-import {createCart, addItems, getOrder, getProduct} from '../store'
+import uuid from 'react-uuid'
+import {
+  createCart,
+  addItems,
+  getOrder,
+  getProduct,
+  getSessionCart,
+} from '../store'
 import axios from 'axios'
+import {createSessionCart} from '../store'
 
 //ASSIGNED TO: Aleks
 
@@ -36,9 +44,9 @@ class Product extends Component {
     if (isLoggedIn === false) {
       //res = await axios.get(`/api/orders/session`)
       if (sessionCartexist === false) {
-        this.props.addSessionCart(user.idproduct.id, product.price, 1, push)
+        this.props.addSessionCart(user.id, product.id, product.price, 1, push)
         //res3 = await axios.post(`/api/orders/session`)
-        console.log('res3 res3', res3.data, sessionCartexist)
+        //console.log('res3 res3', res3.data, sessionCartexist)
         // this.props.addToItem(
         //   user.id,
         //   res3.data.id,
@@ -74,7 +82,8 @@ class Product extends Component {
       console.log('this.props.history.push', order)
 
       if (cartExist === false) {
-        //console.log('hello from if if if if if fif ', user.id)
+        console.log('hello from if if if if if fif ', user.id)
+        console.log('from products and  cart exist false')
         await this.props.addCart(
           user.id,
           product.id,
@@ -87,7 +96,7 @@ class Product extends Component {
         //await this.props.addToItem(order.id, product.id, product.price, 1)
         //this.props.history.push(`/orders/cart/${user.id}`)
       } else {
-        //console.log('hello from else else else ', user.id, order.id)
+        console.log('hello from else else else ', user.id, order.id)
         this.props.addToItem(
           user.id,
           order.id,
@@ -169,7 +178,7 @@ const mapState = (state) => {
     user,
     order,
     isLoggedIn: !!state.user.id,
-    cartExist: !!state.order.id,
+    cartExist: !!state.order.userId,
     sessionCartexist: !!state.order,
   }
 }
@@ -186,10 +195,13 @@ const mapDispatch = (dispatch) => {
     },
     load: (id, productId, push) => {
       dispatch(getProduct(productId, push))
+
+      //dispatch(getSessionCart())
       //dispatch(getOrder(id))
     },
-    addSessionCart: () => {
-      dispatch(addSessionCart())
+    addSessionCart: (userId, productId, price, qv, push) => {
+      dispatch(createSessionCart(userId, productId, price, qv, push))
+      dispatch(getSessionCart())
     },
   }
 }
