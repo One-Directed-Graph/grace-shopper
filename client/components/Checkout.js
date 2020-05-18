@@ -2,6 +2,7 @@ import React from 'react'
 import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js'
 import CardSection from './CardSection'
 import axios from 'axios'
+import '../../public/common.css'
 
 class Checkout extends React.Component {
   constructor() {
@@ -13,8 +14,9 @@ class Checkout extends React.Component {
 
   async componentDidMount() {
     const response = await axios.get('/secret')
-    const client_secret = await response.json()
-    console.log('client Secret: ', client_secret)
+    console.log('response from cheout,', response)
+    const client_secret = await response.data.client_secret
+    console.log('client Secret: ', response.data.client_secret)
     this.setState({CLIENT_SECRET: client_secret})
     // Call stripe.confirmCardPayment() with the client secret.
   }
@@ -25,7 +27,7 @@ class Checkout extends React.Component {
     event.preventDefault()
 
     const {stripe, elements} = this.props
-
+    console.log('stripe elements', stripe, elements)
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make  sure to disable form submission until Stripe.js has loaded.
@@ -33,17 +35,15 @@ class Checkout extends React.Component {
     }
 
     const {CLIENT_SECRET} = this.state
-    const result = await stripe.confirmCardPayment(
-      {CLIENT_SECRET},
-      {
-        payment_method: {
-          card: elements.getElement(CardElement),
-          billing_details: {
-            name: 'Jenny Rosen',
-          },
+    const result = await stripe.confirmCardPayment(CLIENT_SECRET, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: 'Jenny Rosen',
         },
-      }
-    )
+      },
+    })
+    console.log('result', result)
 
     if (result.error) {
       // Show error to your customer (e.g., insufficient funds)
