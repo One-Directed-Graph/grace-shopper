@@ -217,3 +217,11 @@ label {
 .home-carousel {
   margin: 1rem, 0, 0, 1rem;
 }
+
+span {
+  margin: 0.5rem;
+}
+
+.checked {
+  color: #c28867;
+}
