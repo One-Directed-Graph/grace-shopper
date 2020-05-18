@@ -1,5 +1,6 @@
 import React from 'react'
 import {Nav} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 
 export function HomeFooter() {
   const navLinks = [
@@ -21,7 +22,9 @@ export function HomeFooter() {
     >
       {navLinks.map((navlink) => (
         <Nav.Item key={navlink.name}>
-          <Nav.Link to={navlink.path}>{navlink.name}</Nav.Link>
+          <Nav.Link as={Link} to={navlink.path}>
+            {navlink.name}
+          </Nav.Link>
         </Nav.Item>
       ))}
     </Nav>
