@@ -1,8 +1,24 @@
 import React from 'react'
 import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js'
 import CardSection from './CardSection'
+import axios from 'axios'
 
 class Checkout extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      CLIENT_SECRET: '',
+    }
+  }
+
+  async componentDidMount() {
+    const response = await axios.get('/secret')
+    const client_secret = await response.json()
+    console.log('client Secret: ', client_secret)
+    this.setState({CLIENT_SECRET: client_secret})
+    // Call stripe.confirmCardPayment() with the client secret.
+  }
+
   handleSubmit = async (event) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
@@ -16,14 +32,18 @@ class Checkout extends React.Component {
       return
     }
 
-    const result = await stripe.confirmCardPayment('{CLIENT_SECRET}', {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: 'Jenny Rosen',
+    const {CLIENT_SECRET} = this.state
+    const result = await stripe.confirmCardPayment(
+      {CLIENT_SECRET},
+      {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: 'Jenny Rosen',
+          },
         },
-      },
-    })
+      }
+    )
 
     if (result.error) {
       // Show error to your customer (e.g., insufficient funds)
@@ -41,23 +61,23 @@ class Checkout extends React.Component {
   }
 
   render() {
+    console.log('In checkout ', this.props)
     return (
       <form onSubmit={this.handleSubmit}>
         <CardSection />
-        <button disabled={!this.props.stripe}>Confirm order</button>
+        <button>Confirm order</button>
+        {/* disabled={!this.props.stripe} */}
       </form>
     )
   }
 }
 
-/*     export default function InjectedCheckoutForm() {
-      return (
-        <ElementsConsumer>
-          {({stripe, elements}) => (
-            <CheckoutForm  stripe={stripe} elements={elements} />
-          )}
-        </ElementsConsumer>
-      );
-    } */
+export default function InjectedCheckoutForm() {
+  return (
+    <ElementsConsumer>
+      {({stripe, elements}) => <Checkout stripe={stripe} elements={elements} />}
+    </ElementsConsumer>
+  )
+}
 
-export default Checkout
+//export default Checkout
