@@ -398,6 +398,21 @@ async function seed() {
     }),
   ])
 
+  //MORE ORDER ITEMS
+  const moreOrderItems = await Promise.all(
+    orders.map((_order) => {
+      const randProduct = products[Math.floor(Math.random() * products.length)]
+      return OrderItem.create({
+        orderId: _order.id,
+        productId: randProduct.id,
+        quantity: Math.floor(Math.random() * (10 - 1 + 1)) + 1,
+        price: randProduct.price,
+      })
+    })
+  )
+
+  console.log(`seeded ${orderItems.length} more orderItems`)
+
   //CARTS
   const carts = await Promise.all([
     Cart.create({
