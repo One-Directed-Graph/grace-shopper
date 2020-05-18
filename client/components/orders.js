@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {getOrder, getSessionCart} from '../store/order.js'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {Form, Modal, Button, ListGroup} from 'react-bootstrap'
-import {MyVerticallyCenteredModal} from './modelPopup'
 import {destroyItem, getItems, editItem} from '../store/orderItems'
+import Checkout from './Checkout'
+
 import {me} from '../store'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
@@ -156,6 +156,11 @@ class Orders extends Component {
             : []}
         </ul>
         <h2>TOTAL: {this.total()}</h2>
+        <ElementsConsumer>
+          {({stripe, elements}) => (
+            <CheckoutForm stripe={stripe} elements={elements} />
+          )}
+        </ElementsConsumer>
       </div>
     )
   }

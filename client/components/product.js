@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
+import Checkout from './Checkout'
 import uuid from 'react-uuid'
 import {
   createCart,
@@ -150,9 +150,7 @@ class Product extends Component {
             <Button
               className="buttonInProduct"
               variant="success"
-              onClick={() => {
-                console.log('hello')
-              }}
+              onClick={() => <Checkout />}
             >
               checkout
             </Button>

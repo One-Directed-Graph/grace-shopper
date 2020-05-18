@@ -23,15 +23,14 @@ User.hasMany(Order)
 Review.belongsTo(User)
 Review.belongsTo(Product)
 
-//User to Order relationship
+Product.hasMany(Review)
+
 Order.belongsTo(User, {
   foreignKey: {
     allowNull: false,
   },
 })
 
-//OrderDetail to Order
-//Order.belongsTo(Product)
 Order.hasMany(OrderItem)
 
 OrderItem.belongsTo(Product)
