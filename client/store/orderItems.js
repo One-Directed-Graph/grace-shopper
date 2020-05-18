@@ -50,7 +50,7 @@ export const editItem = (userId, id, qv) => {
     })
     //console.log('fgfgfgfgfgfgfgfgfgfgfgffggffggfgfgfgfgfgf', newItem.data)
     dispatch(_editItems(newItem.data))
-    dispatch(getOrder(userId))
+    //dispatch(getOrder(userId))
   }
 }
 

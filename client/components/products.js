@@ -8,6 +8,7 @@ import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Pagination from 'react-bootstrap/Pagination'
 import queryString from 'query-string'
+import {getOrder, getSessionCart} from '../store'
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
@@ -33,10 +34,17 @@ class Products extends Component {
   }
 
   componentDidMount() {
+    const {user, isLogedIn} = this.props
+    console.log('user from productssssss', user, isLogedIn)
     const sortBy = queryString.parse(this.props.location.search).sortBy
     const page = this.props.match.params.page || 1
     const push = this.props.history.push
-    this.props.load(sortBy, page)
+    if (isLogedIn === true) {
+      this.props.load(sortBy, page, user.id)
+    }
+    if (isLogedIn === false) {
+      this.props.loadSession(sortBy, page)
+    }
   }
 
   urlProducer(p) {
@@ -146,16 +154,19 @@ class Products extends Component {
   }
 }
 
-const mapState = ({products, divided}) => {
+const mapState = ({products, divided, user}) => {
   return {
     products,
     divided,
+    user,
+    isLogedIn: !!user.id,
   }
 }
 const mapDispatch = (dispatch) => {
   return {
-    load: (sortBy = 'AtoZ', page = 1) => {
+    load: (sortBy = 'AtoZ', page = 1, userId) => {
       dispatch(getProducts('load', sortBy, page))
+      dispatch(getOrder(userId))
     },
 
     loadProduct: (id, push) => {
@@ -163,6 +174,10 @@ const mapDispatch = (dispatch) => {
     },
     loadPages: async (page, push) => {
       await dispatch(loadPage(page, push))
+    },
+    loadSession: (sortBy, page) => {
+      dispatch(getProducts('load', sortBy, page))
+      dispatch(getSessionCart())
     },
   }
 }
