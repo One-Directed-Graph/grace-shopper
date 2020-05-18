@@ -3,17 +3,12 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Moment from 'react-moment'
+import {ratingStars} from './../../helpers'
 // import ReviewDetails from './review-details'
 
 const Reviews = (props) => {
   const reviews = props.reviews || []
-  const styleStar = 'fa fa-star'
-  const ratingStars = (rating) => {
-    const diff = new Array(5 - rating).fill(styleStar)
-    const starArr = new Array(rating).fill(`${styleStar} checked`)
-    console.log(diff, starArr)
-    return [...starArr, ...diff]
-  }
+
   return (
     <div className="user-home-comps">
       <h3>My Reviews</h3>
@@ -44,17 +39,6 @@ const Reviews = (props) => {
 }
 
 const mapState = ({reviews}) => ({reviews})
-
-// const mapState = ({reviews, products}) => {
-//   const processedReviews = reviews.map((review) => {
-//     const product = products.find(
-//       (_product) => _product.id === review.productId
-//     )
-//     review.productTitle = product.title
-//     review.item.productImg = product.img
-//   })
-//   return {reviews: processedReviews}
-// }
 
 export default connect(mapState)(Reviews)
 
