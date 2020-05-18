@@ -156,11 +156,6 @@ class Orders extends Component {
             : []}
         </ul>
         <h2>TOTAL: {this.total()}</h2>
-        <ElementsConsumer>
-          {({stripe, elements}) => (
-            <CheckoutForm stripe={stripe} elements={elements} />
-          )}
-        </ElementsConsumer>
       </div>
     )
   }

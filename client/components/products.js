@@ -12,7 +12,6 @@ import {getOrder, getSessionCart} from '../store'
 import {getPages} from './paginationFunction'
 import {withRouter} from 'react-router-dom'
 import {ratingStars} from './helpers'
-
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
