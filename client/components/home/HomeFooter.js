@@ -11,12 +11,8 @@ export function HomeFooter() {
   ]
   return (
     <Nav
-      style={{
-        backgroundColor: '#38495e',
-        height: '100px',
-        marginTop: '200px',
-      }}
       className="footer"
+      id="home-footer"
       activeKey="/home"
       // onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
     >
