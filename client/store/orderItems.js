@@ -64,7 +64,7 @@ export const addItems = (userId, orderId, productId, price, qv, push) => {
       price: price,
       quantity: qv,
     })
-
+    dispatch(getOrder(userId))
     //console.log('addToCart thunk 656565666565656565', newItem.data)
     dispatch(_addItems(newItem.data))
     //dispatch(getOrder())
