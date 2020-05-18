@@ -13,26 +13,32 @@ const Reviews = (props) => {
     <div className="user-home-comps">
       <h3>My Reviews</h3>
       <ListGroup variant="flush" id="order-list-orders">
-        {reviews.map((review) => (
-          <ListGroup.Item key={review.id}>
-            <h6>Product: {review.product.title}</h6>
-            <div
-              className="product-list-image"
-              style={{
-                backgroundImage: 'url(' + review.product.img + ')',
-              }}
-            />
-            {ratingStars(review.rating).map((star, idx) => (
-              <span key={idx} className={star}></span>
-            ))}
-            <p>
-              Date of Review:{' '}
-              <Moment format="MMMM D, YYYY h:mma">{review.createdAt}</Moment>
-            </p>
-            <p>Review Description: {review.description}</p>
-            {/* <ReviewDetails review={review} /> */}
-          </ListGroup.Item>
-        ))}
+        {reviews.map((review) => {
+          if (review.product) {
+            return (
+              <ListGroup.Item key={review.id}>
+                <h6>Product: {review.product.title}</h6>
+                <div
+                  className="product-list-image"
+                  style={{
+                    backgroundImage: 'url(' + review.product.img + ')',
+                  }}
+                />
+                {ratingStars(review.rating).map((star, idx) => (
+                  <span key={idx} className={star}></span>
+                ))}
+                <p>
+                  Date of Review:{' '}
+                  <Moment format="MMMM D, YYYY h:mma">
+                    {review.createdAt}
+                  </Moment>
+                </p>
+                <p>Review Description: {review.description}</p>
+                {/* <ReviewDetails review={review} /> */}
+              </ListGroup.Item>
+            )
+          }
+        })}
       </ListGroup>
     </div>
   )
