@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container'
 import Pagination from 'react-bootstrap/Pagination'
 import queryString from 'query-string'
 import {getOrder, getSessionCart} from '../store'
+import {ratingStars} from './helpers'
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
@@ -99,6 +100,12 @@ class Products extends Component {
                   {/* <Card.Img variant="top" src={prod.img} /> */}
                   <Card.Body>
                     <Card.Title>{prod.title}</Card.Title>
+                    <p>
+                      {prod.reviews &&
+                        ratingStars(prod.reviews).map((star, idx) => (
+                          <span key={idx} className={star}></span>
+                        ))}
+                    </p>
                     <Card.Text>
                       Product Description: {prod.description}
                     </Card.Text>

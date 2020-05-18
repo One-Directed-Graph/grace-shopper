@@ -229,17 +229,17 @@ label {
 }
 
 span {
-  margin: 0.5rem;
+  margin: 0.25rem;
 }
 
 .checked {
   color: #c28867;
 }
 
-.footer {
-  background-color: '#38495e';
-  height: '100px';
-  margin-top: '200px';
+.footer.nav {
+  background: #38495e;
+  height: 100px;
+  margin-top: 200px;
 }
 
 .footer a {

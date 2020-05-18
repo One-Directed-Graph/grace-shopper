@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {getPages} from './paginationFunction'
 import {withRouter} from 'react-router-dom'
 import {getProducts} from '../store'
+import {ratingStars} from './helpers'
 
 class DisplayByCategory extends Component {
   constructor() {
@@ -79,6 +80,12 @@ class DisplayByCategory extends Component {
                       {/* <Card.Img variant="top" src={prod.img} /> */}
                       <Card.Body>
                         <Card.Title>{prod.title}</Card.Title>
+                        <p>
+                          {prod.reviews &&
+                            ratingStars(prod.reviews).map((star, idx) => (
+                              <span key={idx} className={star}></span>
+                            ))}
+                        </p>
                         <Card.Text>{prod.description}</Card.Text>
                         <Button
                           variant="success"

@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import {ProductUpdate} from '../'
 import {removeProduct} from '../../../store'
+import {ratingStars} from './../../helpers'
 import {Link, Route} from 'react-router-dom'
 
 //TODO: Add search and sorting
@@ -38,6 +39,12 @@ const ProductList = ({products, history, handleDelete}) => {
               </Card.Header>
               <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
+                <p>
+                  {product.reviews &&
+                    ratingStars(product.reviews).map((star, idx) => (
+                      <span key={idx} className={star}></span>
+                    ))}
+                </p>
                 <Button
                   variant="primary"
                   // type="submit"
