@@ -2,7 +2,6 @@ export function ratingStars(ratings) {
   const styleStar = 'fa fa-star'
   let rating = ratings
   if (Array.isArray(ratings)) {
-    console.log('ratings', ratings)
     rating =
       ratings.reduce((acc, curr) => acc + curr.rating, 0) / ratings.length
   } else {

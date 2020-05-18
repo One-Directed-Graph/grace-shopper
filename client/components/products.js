@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadPage} from '../store/divided'
 import {getProducts} from '../store/products'
 import Container from 'react-bootstrap/Container'
 import Pagination from 'react-bootstrap/Pagination'
@@ -9,8 +8,6 @@ import {getOrder, getSessionCart} from '../store'
 import {ProductCard} from './'
 
 import {getPages} from './paginationFunction'
-import {withRouter} from 'react-router-dom'
-import {ratingStars} from './helpers'
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
@@ -166,9 +163,9 @@ const mapDispatch = (dispatch) => {
       //dispatch(getOrder(userId))
     },
 
-    loadProduct: (id, push) => {
-      dispatch(getProduct(id, push))
-    },
+    // loadProduct: (id, push) => {
+    //   dispatch(getProduct(id, push))
+    // },
     loadPages: (page, push) => {
       //dispatch(loadPage(page, push))
     },
