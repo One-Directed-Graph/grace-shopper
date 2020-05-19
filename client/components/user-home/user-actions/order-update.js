@@ -10,8 +10,12 @@ import {updateOrderStatus} from '../../../store'
  */
 
 const OrderUpdate = ({orderToUpdate, handleChange, error}) => {
-  const statuses = ['Processing', 'Completed', 'Cancelled', 'Shipped']
+  const statuses = ['Processing', 'Cancelled', 'Shipped']
   const {id, status} = orderToUpdate
+  const disabled = (status) => {
+    if (status === 'Cancelled' || status === 'Shipped') return true
+    return false
+  }
 
   return (
     <div id="order-update-form-div">
@@ -22,6 +26,7 @@ const OrderUpdate = ({orderToUpdate, handleChange, error}) => {
           as="select"
           name="status"
           value={status}
+          disabled={disabled(status)}
           onChange={(evt) => {
             handleChange(id, evt.target.value)
           }}
