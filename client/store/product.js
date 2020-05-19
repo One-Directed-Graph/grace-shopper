@@ -11,7 +11,16 @@ const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+const defaultProduct = {
+  id: '',
+  title: '',
+  description: '',
+  price: 0,
+  quantity: 0,
+  img: '',
+  categoryId: '',
+  reviews: [],
+}
 
 /**
  * ACTION CREATORS
@@ -38,7 +47,7 @@ export const getProduct = (id, push) => {
 /**
  * REDUCER
  */
-export default function (state = [], action) {
+export default function (state = defaultProduct, action) {
   switch (action.type) {
     case GET_PRODUCT:
       return action.product

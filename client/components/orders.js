@@ -4,7 +4,8 @@ import {connect} from 'react-redux'
 import {Form, Modal, Button, ListGroup} from 'react-bootstrap'
 import {destroyItem, getItems, editItem} from '../store/orderItems'
 import Checkout from './Checkout'
-
+import {Elements} from '@stripe/react-stripe-js'
+import {loadStripe} from '@stripe/stripe-js'
 import {me} from '../store'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
@@ -61,7 +62,7 @@ class Orders extends Component {
     const {userId} = this.props.match.params
 
     const {quantity} = this.state
-
+    const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
     //this.total()
 
     return (
@@ -154,6 +155,10 @@ class Orders extends Component {
             : []}
         </ul>
         <h2>TOTAL: {this.total()}</h2>
+        <Elements stripe={stripePromise}>
+          {' '}
+          <Checkout />
+        </Elements>
       </div>
     )
   }
