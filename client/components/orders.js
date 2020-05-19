@@ -6,7 +6,7 @@ import {destroyItem, getItems, editItem} from '../store/orderItems'
 import Checkout from './Checkout'
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
-import {me} from '../store'
+import {me, editProduct, editCart} from '../store'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 
@@ -17,6 +17,7 @@ class Orders extends Component {
       quantity: 1,
     }
     this.total = this.total.bind(this)
+    this.handleCheckout = this.handleCheckout.bind(this)
     // this.itemsForUser = this.itemsForUser.bind(this)
   }
   // setModalShow(input) {
@@ -55,6 +56,22 @@ class Orders extends Component {
     } else if (isLoggedIn === true) {
       await this.props.load(this.props.match.params.userId)
     }
+  }
+  handleCheckout() {
+    const push = this.props.history.push
+    const {order} = this.props
+    const orderitems = order.orderitems
+    let total = this.total()
+
+    console.log('orderitem', order)
+    orderitems.map((item) => {
+      let totalQuan = item.product.quantity
+      let minusQuan = item.quantity
+      let newQuan = totalQuan - minusQuan
+      let prodId = item.product.id
+      this.props.editProduct(prodId, newQuan)
+    })
+    this.props.editCart(order.id, total, 'Processing', push)
   }
   render() {
     const {order, user, isLoggedIn} = this.props
@@ -154,7 +171,12 @@ class Orders extends Component {
               })
             : []}
         </ul>
-        <h2>TOTAL: {this.total()}</h2>
+        <div className="buttonCheckout">
+          <h2 style={{marginLeft: '45px'}}>TOTAL: {this.total()}</h2>
+          <Button style={{marginLeft: '20px'}} onClick={this.handleCheckout}>
+            Checkout
+          </Button>
+        </div>
         <Elements stripe={stripePromise}>
           {' '}
           <Checkout />
@@ -194,6 +216,12 @@ const mapDispatch = (dispatch) => {
     },
     getSession: () => {
       dispatch(getSessionCart())
+    },
+    editProduct: (id, qv) => {
+      dispatch(editProduct(id, qv))
+    },
+    editCart: (orderId, total, status, push) => {
+      dispatch(editCart(orderId, total, status, push))
     },
   }
 }
