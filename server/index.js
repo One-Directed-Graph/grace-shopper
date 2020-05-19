@@ -88,18 +88,21 @@ const createApp = () => {
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
 
-  app.get('/secret', async (req, res) => {
+  app.post('/secret', async (req, res, next) => {
     // Set your secret key. Remember to switch to your live secret key in production!
     // See your keys here: https://dashboard.stripe.com/account/apikeys
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1099,
-      currency: 'usd',
-      // Verify your integration in this guide by including this parameter
-      metadata: {integrationCheck: 'accept_a_payment'},
-    })
-
-    const intent = paymentIntent
-    res.json(intent)
+    try {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: req.body.amount,
+        currency: 'USD',
+        // Verify your integration in this guide by including this parameter
+        metadata: {integrationCheck: 'accept_a_payment'},
+      })
+      const intent = paymentIntent
+      res.json(intent)
+    } catch (ex) {
+      next(ex)
+    }
   })
 
   // static file-serving middleware

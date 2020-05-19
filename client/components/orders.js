@@ -180,9 +180,6 @@ class Orders extends Component {
             Checkout
           </Button>
         </div>
-        <p>
-          <OrderSummary total={this.total()} />
-        </p>
       </div>
     )
   }
