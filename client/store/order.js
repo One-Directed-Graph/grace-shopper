@@ -96,6 +96,17 @@ export const createCart = (id, productid, productprice, qv, push, product) => {
   }
 }
 
+export const editCart = (id, total, status, push) => {
+  return async (dispatch) => {
+    const res = await axios.put(`/api/orders/${id} `, {
+      subTotal: total,
+      status: status,
+    })
+    push('/checkout')
+    dispatch(_editOrder(res.data))
+  }
+}
+
 // export const addOrder = (item) => {
 //   return async (dispatch) => {
 //     //console.log('addToorder thunk 222222222111111111', item)

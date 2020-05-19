@@ -357,3 +357,7 @@ span {
 #stripe-checkout .result {
   color: #666ee8;
 }
+.buttonCheckout {
+  display: inline-flex;
+  flex-direction: row;
+}

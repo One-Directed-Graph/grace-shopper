@@ -60,6 +60,12 @@ router.delete('/:id', async (req, res, next) => {
     next(ex)
   }
 })
+router.put('/checkout/:id', (req, res, next) => {
+  Product.findByPk(req.params.id)
+    .then((product) => product.update(req.body))
+    .then((product) => res.json(product))
+    .catch(next)
+})
 
 // router.get('/:page?', (req, res, next) => {
 //   const resultsPerPage = 8

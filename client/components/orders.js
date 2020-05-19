@@ -6,9 +6,10 @@ import {destroyItem, getItems, editItem} from '../store/orderItems'
 import Checkout from './Checkout'
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
-import {me} from '../store'
+import {me, editProduct, editCart} from '../store'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
+import OrderSummary from './OrderSummary'
 
 class Orders extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class Orders extends Component {
       quantity: 1,
     }
     this.total = this.total.bind(this)
+    this.handleCheckout = this.handleCheckout.bind(this)
     // this.itemsForUser = this.itemsForUser.bind(this)
   }
   // setModalShow(input) {
@@ -56,18 +58,34 @@ class Orders extends Component {
       await this.props.load(this.props.match.params.userId)
     }
   }
+  handleCheckout() {
+    const push = this.props.history.push
+    const {order} = this.props
+    const orderitems = order.orderitems
+    let total = this.total()
+
+    console.log('orderitem', order)
+    orderitems.map((item) => {
+      let totalQuan = item.product.quantity
+      let minusQuan = item.quantity
+      let newQuan = totalQuan - minusQuan
+      let prodId = item.product.id
+      this.props.editProduct(prodId, newQuan)
+    })
+    this.props.editCart(order.id, total, 'Processing', push)
+  }
   render() {
     const {order, user, isLoggedIn} = this.props
 
     const {userId} = this.props.match.params
 
     const {quantity} = this.state
-    const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
+    //const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
     //this.total()
 
     return (
       <div>
-        <h1> Cart ({order.orderitems ? order.orderitems.length : 0} )</h1>
+        <h2> Cart ({order.orderitems ? order.orderitems.length : 0} )</h2>
         <ul>
           {order.orderitems
             ? order.orderitems.map((item, idx) => {
@@ -154,11 +172,17 @@ class Orders extends Component {
               })
             : []}
         </ul>
-        <h2>TOTAL: {this.total()}</h2>
-        <Elements stripe={stripePromise}>
-          {' '}
-          <Checkout />
-        </Elements>
+        <h3>TOTAL: {this.total()}</h3>
+        {/*   <button onClick={() => <OrderSummary />}> OrderSummary</button> */}
+        <div className="buttonCheckout">
+          <h2 style={{marginLeft: '45px'}}>TOTAL: {this.total()}</h2>
+          <Button style={{marginLeft: '20px'}} onClick={this.handleCheckout}>
+            Checkout
+          </Button>
+        </div>
+        <p>
+          <OrderSummary total={this.total()} />
+        </p>
       </div>
     )
   }
@@ -194,6 +218,12 @@ const mapDispatch = (dispatch) => {
     },
     getSession: () => {
       dispatch(getSessionCart())
+    },
+    editProduct: (id, qv) => {
+      dispatch(editProduct(id, qv))
+    },
+    editCart: (orderId, total, status, push) => {
+      dispatch(editCart(orderId, total, status, push))
     },
   }
 }

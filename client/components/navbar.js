@@ -30,12 +30,13 @@ class Navbarclass extends Component {
     const {order, isLoggedIn, isOrderIn, user} = this.props
     if (isLoggedIn === true && isOrderIn === true) {
       const res = await axios.get('/api/orders/session')
-
-      if (res.data.orderitems.length > 0) {
-        const orderId = order.orderitems[0].orderId
-        res.data.orderitems.map((orderitem) => {
-          this.props.editItem(orderitem.id, orderId)
-        })
+      if (res.data) {
+        if (res.data.orderitems.length > 0) {
+          const orderId = order.orderitems[0].orderId
+          res.data.orderitems.map((orderitem) => {
+            this.props.editItem(orderitem.id, orderId)
+          })
+        }
       }
       // this.props.load(user.id)
     }
@@ -50,14 +51,16 @@ class Navbarclass extends Component {
       this.props.load(user.id)
     }
   }
-  componentDidUpdate(prevProp) {
-    const {order, isOrderIn, isLoggedIn, user} = this.props
-    if (isOrderIn && isLoggedIn && prevProp.order.orderitems) {
-      if (prevProp.order.orderitems.length !== order.orderitems.length) {
-        this.props.load(user.id)
-      }
-    }
-  }
+
+  // componentDidUpdate(prevProp) {
+  //   const {order, isOrderIn, isLoggedIn, user} = this.props
+  //   if (isOrderIn === true && isLoggedIn === true) {
+  //     if (prevProp.order.orderitems.length !== order.orderitems.length) {
+  //       this.props.load(user.id)
+  //     }
+  //   }
+  // }
+
   render() {
     const navStyle = {color: ' #38495E', fontWeight: '500', fontSize: '120%'}
     const navStyle2 = {
