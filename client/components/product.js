@@ -159,7 +159,7 @@ class Product extends Component {
             <Button
               className="buttonInProduct"
               variant="success"
-              onClick={() => <Checkout />}
+              onClick={() => this.props.history.push('/checkout')}
             >
               checkout
             </Button>
