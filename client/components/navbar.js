@@ -52,7 +52,7 @@ class Navbarclass extends Component {
   }
   componentDidUpdate(prevProp) {
     const {order, isOrderIn, isLoggedIn, user} = this.props
-    if (isOrderIn === true && isLoggedIn === true) {
+    if (isOrderIn && isLoggedIn && prevProp.order.orderitems) {
       if (prevProp.order.orderitems.length !== order.orderitems.length) {
         this.props.load(user.id)
       }
