@@ -15,8 +15,8 @@ class Checkout extends React.Component {
   }
 
   async componentDidMount() {
-    const response = await axios.get('/secret')
-    console.log('response from cheout,', response)
+    const response = await axios.post('/secret', {amount: 500})
+    console.log('response from checkout,', response)
     const client_secret = await response.data.client_secret
     console.log('client Secret: ', response.data.client_secret)
     this.setState({CLIENT_SECRET: client_secret})

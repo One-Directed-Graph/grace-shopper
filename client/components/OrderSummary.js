@@ -12,10 +12,11 @@ class OrderSummary extends Component {
   render() {
     const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
 
-    const {order, total} = this.props
-    let subtotal = 0
+    const {order} = this.props
+    let subtotalWithoutTax = 0
+    let subTotal = order.subTotal
 
-    console.log('Inside OrderSummary', total)
+    console.log('Inside OrderSummary subtotal', this.props.order)
     return (
       <div>
         <h1> Order Summary </h1>
@@ -26,7 +27,7 @@ class OrderSummary extends Component {
         <ul>
           {order.orderitems
             ? order.orderitems.map((item) => {
-                subtotal += item.price * item.quantity
+                subtotalWithoutTax += item.price * item.quantity
                 return (
                   <ListGroup horizontal="sm" key={item.id}>
                     <ListGroup.Item>
@@ -50,9 +51,9 @@ class OrderSummary extends Component {
               })
             : []}
         </ul>
-        <p>Subtotal: ${subtotal}</p>
-        <p>Taxes: ${(total - subtotal).toFixed(2)}</p>
-        <p>Total Amount to Pay: ${total}</p>
+        <p>Subtotal: ${subtotalWithoutTax}</p>
+        <p>Taxes: ${(subTotal - subtotalWithoutTax).toFixed(2)}</p>
+        <p>Total Amount to Pay: ${subTotal}</p>
 
         <div>
           <Elements stripe={stripePromise}>
