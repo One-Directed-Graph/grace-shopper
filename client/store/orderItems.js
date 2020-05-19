@@ -25,7 +25,6 @@ const _editItems = (item) => ({type: EDIT_ITEMS, item})
  * THUNK CREATORS
  */
 export const destroyItem = (id) => {
-  console.log('heklelelelelelelel', id)
   return async (dispatch) => {
     await axios.delete(`/api/items/${id}`)
     //console.log(',.,.,.,.,.,.,.,.,.,.,.,.,.,.', res.data)
@@ -40,7 +39,14 @@ export const getItems = () => {
     dispatch(_getItems(res.data))
   }
 }
-
+export const combineItem = (orderitemId, orderId) => {
+  return async (dispatch) => {
+    const newItem = await axios.put(`/api/items/${orderitemId}`, {
+      orderId: orderId,
+    })
+    dispatch(_editItems(newItem.data))
+  }
+}
 export const editItem = (userId, id, qv) => {
   return async (dispatch) => {
     //console.log('items thunk 22222222', orderId, productId)

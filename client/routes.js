@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import axios from 'axios'
 import {withRouter, Route, Switch, HashRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
@@ -41,13 +42,13 @@ class Routes extends Component {
   constructor() {
     super()
     this.getOrder = this.getOrder.bind(this)
+    //this.combineCarts = this.combineCarts.bind(this)
   }
 
   getOrder(userId) {
     const {isLoggedIn, user} = this.props
-    console.log('getoreder function', userId, user.id)
+
     if (isLoggedIn) {
-      console.log('getoreder function inside', userId, user.id)
       this.props.loadOrder(userId)
     }
     if (isLoggedIn === false) {
@@ -62,8 +63,9 @@ class Routes extends Component {
   }
   render() {
     const {isLoggedIn, user} = this.props
-    console.log('user in render hshshsh', isLoggedIn)
+
     this.getOrder(user.id)
+    //this.combineCarts()
     //this.props.load(user.Id)
     // console.log('User: ')
     // console.log('routes---user logged in ', isLoggedIn, this.props)
@@ -109,12 +111,13 @@ class Routes extends Component {
  */
 const mapState = (state) => {
   //console.log('statestatestate', state)
-  const {user} = state
+  const {user, order} = state
   //console.log('User: ', user)
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
+    isOrderIn: !!state.order.orderitems,
     user,
   }
 }
