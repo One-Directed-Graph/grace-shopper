@@ -10,7 +10,6 @@ import {me, editProduct, editCart} from '../store'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 import OrderSummary from './OrderSummary'
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
 
 class Orders extends Component {
   constructor(props) {
@@ -33,33 +32,6 @@ class Orders extends Component {
   //     this.props.load(id)
   //   }
   // }
-  /* const paymentIntent = await stripe.paymentIntents.create({
-    amount: 1099,
-    currency: 'usd',
-    // Verify your integration in this guide by including this parameter
-    metadata: {integrationCheck: 'accept_a_payment'},
-  })
-  amount: 1099
-canceled_at: null
-cancellation_reason: null
-capture_method: "automatic"
-client_secret: "pi_1GkN7u2eZvKYlo2C7zuu6gdj_secret_3JXbQIMh5QiSbJxGoGluTuB5M"
-confirmation_method: "automatic"
-created: 1589862746
-currency: "usd"
-description: null
-id: "pi_1GkN7u2eZvKYlo2C7zuu6gdj"
-last_payment_error: null
-livemode: false
-next_action: null
-object: "payment_intent"
-payment_method: null
-payment_method_types: ["card"]
-receipt_email: null
-setup_future_usage: null
-shipping: null
-source: null
-status: "requires_payment_method" */
 
   total() {
     const {order} = this.props
@@ -108,7 +80,7 @@ status: "requires_payment_method" */
     const {userId} = this.props.match.params
 
     const {quantity} = this.state
-    const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
+    //const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
     //this.total()
 
     return (
@@ -208,11 +180,9 @@ status: "requires_payment_method" */
             Checkout
           </Button>
         </div>
-        <Elements stripe={stripePromise}>
-          {' '}
-          <Checkout />
-        </Elements>{' '}
-        */ }
+        <p>
+          <OrderSummary total={this.total()} />
+        </p>
       </div>
     )
   }
