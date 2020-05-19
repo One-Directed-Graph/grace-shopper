@@ -124,7 +124,7 @@ export default function (state = defaultOrder, action) {
       console.log(state)
       return {
         ...state,
-        orderitems: state.orderitems.push(action.item),
+        orderitems: [...state.orderitems, action.item],
       }
     case EDIT_ORDER:
       return {
