@@ -322,7 +322,7 @@ span {
   opacity: 0.6;
 }
 
-#stripe-checkout input {
+/* #stripe-checkout input {
   display: block;
   border: none;
   font-size: 18px;
@@ -336,7 +336,7 @@ span {
   color: #424770;
   letter-spacing: 0.025em;
   width: 500px;
-}
+} */
 
 #stripe-checkout input::placeholder {
   color: #aab7c4;
