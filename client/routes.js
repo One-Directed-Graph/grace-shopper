@@ -11,6 +11,7 @@ import {
   Product,
   DisplaySearch,
   DisplayByCategory,
+  OrderSummary,
 } from './components'
 import Orders from './components/orders'
 import {Home} from './components/home/home'
@@ -83,6 +84,7 @@ class Routes extends Component {
           <Route path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/products" component={Products} />
           <Route exact path="/orders/cart/:userId" component={Orders} />
+          <Route exact path="/checkout" component={OrderSummary} />
           {/* //<Route exact path="/orders/cart/session " component={Orders} /> */}
 
           <Route path="/products/:page?" component={Products} />
