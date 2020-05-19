@@ -70,18 +70,24 @@ export const getProducts = (str, sortBy, page, push) => {
       const products = await store.getState().products
       const categories = await store.getState().categories
       dispatch(_Categories(products, categories))
-      //dispatch(loadPage(page))
+      //let products2 = await store.getState().products
+      //dispatch(_getProducts(products2))
+      push(`/products/${page}/?sortBy=${sortBy}`)
     }
     if (sortBy === 'LowToHigh') {
       const products = await store.getState().products
 
       dispatch(_LowToHigh(products))
+      //let products2 = await store.getState().products
+      //dispatch(_getProducts(products2))
+      push(`/products/${page}/?sortBy=${sortBy}`)
       //dispatch(loadPage(page))
     }
     if (sortBy === 'HighToLow') {
       const products = await store.getState().products
       //push(`/products/${page}?${sortBy}`)
       dispatch(_highToLow(products))
+      push(`/products/${page}/?sortBy=${sortBy}`)
       console.log('from low to high', products)
 
       //dispatch(loadPage(page))
@@ -90,11 +96,13 @@ export const getProducts = (str, sortBy, page, push) => {
     if (sortBy === 'AtoZ') {
       const products = await store.getState().products
       dispatch(_aToz(products))
+      push(`/products/${page}/?sortBy=${sortBy}`)
       //dispatch(loadPage(page))
     }
     if (sortBy === 'ZtoA') {
       const products = await store.getState().products
       dispatch(_zToa(products))
+      push(`/products/${page}/?sortBy=${sortBy}`)
       //dispatch(loadPage(page))
     }
     if (str === 'do nothing') {
