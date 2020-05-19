@@ -9,6 +9,7 @@ import {loadStripe} from '@stripe/stripe-js'
 import {me, editProduct, editCart} from '../store'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
+import OrderSummary from './OrderSummary'
 
 class Orders extends Component {
   constructor(props) {
@@ -79,12 +80,12 @@ class Orders extends Component {
     const {userId} = this.props.match.params
 
     const {quantity} = this.state
-    const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
+    //const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
     //this.total()
 
     return (
       <div>
-        <h1> Cart ({order.orderitems ? order.orderitems.length : 0} )</h1>
+        <h2> Cart ({order.orderitems ? order.orderitems.length : 0} )</h2>
         <ul>
           {order.orderitems
             ? order.orderitems.map((item, idx) => {
@@ -171,16 +172,17 @@ class Orders extends Component {
               })
             : []}
         </ul>
+        <h3>TOTAL: {this.total()}</h3>
+        {/*   <button onClick={() => <OrderSummary />}> OrderSummary</button> */}
         <div className="buttonCheckout">
           <h2 style={{marginLeft: '45px'}}>TOTAL: {this.total()}</h2>
           <Button style={{marginLeft: '20px'}} onClick={this.handleCheckout}>
             Checkout
           </Button>
         </div>
-        <Elements stripe={stripePromise}>
-          {' '}
-          <Checkout />
-        </Elements>
+        <p>
+          <OrderSummary total={this.total()} />
+        </p>
       </div>
     )
   }
