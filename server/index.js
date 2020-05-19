@@ -94,7 +94,6 @@ const createApp = () => {
     try {
       const paymentIntent = await stripe.paymentIntents.create({
         amount: req.body.amount,
-        receipt_email: req.body.receipt_email,
         currency: 'USD',
         // Verify your integration in this guide by including this parameter
         metadata: {integrationCheck: 'accept_a_payment'},

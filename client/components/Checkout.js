@@ -20,7 +20,6 @@ class Checkout extends React.Component {
     const total = this.props.order.subTotal * 100
     const response = await axios.post('/secret', {
       amount: total,
-      receipt_email: this.props.user.email,
     })
     const client_secret = await response.data.client_secret
     this.setState({CLIENT_SECRET: client_secret})
@@ -46,7 +45,7 @@ class Checkout extends React.Component {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: 'Katt',
+          name: 'Vinayak',
         },
       },
     })
