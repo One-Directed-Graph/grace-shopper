@@ -39,8 +39,9 @@ class Checkout extends React.Component {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: 'Jenny Rosen',
+          name: 'Vinayak Khare',
         },
+        receipt_email: 'khare.vinayak@gmail.com',
       },
     })
     console.log('result', result)
