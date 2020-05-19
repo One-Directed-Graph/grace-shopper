@@ -3,7 +3,7 @@ import {getOrder, getSessionCart} from '../store/order.js'
 import {connect} from 'react-redux'
 import {Form, Modal, Button, ListGroup} from 'react-bootstrap'
 import {destroyItem, getItems, editItem} from '../store/orderItems'
-import Checkout from './Checkout'
+import InjectedCheckoutForm from './Checkout'
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
 import {me} from '../store'
@@ -29,21 +29,21 @@ class OrderSummary extends Component {
             ? order.orderitems.map((item) => {
                 subtotalWithoutTax += item.price * item.quantity
                 return (
-                  <ListGroup horizontal="sm" key={item.id}>
+                  <ListGroup horizontal="md" key={item.id}>
                     <ListGroup.Item>
-                      <p>Description</p>
+                      <h6>Description</h6>
                       <p>{item.product.title}</p>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <p>Quantity</p>
+                      <h6>Quantity</h6>
                       <p>{item.quantity}</p>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <p>Price</p>
+                      <h6>Price</h6>
                       <p>{item.price}</p>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <p>Amount</p>
+                      <h6>Amount</h6>
                       <p>{(item.price * 1 * item.quantity * 1).toFixed(2)}</p>
                     </ListGroup.Item>
                   </ListGroup>
@@ -51,13 +51,17 @@ class OrderSummary extends Component {
               })
             : []}
         </ul>
-        <p>Subtotal: ${subtotalWithoutTax}</p>
-        <p>Taxes: ${(subTotal - subtotalWithoutTax).toFixed(2)}</p>
-        <p>Total Amount to Pay: ${subTotal}</p>
+        <ListGroup variant="flush">
+          <ListGroup.Item>Subtotal: ${subtotalWithoutTax}</ListGroup.Item>
+          <ListGroup.Item>
+            Taxes: ${(subTotal - subtotalWithoutTax).toFixed(2)}
+          </ListGroup.Item>
+          <ListGroup.Item>Total Amount to Pay: ${subTotal}</ListGroup.Item>
+        </ListGroup>
 
         <div>
           <Elements stripe={stripePromise}>
-            <Checkout />
+            {InjectedCheckoutForm(order, this.props.user)}
           </Elements>
         </div>
       </div>
@@ -74,6 +78,4 @@ const mapState = (state) => {
   }
 }
 
-const mapDispatch = () => {}
-
-export default connect(mapState, mapDispatch)(OrderSummary)
+export default connect(mapState)(OrderSummary)
