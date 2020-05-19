@@ -175,7 +175,7 @@ class Orders extends Component {
         <h3>TOTAL: {this.total()}</h3>
         {/*   <button onClick={() => <OrderSummary />}> OrderSummary</button> */}
         <div className="buttonCheckout">
-          <h2 style={{marginLeft: '45px'}}>TOTAL: {this.total()}</h2>
+          {/* <h2 style={{marginLeft: '45px'}}>TOTAL: {this.total()}</h2> */}
           <Button style={{marginLeft: '20px'}} onClick={this.handleCheckout}>
             Checkout
           </Button>

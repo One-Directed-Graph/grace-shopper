@@ -51,6 +51,7 @@ class Navbarclass extends Component {
       this.props.load(user.id)
     }
   }
+
   // componentDidUpdate(prevProp) {
   //   const {order, isOrderIn, isLoggedIn, user} = this.props
   //   if (isOrderIn === true && isLoggedIn === true) {
@@ -59,6 +60,7 @@ class Navbarclass extends Component {
   //     }
   //   }
   // }
+
   render() {
     const navStyle = {color: ' #38495E', fontWeight: '500', fontSize: '120%'}
     const navStyle2 = {
