@@ -84,6 +84,13 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
+router.put('/:id', (req, res, next) => {
+  Order.findByPk(req.params.id)
+    .then((order) => order.update(req.body))
+    .then((order) => res.json(order))
+    .catch(next)
+})
+
 router.put('/order-list/', (req, res, next) => {
   console.log('in update order api', req.body)
   Order.findByPk(req.body.id)

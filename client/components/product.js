@@ -143,6 +143,10 @@ class Product extends Component {
             <Card.Text>
               Category Name: {product.category ? product.category.name : ''}
             </Card.Text>
+            <Card.Text>
+              In Stock:{' '}
+              {product.quantity > 0 ? product.quantity : 'OUT OF STOCK'}
+            </Card.Text>
             <Button
               className="buttonInProduct"
               variant="success"
