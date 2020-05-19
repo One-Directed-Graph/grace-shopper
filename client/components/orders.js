@@ -58,6 +58,7 @@ class Orders extends Component {
     }
   }
   handleCheckout() {
+    const push = this.props.history.push
     const {order} = this.props
     const orderitems = order.orderitems
     let total = this.total()
@@ -70,7 +71,7 @@ class Orders extends Component {
       let prodId = item.product.id
       this.props.editProduct(prodId, newQuan)
     })
-    this.props.editCart(order.id, total, 'Processing')
+    this.props.editCart(order.id, total, 'Processing', push)
   }
   render() {
     const {order, user, isLoggedIn} = this.props
@@ -219,8 +220,8 @@ const mapDispatch = (dispatch) => {
     editProduct: (id, qv) => {
       dispatch(editProduct(id, qv))
     },
-    editCart: (orderId, total, status) => {
-      dispatch(editCart(orderId, total, status))
+    editCart: (orderId, total, status, push) => {
+      dispatch(editCart(orderId, total, status, push))
     },
   }
 }
