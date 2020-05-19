@@ -1,14 +1,10 @@
 import React from 'react'
 import Jumbotron from 'react-bootstrap/Jumbotron'
-import Button from 'react-bootstrap/Button'
 import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js'
 import CardSection from './CardSection'
 import axios from 'axios'
-// import OrderSummary from './OrderSummary'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-// import '../../public/common.css'
-//const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
 
 class Checkout extends React.Component {
   constructor() {
@@ -21,15 +17,12 @@ class Checkout extends React.Component {
   }
 
   async componentDidMount() {
-    console.log('PROPS', this.props)
     const total = this.props.order.subTotal * 100
-    console.log('AMOUNT', total)
     const response = await axios.post('/secret', {
       amount: total,
+      receipt_email: this.props.user.email,
     })
-    console.log('response from checkout,', response)
     const client_secret = await response.data.client_secret
-    console.log('client Secret: ', response.data.client_secret)
     this.setState({CLIENT_SECRET: client_secret})
     // Call stripe.confirmCardPayment() with the client secret.
   }
@@ -41,7 +34,6 @@ class Checkout extends React.Component {
 
     const {stripe, elements} = this.props
     //const elements = this.props
-    console.log('stripe elements', stripe, elements)
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make  sure to disable form submission until Stripe.js has loaded.
@@ -62,7 +54,6 @@ class Checkout extends React.Component {
 
     if (result.error) {
       // Show error to your customer (e.g., insufficient funds)
-      console.log(result.error.message)
       this.setState({error: result.error})
     } else if (result.paymentIntent.status === 'succeeded') {
       console.log('The payment has been processed!')
@@ -78,7 +69,6 @@ class Checkout extends React.Component {
   }
 
   render() {
-    console.log('In checkout ', this.props)
     return (
       <div>
         <div>
@@ -120,12 +110,3 @@ export default function InjectedCheckoutForm(order, user) {
     </div>
   )
 }
-
-// const mapState = ({order, user, stripe, elements}) => ({
-//   order,
-//   user,
-//   stripe,
-//   elements,
-// })
-
-// export default connect(mapState)(Checkout)
