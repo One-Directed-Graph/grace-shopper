@@ -4,18 +4,21 @@ import {connect} from 'react-redux'
 import {Form, Modal, Button, ListGroup} from 'react-bootstrap'
 import {destroyItem, getItems, editItem} from '../store/orderItems'
 import Checkout from './Checkout'
-
-import {me} from '../store'
+import {Elements} from '@stripe/react-stripe-js'
+import {loadStripe} from '@stripe/stripe-js'
+import {me, editProduct, editCart} from '../store'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
+import OrderSummary from './OrderSummary'
 
 class Orders extends Component {
   constructor(props) {
-    console.log('propspropsprops', props)
     super()
     this.state = {
       quantity: 1,
     }
+    this.total = this.total.bind(this)
+    this.handleCheckout = this.handleCheckout.bind(this)
     // this.itemsForUser = this.itemsForUser.bind(this)
   }
   // setModalShow(input) {
@@ -32,7 +35,7 @@ class Orders extends Component {
 
   total() {
     const {order} = this.props
-    console.log('ordersordersorder', order)
+
     let total = 0
     if (order.orderitems) {
       let arrayOfPrice = order.orderitems.map((order) => {
@@ -46,29 +49,43 @@ class Orders extends Component {
   async componentDidMount() {
     const {user, isLoggedIn} = this.props
     let order = this.props
-    console.log(this.props.match.params.userId)
+
     this.props.load2()
-    console.log('in mount', this.props.match.params.userId)
+
     if (isLoggedIn === false) {
-      console.log('from false is log in false')
       this.props.getSession()
     } else if (isLoggedIn === true) {
-      console.log('from true is log in true')
       await this.props.load(this.props.match.params.userId)
     }
   }
+  handleCheckout() {
+    const push = this.props.history.push
+    const {order} = this.props
+    const orderitems = order.orderitems
+    let total = this.total()
+
+    console.log('orderitem', order)
+    orderitems.map((item) => {
+      let totalQuan = item.product.quantity
+      let minusQuan = item.quantity
+      let newQuan = totalQuan - minusQuan
+      let prodId = item.product.id
+      this.props.editProduct(prodId, newQuan)
+    })
+    this.props.editCart(order.id, total, 'Processing', push)
+  }
   render() {
     const {order, user, isLoggedIn} = this.props
-    console.log('is log in here we come', isLoggedIn, order)
-    const {userId} = this.props.match.params
-    console.log('in orders render = props<><><><><><><', userId, order, user.id)
-    const {quantity} = this.state
 
+    const {userId} = this.props.match.params
+
+    const {quantity} = this.state
+    //const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
     //this.total()
 
     return (
       <div>
-        <h1> Cart ({order.orderitems ? order.orderitems.length : 0} )</h1>
+        <h2> Cart ({order.orderitems ? order.orderitems.length : 0} )</h2>
         <ul>
           {order.orderitems
             ? order.orderitems.map((item, idx) => {
@@ -155,7 +172,17 @@ class Orders extends Component {
               })
             : []}
         </ul>
-        <h2>TOTAL: {this.total()}</h2>
+        <h3>TOTAL: {this.total()}</h3>
+        {/*   <button onClick={() => <OrderSummary />}> OrderSummary</button> */}
+        <div className="buttonCheckout">
+          <h2 style={{marginLeft: '45px'}}>TOTAL: {this.total()}</h2>
+          <Button style={{marginLeft: '20px'}} onClick={this.handleCheckout}>
+            Checkout
+          </Button>
+        </div>
+        <p>
+          <OrderSummary total={this.total()} />
+        </p>
       </div>
     )
   }
@@ -182,17 +209,21 @@ const mapDispatch = (dispatch) => {
     },
     destroyItems: (userId, id) => {
       dispatch(getOrder(userId))
-      console.log('gogoggogogogogog')
+
       dispatch(destroyItem(id))
     },
     change: (userId, id, qv) => {
-      console.log('177 177 177', userId)
       dispatch(getOrder(userId))
       dispatch(editItem(userId, id, qv))
     },
     getSession: () => {
-      console.log('in the dispatch mapdispatch')
       dispatch(getSessionCart())
+    },
+    editProduct: (id, qv) => {
+      dispatch(editProduct(id, qv))
+    },
+    editCart: (orderId, total, status, push) => {
+      dispatch(editCart(orderId, total, status, push))
     },
   }
 }

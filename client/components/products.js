@@ -5,9 +5,10 @@ import Container from 'react-bootstrap/Container'
 import Pagination from 'react-bootstrap/Pagination'
 import queryString from 'query-string'
 import {getOrder, getSessionCart} from '../store'
-import {ProductCard} from './'
 
 import {getPages} from './paginationFunction'
+import {withRouter} from 'react-router-dom'
+import {ProductCard} from '.'
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
@@ -162,10 +163,6 @@ const mapDispatch = (dispatch) => {
       dispatch(getProducts(str, sortBy, page, push))
       //dispatch(getOrder(userId))
     },
-
-    // loadProduct: (id, push) => {
-    //   dispatch(getProduct(id, push))
-    // },
     loadPages: (page, push) => {
       //dispatch(loadPage(page, push))
     },

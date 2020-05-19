@@ -21,6 +21,7 @@ class Product extends Component {
   constructor(props) {
     //console.log('33333333333333333333', props)
     super()
+    this.goToCart = this.goToCart.bind(this)
   }
   async goToCart() {
     const push = this.props.history.push
@@ -59,15 +60,7 @@ class Product extends Component {
       }
       if (sessionCartexist === true) {
         res = await axios.get(`/api/orders/session`)
-        console.log(
-          'in theeeee prrrroducts session',
-          sessionCartexist,
-          res.data,
-          user.id,
-          res.data.id,
-          product.id,
-          product.price
-        )
+
         this.props.addToItem(
           user.id,
           res.data.id,
@@ -80,11 +73,7 @@ class Product extends Component {
       //let res2 = await axios.get(`/api/orders/session`)
       //console.log('response 2', res2.data)
     } else {
-      console.log('this.props.history.push', order)
-
       if (cartExist === false) {
-        console.log('hello from if if if if if fif ', order, cartExist)
-        console.log('from products and  cart exist false')
         await this.props.addCart(
           user.id,
           product.id,
@@ -110,6 +99,7 @@ class Product extends Component {
         //this.props.history.push(`/orders/cart/${user.id}`)
       }
     }
+    push('/products/1?sortBy=AtoZ')
   }
 
   // componentDidMount() {
@@ -139,6 +129,7 @@ class Product extends Component {
               }}
             />
           </Card.Header>
+          {/* <Card.Img variant="top" src={product.img} /> */}
           <Card.Body>
             <Card.Title>{product.title}</Card.Title>
             <p>
@@ -151,6 +142,10 @@ class Product extends Component {
             <Card.Text>Price: ${product.price}</Card.Text>
             <Card.Text>
               Category Name: {product.category ? product.category.name : ''}
+            </Card.Text>
+            <Card.Text>
+              In Stock:{' '}
+              {product.quantity > 0 ? product.quantity : 'OUT OF STOCK'}
             </Card.Text>
             <Button
               className="buttonInProduct"

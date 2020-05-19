@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
-import {logout, getProducts, loadPage} from '../store'
+import {logout, getProducts, loadPage, combineItem} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Image from 'react-bootstrap/Image'
 import {CategoryBar} from './'
 import order, {getSessionCart, getOrder} from '../store/order'
-
+import axios from 'axios'
 function NavLinkCart({order}) {
   console.log('i am the link cart function ', order)
   return (
@@ -23,7 +23,23 @@ function NavLinkCart({order}) {
 class Navbarclass extends Component {
   constructor(props) {
     super()
-    console.log(props)
+
+    this.combineCarts = this.combineCarts.bind(this)
+  }
+  async combineCarts() {
+    const {order, isLoggedIn, isOrderIn, user} = this.props
+    if (isLoggedIn === true && isOrderIn === true) {
+      const res = await axios.get('/api/orders/session')
+      if (res.data) {
+        if (res.data.orderitems.length > 0) {
+          const orderId = order.orderitems[0].orderId
+          res.data.orderitems.map((orderitem) => {
+            this.props.editItem(orderitem.id, orderId)
+          })
+        }
+      }
+      // this.props.load(user.id)
+    }
   }
   componentDidMount() {
     const {user} = this.props
@@ -35,12 +51,27 @@ class Navbarclass extends Component {
       this.props.load(user.id)
     }
   }
+  // componentDidUpdate(prevProp) {
+  //   const {order, isOrderIn, isLoggedIn, user} = this.props
+  //   if (isOrderIn === true && isLoggedIn === true) {
+  //     if (prevProp.order.orderitems.length !== order.orderitems.length) {
+  //       this.props.load(user.id)
+  //     }
+  //   }
+  // }
   render() {
     const navStyle = {color: ' #38495E', fontWeight: '500', fontSize: '120%'}
+    const navStyle2 = {
+      color: ' #38495E',
+      fontWeight: '500',
+
+      fontSize: '150%',
+      margin: '0',
+    }
     //console.log('documenta cookie', document.cookie)
     const {handleClick, isLoggedIn, user, order} = this.props
+    this.combineCarts()
 
-    console.log('documenta cookie', user)
     return (
       <div>
         <NavLinkCart />
@@ -59,7 +90,10 @@ class Navbarclass extends Component {
               alt="Maskerade logo"
             />
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Toggle
+            aria-controls="responsive-navbar-nav"
+            style={{backgroundColor: ' #38495E'}}
+          />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
               {isLoggedIn ? (
@@ -107,19 +141,24 @@ class Navbarclass extends Component {
 
           <Navbar.Brand as={Link} to={`/orders/cart/${user.id || 'session'}`}>
             <img
+              //style={{width: '20%'}}
               src="/images/shop.png"
               width="40px"
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
+
+            <span style={navStyle2}>
+              {order.orderitems ? order.orderitems.length : 0}
+            </span>
           </Navbar.Brand>
-          <i className="fas fa-cart-arrow-down"></i>
+          {/* <i className="fas fa-cart-arrow-down"></i> */}
         </Navbar>
         <div className="hello2">
           <Image src="/images/long3.jpg" fluid style={{width: '100%'}} />
         </div>
         <hr />
-        <CategoryBar />
+        <CategoryBar className="credit" />
         <hr />
       </div>
     )
@@ -135,6 +174,7 @@ const mapState = (state) => {
 
   return {
     isLoggedIn: !!state.user.id,
+    isOrderIn: !!order.orderitems,
     products,
     user,
     order,
@@ -155,6 +195,9 @@ const mapDispatch = (dispatch) => {
     },
     getSession: () => {
       dispatch(getSessionCart())
+    },
+    editItem: (orderitemId, orderId) => {
+      dispatch(combineItem(orderitemId, orderId))
     },
   }
 }

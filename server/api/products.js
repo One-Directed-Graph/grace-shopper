@@ -8,11 +8,8 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      order: [
-        ['categoryId', 'ASC'],
-        ['title', 'ASC'],
-      ],
-      include: {model: Review, attributes: ['rating']},
+      order: [['title', 'ASC']],
+      include: {model: Review, attributes: ['rating', 'description']},
     })
     res.json(products)
   } catch (err) {
@@ -22,7 +19,12 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const product = await Product.findByPk(req.params.id, {include: Category})
+    const product = await Product.findByPk(req.params.id, {
+      include: [
+        {model: Category},
+        {model: Review, attributes: ['rating', 'description']},
+      ],
+    })
     res.json(product)
   } catch (err) {
     next(err)
@@ -57,6 +59,12 @@ router.delete('/:id', async (req, res, next) => {
   } catch (ex) {
     next(ex)
   }
+})
+router.put('/checkout/:id', (req, res, next) => {
+  Product.findByPk(req.params.id)
+    .then((product) => product.update(req.body))
+    .then((product) => res.json(product))
+    .catch(next)
 })
 
 // router.get('/:page?', (req, res, next) => {

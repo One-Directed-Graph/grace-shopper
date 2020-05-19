@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {getPages} from './paginationFunction'
 // import {withRouter} from 'react-router-dom'
 import {getProducts} from '../store'
-import {ProductCard} from './'
+import {ProductCard} from '.'
 
 class DisplayByCategory extends Component {
   constructor() {
@@ -15,7 +15,7 @@ class DisplayByCategory extends Component {
 
   urlProducer(p) {
     const push = this.props.history.push
-    console.log(push)
+    // console.log(push)
     let category = this.props.match.params.category
 
     let pe = p || 1
@@ -26,11 +26,11 @@ class DisplayByCategory extends Component {
     let {categories} = this.props
     const page = this.props.match.params.page || 1
     let categoryToDisplay = categories.find((cat) => {
-      console.log(
-        'hellloooooooooooo display categories i dispaly producer',
-        cat.name,
-        this.props.match.params.category
-      )
+      // console.log(
+      //   'hellloooooooooooo display categories i dispaly producer',
+      //   cat.name,
+      //   this.props.match.params.category
+      // )
       return cat.name === this.props.match.params.category
     })
     if (categoryToDisplay) {
@@ -43,13 +43,13 @@ class DisplayByCategory extends Component {
     const {urlProducer} = this
     const {pagedCategory, categoryToDisplay} = this.displayProducer()
     const page = this.props.match.params.page
-    if (categoryToDisplay) {
-      console.log(
-        'hello in render dispaly categories',
-        pagedCategory,
-        categoryToDisplay.products.length
-      )
-    }
+    // if (categoryToDisplay) {
+    //   console.log(
+    //     'hello in render dispaly categories',
+    //     pagedCategory,
+    //     categoryToDisplay.products.length
+    //   )
+    // }
     return (
       <div>
         <div>
@@ -125,9 +125,6 @@ const mapState = ({products, categories}) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    // loadProduct: (id, push) => {
-    //   dispatch(getProduct(id, push))
-    // },
     load: () => {
       dispatch(getProducts('load'))
     },
