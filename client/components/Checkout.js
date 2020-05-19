@@ -1,4 +1,6 @@
 import React from 'react'
+import Jumbotron from 'react-bootstrap/Jumbotron'
+import Button from 'react-bootstrap/Button'
 import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js'
 import CardSection from './CardSection'
 import axios from 'axios'
@@ -82,10 +84,10 @@ class Checkout extends React.Component {
         <div>
           {this.state.error && <h3>{this.state.error}</h3>}
           {this.state.response && (
-            <div>
+            <Jumbotron>
               <h3>{this.state.response}</h3>{' '}
               <Link to="/products">Shop some more!</Link>
-            </div>
+            </Jumbotron>
           )}
         </div>
         {!this.state.response && (
