@@ -70,7 +70,7 @@ class Products extends Component {
 
   render() {
     const {urlProducer} = this
-    const {products, divided} = this.props
+    const {products, divided, user} = this.props
     const push = this.props.history.push
     const page = this.props.match.params.page
     const sortBy = queryString.parse(this.props.location.search).sortBy
@@ -82,7 +82,14 @@ class Products extends Component {
           <div className="sortBlock">
             <select
               onChange={(ev) => {
-                push(`/products/${page}/?sortBy=${ev.target.value}`)
+                this.props.load(
+                  'no results',
+                  ev.target.value,
+                  page,
+                  user.id,
+                  push
+                )
+                //push(`/products/${page}/?sortBy=${ev.target.value}`)
               }}
             >
               <option>Sort By</option>
