@@ -85,12 +85,9 @@ class Routes extends Component {
           <Route exact path="/orders/cart/:userId" component={Orders} />
           {/* //<Route exact path="/orders/cart/session " component={Orders} /> */}
 
-          <Route path="/products/:page?" component={Products} />
+          {/* <Route path="/products/:page?" component={Products} /> */}
           <Route exact path="/product/:id" component={Product} />
-          <Route
-            path="/category/:category/:page"
-            component={DisplayByCategory}
-          />
+          <Route path="/products/:category/:page?" component={Products} />
           {/*<Route exact path="/products/:id" component={Product} />*/}
           <Route path="/products" component={Products} />
 

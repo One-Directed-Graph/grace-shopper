@@ -128,8 +128,8 @@ class Navbarclass extends Component {
               <Nav className="mr-auto"></Nav>
               <Nav.Link
                 onClick={() => {
-                  this.props.history.push(`/products/1?sortBy=AtoZ`)
-                  this.props.loadPages(1)
+                  this.props.history.push(`/products/all/1?sortBy=AtoZ`)
+                  // this.props.loadPages(1)
                 }}
                 style={navStyle}
               >

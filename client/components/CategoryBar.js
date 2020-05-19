@@ -14,7 +14,7 @@ const CategoryBar = ({categories}) => {
       <Row className="hello">
         {categories.map((category) => (
           <Col key={category.id} md={4} className="colpic">
-            <Link to={`/category/${category.name}/1`} className="linksInNavBar">
+            <Link to={`/products/${category.name}/1`} className="linksInNavBar">
               <Image
                 src={`/images${category.img}`}
                 roundedCircle
