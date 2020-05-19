@@ -18,7 +18,7 @@ async function seed() {
 
   const users = await Promise.all([
     User.create({email: 'cody@email.com', password: '123', admin: true}),
-    User.create({email: 'vinayak@email.com', password: '123', admin: true}),
+    User.create({email: 'khare.vinayak@gmail.com', password: '123'}),
     User.create({email: 'katt@email.com', password: '123', admin: true}),
     User.create({email: 'aleks@email.com', password: '123', admin: true}),
     User.create({email: 'murphy@email.com', password: '123'}),
@@ -292,7 +292,7 @@ async function seed() {
 
   //ORDERS & ORDERITEMS
 
-  const randStatus = ['Cart', 'Processing', 'Completed', 'Cancelled', 'Shipped']
+  const randStatus = ['Cart', 'Processing', 'Shipped']
 
   const orders = await Promise.all(
     users
