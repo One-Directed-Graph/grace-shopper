@@ -5,10 +5,22 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import {updateUser, removeUser} from '../../../store'
 
+//TODO: Error handling
+//TODO: Disable delete if user has order or reviews
+
 /**
  * COMPONENT
  */
+
 const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
+  const disabled = () => {
+    if (userToUpdate.admin) return true
+    if (userToUpdate.orders && userToUpdate.reviews) {
+      if (userToUpdate.orders.length > 0 || userToUpdate.reviews.length > 0)
+        return true
+    }
+  }
+
   return (
     <div id="user-update-form-div">
       <div id="user-udpdate-elements">
@@ -33,7 +45,8 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
         <Button
           inline="true"
           variant="danger"
-          onClick={(evt) => handleDelete(userToUpdate.id, evt.target)}
+          disabled={disabled()}
+          onClick={() => handleDelete(userToUpdate.id)}
         >
           Delete User
         </Button>
@@ -48,12 +61,6 @@ const UserUpdate = ({userToUpdate, handleChange, handleDelete, error}) => {
  */
 
 const mapState = null
-// (state) => {
-//   console.log('in user-update state', state)
-//   return {
-//     state,
-//   }
-// }
 
 const mapDispatch = (dispatch) => {
   return {
@@ -63,9 +70,8 @@ const mapDispatch = (dispatch) => {
       const newValue = evtName === 'admin' ? !admin : !pwReset
       dispatch(updateUser({id, change: {[evtName]: newValue}}))
     },
-    handleDelete(id, evt) {
-      console.log('targer', evt.target)
-      console.log(`updating user ${id}`)
+    handleDelete(id) {
+      console.log(`deleting user ${id}`)
       dispatch(removeUser(id))
     },
   }

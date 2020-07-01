@@ -14,31 +14,27 @@ const Cart = require('./cart')
 //  */
 //Category.belongsTo(Product)
 
+OrderItem.belongsTo(Order, {otherKey: 'sessionId'})
+
 Product.belongsTo(Category)
 Category.hasMany(Product)
 User.hasMany(Review)
+User.hasMany(Order)
 Review.belongsTo(User)
 Review.belongsTo(Product)
 
-//User to Order relationship
+Product.hasMany(Review)
+
 Order.belongsTo(User, {
   foreignKey: {
     allowNull: false,
   },
 })
 
-//OrderDetail to Order
-OrderItem.belongsTo(Order, {
-  foreignKey: {
-    allowNull: false,
-  },
-})
+Order.hasMany(OrderItem)
 
-OrderItem.belongsTo(Product, {
-  foreignKey: {
-    allowNull: false,
-  },
-})
+OrderItem.belongsTo(Product)
+OrderItem.belongsTo(Order)
 
 Product.belongsTo(Category)
 

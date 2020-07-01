@@ -4,46 +4,48 @@ import axios from 'axios'
 /**
  * ACTION TYPES
  */
-const GOT_USER_LIST = 'GOT_USER_LIST'
-const ADDED_USER = 'ADDED_USER'
-const REMOVED_USER = 'REMOVED_USER'
-const UPDATED_USER = 'UPDATE_USER'
+const GET_USER_LIST = 'GET_USER_LIST'
+const ADD_USER = 'ADD_USER'
+const REMOVE_USER = 'REMOVE_USER'
+const UPDATE_USER = 'UPDATE_USER'
 
 /**
  * INITIAL STATE
  */
-const defaultUsers = []
+const defaultUsers = [
+  {id: '', email: '', admin: false, pwReset: false, orders: [], reviews: []},
+]
 
 /**
  * ACTION CREATORS
  */
-const gotUserList = (users) => ({type: GOT_USER_LIST, users})
-const addedUser = (user) => ({type: ADDED_USER, user})
-const removedUser = (id) => ({type: REMOVED_USER, id})
-const updatedUser = (user) => ({type: UPDATED_USER, user})
+const _getUserList = (users) => ({type: GET_USER_LIST, users})
+const _addUser = (user) => ({type: ADD_USER, user})
+const _removeUser = (id) => ({type: REMOVE_USER, id})
+const _updateUser = (user) => ({type: UPDATE_USER, user})
 
 /**
  * THUNK CREATORS
  */
-export const getUserList = () => async (dispatch) => {
-  const users = (await axios.get('/api/users/user-list')).data
-  dispatch(gotUserList(users))
+export const getUserList = (id) => async (dispatch) => {
+  const users = (await axios.get(`/api/users/user-list/${id}`)).data
+  dispatch(_getUserList(users))
 }
 
 export const addUser = (user) => async (dispatch) => {
   const _addedUser = (await axios.put(`/api/users/user-list`, user)).data
-  dispatch(addedUser(_addedUser))
+  dispatch(_addUser(_addedUser))
 }
 
 export const updateUser = (user) => async (dispatch) => {
   const _updatedUser = (await axios.put(`/api/users/user-list`, user)).data
-  dispatch(updatedUser(_updatedUser))
+  dispatch(_updateUser(_updatedUser))
 }
 
 export const removeUser = (id) => {
   return async (dispatch) => {
     await axios.delete(`/api/users/user-list/${id}`)
-    dispatch(removedUser(id))
+    dispatch(_removeUser(id))
   }
 }
 
@@ -52,15 +54,21 @@ export const removeUser = (id) => {
  */
 export default function (state = defaultUsers, action) {
   switch (action.type) {
-    case GOT_USER_LIST:
+    case GET_USER_LIST:
       return action.users
-    case ADDED_USER:
+    case ADD_USER:
       return [...state, action.user]
-    case UPDATED_USER:
-      return [...state].map((user) =>
-        user.id === action.user.id ? action.user : user
-      )
-    case REMOVED_USER:
+    case UPDATE_USER:
+      return state.map((user) => {
+        if (user.id === action.user.id) {
+          const processedUser = {...action.user}
+          processedUser.reviews = user.reviews
+          processedUser.orders = user.orders
+          return processedUser
+        }
+        return user
+      })
+    case REMOVE_USER:
       return [...state].filter((user) => user.id !== action.id)
     default:
       return state

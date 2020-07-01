@@ -35,8 +35,13 @@ export const getCart = () => {
 export const addToCart = (item) => {
   return async (dispatch) => {
     console.log('addToCart thunk')
-    const {productId, quantity, price} = item
-    const newItem = await axios.post('/api/cart', {productId, quantity, price})
+    const {productId, quantity, price, userId} = item
+    const newItem = await axios.post('/api/cart', {
+      productId,
+      quantity,
+      price,
+      userId,
+    })
 
     console.log('addToCart thunk', newItem.data)
     dispatch(_addToCart(newItem.data))
@@ -50,19 +55,24 @@ export default function (state = [], action) {
   switch (action.type) {
     case GET_CART:
       return action.items
+
     case ADD_TO_CART:
+      console.log(state)
       // if new item then add else update existing item's quantity
       const existingItem = state.find(
-        (item) => item.productId === action.productId
+        (item) => item.productId === action.item.productId
       )
       console.log('Inside ADD_CART reducer: ', action.item, existingItem)
       if (existingItem) {
-        state.quantity += action.quantity
+        existingItem.quantity += action.item.quantity
+        return state.map((item) => {
+          if (item.productId === existingItem.productId) {
+            return existingItem
+          }
+        })
       } else {
-        return {...state, ...action.item}
+        return [...state, action.item]
       }
-      return state
-
     default:
       return state
   }

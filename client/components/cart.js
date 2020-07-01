@@ -8,15 +8,16 @@ import Image from 'react-bootstrap/Image'
 //ASSIGNED TO: Vinayak
 
 class Cart extends Component {
-  constructor() {
+  /*   constructor() {
     super()
-  }
-  componentDidMount() {
+  } */
+  /* componentDidMount() {
     this.props.load()
-  }
+  } */
   render() {
     console.log(this.props)
     const cart = this.props.cart
+    console.log(',.,.,.,.,.,.,.,.,.,', this.props, cart)
     const productList = this.props.products
     //  console.log('Cart in render: ',cart)
     //  console.log('Cart in render: ',productList)
@@ -33,6 +34,7 @@ class Cart extends Component {
         <ul className="listgrp">
           {itemList
             ? itemList.map((item) => {
+                console.log('itemitemitem', item)
                 return (
                   <ListGroup horizontal="sm" className="my-2" key={item.id}>
                     <ListGroup.Item>
@@ -66,17 +68,20 @@ class Cart extends Component {
   }
 }
 
-const mapState = ({cart, products}) => {
+const mapState = ({cart, products, user}) => {
+  // console.log('in cart mapstate ', state)
+  //const {cart,products,user} = state
   return {
     cart,
     products,
+    user,
   }
 }
 const mapDispatch = (dispatch) => {
   return {
     load: () => {
-      dispatch(getProducts('load'))
-      dispatch(getCart())
+      // dispatch(getProducts('load'))
+      //  dispatch(getCart())
     },
   }
 }

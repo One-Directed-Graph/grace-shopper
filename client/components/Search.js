@@ -34,7 +34,12 @@ class Search extends Component {
     const {history} = this.props
 
     return (
-      <Form inline>
+      <Form
+        inline
+        onSubmit={(e) => {
+          e.preventDefaulte()
+        }}
+      >
         <FormControl
           className="mr-sm-2"
           value={searchInput}
@@ -47,6 +52,7 @@ class Search extends Component {
 
         <Link to="/displaysearch">
           <Button
+            style={{backgroundColor: ' #38495e', border: 'none'}}
             onClick={() => {
               let searchResults = this.search()
               //console.log(history)

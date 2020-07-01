@@ -3,7 +3,7 @@ const router = require('express').Router()
 const Cart = require('../db/models/cart')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+/* router.get('/', async (req, res, next) => {
   try {
     const cart = await Cart.findAll()
 
@@ -12,7 +12,18 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+ */
 
+/*  router.get('/',(req,res,next)=>{
+    Order.findAll({where: {
+                    userId: //Userid
+                  },
+                  {
+                    status: //CART
+                  }
+            })
+})
+ */
 router.post('/', (req, res, next) => {
   Cart.create(req.body)
     .then((resp) => {

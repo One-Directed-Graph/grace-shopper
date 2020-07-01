@@ -14,12 +14,24 @@ const A_Z = 'A_Z'
 const Z_A = 'Z_A'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const CREATE_PRODUCT = 'CREATE_PRODUCT'
+const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 
 /**
  * INITIAL STATE
  */
 
-const defaultProducts = []
+const defaultProducts = [
+  {
+    id: '',
+    title: '',
+    description: '',
+    price: 0,
+    quantity: 0,
+    img: '',
+    categoryId: '',
+    reviews: [],
+  },
+]
 
 /**
  * ACTION CREATORS
@@ -36,13 +48,15 @@ const _Categories = (products, categories) => ({
 const _aToz = (products) => ({type: A_Z, products})
 const _zToa = (products) => ({type: Z_A, products})
 const _createProduct = (product) => ({type: CREATE_PRODUCT, product})
+const _updateProduct = (product) => ({type: UPDATE_PRODUCT, product})
+const _removeProduct = (id) => ({type: REMOVE_PRODUCT, id})
 
 /**
  * THUNK CREATORS
  */
 export const getProducts = (str, sortBy, page, push) => {
-  console.log('from getProducts', sortBy, str)
-
+  console.log('from getProducts', sortBy, str, page, push)
+  //page = page || 1
   return async (dispatch) => {
     if (str === 'load') {
       //console.log('555555', products.length)
@@ -50,35 +64,46 @@ export const getProducts = (str, sortBy, page, push) => {
 
       dispatch(_getProducts(products.data))
       //dispatch(_aToz(products.data))
-      dispatch(loadPage(page, push))
+      //dispatch(loadPage(page))
     }
     if (sortBy === 'Categories') {
       const products = await store.getState().products
       const categories = await store.getState().categories
       dispatch(_Categories(products, categories))
-      dispatch(loadPage(page))
+      //let products2 = await store.getState().products
+      //dispatch(_getProducts(products2))
+      push(`/products/${page}/?sortBy=${sortBy}`)
     }
     if (sortBy === 'LowToHigh') {
       const products = await store.getState().products
 
       dispatch(_LowToHigh(products))
-      dispatch(loadPage(page))
+      //let products2 = await store.getState().products
+      //dispatch(_getProducts(products2))
+      push(`/products/${page}/?sortBy=${sortBy}`)
+      //dispatch(loadPage(page))
     }
     if (sortBy === 'HighToLow') {
       const products = await store.getState().products
+      //push(`/products/${page}?${sortBy}`)
       dispatch(_highToLow(products))
+      push(`/products/${page}/?sortBy=${sortBy}`)
       console.log('from low to high', products)
-      dispatch(loadPage(page))
+
+      //dispatch(loadPage(page))
     }
+
     if (sortBy === 'AtoZ') {
       const products = await store.getState().products
       dispatch(_aToz(products))
-      dispatch(loadPage(page))
+      push(`/products/${page}/?sortBy=${sortBy}`)
+      //dispatch(loadPage(page))
     }
     if (sortBy === 'ZtoA') {
       const products = await store.getState().products
       dispatch(_zToa(products))
-      dispatch(loadPage(page))
+      push(`/products/${page}/?sortBy=${sortBy}`)
+      //dispatch(loadPage(page))
     }
     if (str === 'do nothing') {
       let products = store.getState().products
@@ -90,6 +115,19 @@ export const getProducts = (str, sortBy, page, push) => {
 export const createProduct = (product) => async (dispatch) => {
   const newProduct = (await axios.post('/api/products', product)).data
   dispatch(_createProduct(newProduct))
+}
+
+export const updateProduct = (product) => async (dispatch) => {
+  const newProduct = (await axios.put(`/api/products/${product.id}`, product))
+    .data
+  dispatch(_updateProduct(newProduct))
+}
+
+export const removeProduct = (id) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/products/${id}`)
+    dispatch(_removeProduct(id))
+  }
 }
 
 // export const lowToHigh = () => {
@@ -170,6 +208,21 @@ export default function (state = defaultProducts, action) {
 
   if (action.type === CREATE_PRODUCT) {
     return [action.product, ...state]
+  }
+
+  if (action.type === UPDATE_PRODUCT) {
+    return state.map((product) => {
+      if (product.id === action.product.id) {
+        const processedProduct = {...action.product}
+        processedProduct.reviews = product.reviews
+        return processedProduct
+      }
+      return product
+    })
+  }
+
+  if (action.type === REMOVE_PRODUCT) {
+    return [...state].filter((product) => product.id !== action.id)
   }
 
   return state

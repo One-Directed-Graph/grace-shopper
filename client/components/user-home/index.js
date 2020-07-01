@@ -10,7 +10,9 @@ export {default as Reviews} from './user-comps/reviews'
 export {default as UserList} from './user-admin-comps/user-list'
 export {default as OrderList} from './user-admin-comps/order-list'
 export {default as ProductList} from './user-admin-comps/product-list'
-export {default as ProductCreate} from './user-actions/product-create'
-
-//forms
+export {
+  ProductCreate,
+  ProductUpdate,
+} from './user-actions/product-create-update'
 export {default as UserUpdate} from './user-actions/user-update'
+export {default as OrderUpdate} from './user-actions/order-update'

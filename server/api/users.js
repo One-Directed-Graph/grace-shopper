@@ -1,12 +1,13 @@
 const express = require('express')
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {Op} = require('sequelize')
+const {User, Order, Review} = require('../db/models')
 module.exports = router
 
 router.use(express.json())
 
 router.get('/', async (req, res, next) => {
-  console.log('nmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmn')
+  //console.log('nmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmnmn')
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
@@ -20,11 +21,20 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/user-list', (req, res, next) => {
+router.get('/user-list/:id', (req, res, next) => {
   console.log('getting user list for admin')
   User.findAll({
-    where: {admin: false},
+    where: {
+      id: {
+        [Op.ne]: req.params.id,
+      },
+    },
     attributes: ['id', 'email', 'admin', 'pwReset'],
+    order: [
+      ['admin', 'ASC'],
+      ['email', 'ASC'],
+    ],
+    include: [{model: Review}, {model: Order}],
   })
     .then((users) => res.send(users))
     .catch(next)
@@ -41,6 +51,7 @@ router.put('/user-list', (req, res, next) => {
   User.findByPk(req.body.id)
     .then((user) => user.update(change))
     .then((user) => res.send(user))
+    .catch(next)
 })
 
 router.delete('/user-list/:id', async (req, res, next) => {

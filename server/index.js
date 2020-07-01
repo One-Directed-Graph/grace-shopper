@@ -2,9 +2,7 @@ const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
-const cookieParser = require('cookie-parser')
 const session = require('express-session')
-
 const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
@@ -12,6 +10,8 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
+
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 //app.use(cookieParser())
 app.use(session({secret: 'Shh, its a secret!'}))
-
+//console.log(sessionStore.create())
 /**
  * In your development environment, you can keep all of your
  * app's secret API keys in a file called `secrets.js`, in your project
@@ -56,41 +56,54 @@ const createApp = () => {
   app.use(compression())
 
   // session middleware with passport
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET || 'my best friend is Cody',
-      store: sessionStore,
-      resave: true,
-      saveUninitialized: false,
-    })
-  )
+  // app.use(
+  //   session({
+  //     secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+  //     store: sessionStore,
+  //     resave: true,
+  //     saveUninitialized: false,
+  //   })
+  // )
   app.use(passport.initialize())
   app.use(passport.session())
 
-  app.get('/api/sessionId', function (req, res) {
-    res.send(req.session.id)
-    if (req.session.page_views) {
-      console.log(
-        '<><><><><><><><><><><><><><><><><><><><><><><',
-        req.session.id,
-        req.session.page_views
-      )
-      req.session.page_views++
-      res.send('You visited this page ' + req.session.page_views + ' times')
-    } else {
-      console.log(
-        '<><>>?>?><><><><>?<?<>?<>?<>?<>?',
-        req.session.id,
-        req.session.page_views
-      )
-      req.session.page_views = 1
-      res.send('Welcome to this page for the first time!')
-    }
-  })
+  // app.get('/', function (req, res) {
+  //   // sessionStore.create({sid: 'hello'})
+  //   //Sessions.create(req.ssesion)
+  //   //req.session.alex = 'goodboy'
+  //   //console.log(',.,.,.,.,.,.,.,.,.,.,.,.', req.session.id)
+  //   //console.log(req.session.alex)
+  //   // if (req.session.page_views) {
+  //   //   console.log(req.session.page_views)
+  //   //   req.session.page_views++
+  //   //   res.send('You visited this page ' + req.session.page_views + ' times')
+  //   // } else {
+  //   //console.log(req.session.page_views)
+  //   //req.session.page_views = 1
+  //   //   res.send('Welcome to this page for the first time!')
+  //   // }
+  // })
 
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
+
+  app.post('/secret', async (req, res, next) => {
+    // Set your secret key. Remember to switch to your live secret key in production!
+    // See your keys here: https://dashboard.stripe.com/account/apikeys
+    try {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: req.body.amount,
+        currency: 'USD',
+        // Verify your integration in this guide by including this parameter
+        metadata: {integrationCheck: 'accept_a_payment'},
+      })
+      const intent = paymentIntent
+      res.json(intent)
+    } catch (ex) {
+      next(ex)
+    }
+  })
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
@@ -121,7 +134,8 @@ const createApp = () => {
     res.status(err.status || 500).send(err.message || 'Internal server error.')
   })
 }
-
+//*************************Stripe  */
+//*************************** */
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
   const server = app.listen(PORT, () =>
