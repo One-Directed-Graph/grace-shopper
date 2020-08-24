@@ -73,7 +73,7 @@ class Product extends Component {
       //let res2 = await axios.get(`/api/orders/session`)
       //console.log('response 2', res2.data)
     } else {
-      if (cartExist === false) {
+      if (order.userId !== user.id) {
         await this.props.addCart(
           user.id,
           product.id,
@@ -211,7 +211,7 @@ const mapDispatch = (dispatch) => {
     },
     addSessionCart: (userId, productId, price, qv, push) => {
       dispatch(createSessionCart(userId, productId, price, qv, push))
-      dispatch(getSessionCart())
+      //dispatch(getSessionCart())
     },
   }
 }

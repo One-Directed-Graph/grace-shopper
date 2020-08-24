@@ -45,7 +45,7 @@ export const getSessionCart = () => {
     console.log('response from the getssesioncart', res)
     if (res === null) {
       //console.log('create create create create', id)
-      //createSessionCart(id)
+      // createSessionCart()
     } else {
       //console.log('in getOrder thunk', res.data)
       dispatch(_getSessionCart(res.data))
@@ -62,17 +62,18 @@ export const createSessionCart = (userId, productId, price, qv, push) => {
     //res.data
     //),
     dispatch(_createSessionCart(res.data))
-    addItems(userId, res.data.id, productId, price, qv, push)
+    dispatch(addItems(userId, res.data.id, productId, price, qv, push))
 
     //push(`/orders/cart/${res.data.userId}`)
   }
 }
 export const getOrder = (id) => {
-  //console.log('id from getOrder idcfrom getOrder', id)
+  console.log('id from getOrder idcfrom getOrder', id)
   return async (dispatch) => {
     const res = await axios.get(`/api/orders/cart/${id}`)
-    if (res === null) {
-      //console.log('create create create create', id)
+    console.log(res)
+    if (res.data == null) {
+      console.log('create create create create', id)
       createCart(id)
     } else {
       //console.log('in getOrder thunk', res.data)
@@ -90,7 +91,7 @@ export const createCart = (id, productid, productprice, qv, push, product) => {
     // console.log('post post post post in getOrder thunk', res.data),
     dispatch(_createCart(res.data))
 
-    addItems(id, res.data.id, productid, productprice, qv, push)
+    dispatch(addItems(id, res.data.id, productid, productprice, qv, push))
 
     //push(`/orders/cart/${res.data.userId}`)
   }

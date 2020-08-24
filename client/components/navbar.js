@@ -44,7 +44,8 @@ class Navbarclass extends Component {
   componentDidMount() {
     const {user} = this.props
     console.log('userisdididididididid', user.id)
-    const isLoggedIn = this.state
+    const {isLoggedIn} = this.props
+    console.log('islogin from navbar', isLoggedIn)
     if (isLoggedIn === false) {
       this.props.getSession()
     } else {
@@ -175,11 +176,11 @@ const mapState = (state) => {
   const {user, order} = state
 
   return {
-    isLoggedIn: !!state.user.id,
-    isOrderIn: !!order.orderitems,
     products,
     user,
     order,
+    isLoggedIn: !!state.user.id,
+    isOrderIn: !!order.orderitems,
   }
 }
 
@@ -192,8 +193,8 @@ const mapDispatch = (dispatch) => {
       //dispatch(loadPage(pg, push))
     },
     load: (userId) => {
-      dispatch(getProducts('load'))
       dispatch(getOrder(userId))
+      dispatch(getProducts('load'))
     },
     getSession: () => {
       dispatch(getSessionCart())
