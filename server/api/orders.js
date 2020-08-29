@@ -44,15 +44,18 @@ router.post('/session', async (req, res, next) => {
 })
 
 router.get('/session', async (req, res, next) => {
-  Order.findOne({
-    where: {sessionId: req.session.id},
-    include: {model: OrderItem, include: {model: Product}}, //include: {model: Product}
-  })
-    .then((response) => {
-      console.log('><><><><><><><><><><<><><><><>><><><>><><', response)
-      res.send(response)
+  console.log('req.session.id', req.session.id)
+  try {
+    const sessionCart = await Order.findOne({
+      where: {sessionId: req.session.id},
+      include: {model: OrderItem, include: {model: Product}}, //include: {model: Product}
     })
-    .catch(next)
+    console.log('><><><><><><><><><><<><><><><>><><><>><><', sessionCart)
+    res.send(sessionCart)
+  } catch (err) {
+    console.log('errerrerrerrerrerr', err)
+    next(err)
+  }
 })
 
 router.get('/order-list', async (req, res, next) => {

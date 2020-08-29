@@ -16,7 +16,8 @@ class Search extends Component {
       searchOutput: [],
     }
   }
-  search = () => {
+  search(e) {
+    //e.preventDefault()
     const {products} = this.props
 
     const {searchInput, searchOutput} = this.state
@@ -29,40 +30,88 @@ class Search extends Component {
     this.setState({searchOutput: searchList})
     return searchList
   }
+  componentDidMount() {
+    console.log('hello grom search')
+  }
   render() {
     const {searchInput, searchOutput} = this.state
     const {history} = this.props
 
     return (
-      <Form
-        inline
-        onSubmit={(e) => {
-          e.preventDefaulte()
-        }}
-      >
-        <FormControl
-          className="mr-sm-2"
-          value={searchInput}
-          type="text"
-          placeholder="search"
-          onChange={(ev) => {
-            this.setState({searchInput: ev.target.value})
-          }}
-        />
-
-        <Link to="/displaysearch">
-          <Button
-            style={{backgroundColor: ' #38495e', border: 'none'}}
-            onClick={() => {
-              let searchResults = this.search()
-              //console.log(history)
-              this.props.sendSearch(searchResults)
+      <div>
+        <a href="javascript:void(0);" className="nav-link search_trigger">
+          <i className="linearicons-magnifier"></i>
+        </a>
+        <div className="search_wrap">
+          <span className="close-search">
+            <i className="ion-ios-close-empty"></i>
+          </span>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
             }}
           >
-            search
-          </Button>
-        </Link>
-      </Form>
+            <input
+              type="text"
+              placeholder="Search"
+              className="form-control"
+              id="search_input"
+              value={this.state.searchInput}
+              onChange={(ev) => {
+                console.log(ev.target.value)
+                this.setState({searchInput: ev.target.value})
+              }}
+            />
+            <Link to="/displaysearch">
+              <button
+                //type="submit"
+                className="search_icon"
+                onClick={(e) => {
+                  let searchResults = this.search(e)
+                  console.log(this.props.searchInput)
+                  console.log(searchResults)
+                  this.props.sendSearch(searchResults)
+
+                  $('.search_wrap,.search_overlay').removeClass('open')
+                  $('body').removeClass('search_open')
+                }}
+              >
+                <i className="ion-ios-search-strong"></i>
+              </button>
+            </Link>
+          </form>
+        </div>
+        <div className="search_overlay"></div>
+      </div>
+      // <Form
+      //   inline
+      //   onSubmit={(e) => {
+      //     e.preventDefaulte()
+      //   }}
+      // >
+      //   <FormControl
+      //     className="mr-sm-2"
+      //     value={searchInput}
+      //     type="text"
+      //     placeholder="search"
+      //     onChange={(ev) => {
+      //       this.setState({searchInput: ev.target.value})
+      //     }}
+      //   />
+
+      //   <Link to="/displaysearch">
+      //     <Button
+      //       style={{backgroundColor: ' #38495e', border: 'none'}}
+      //       onClick={() => {
+      //         let searchResults = this.search()
+      //         //console.log(history)
+      //         this.props.sendSearch(searchResults)
+      //       }}
+      //     >
+      //       search
+      //     </Button>
+      //   </Link>
+      // </Form>
     )
   }
 }
@@ -75,6 +124,7 @@ const mapState = ({products}) => {
 const mapDispatch = (dispatch) => {
   return {
     sendSearch: (searchResults) => {
+      console.log('from dispatch search result', searchResults)
       dispatch(getSearchProducts(searchResults))
     },
   }

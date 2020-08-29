@@ -60,7 +60,7 @@ class Product extends Component {
       }
       if (sessionCartexist === true) {
         res = await axios.get(`/api/orders/session`)
-
+        console.log()
         this.props.addToItem(
           user.id,
           res.data.id,

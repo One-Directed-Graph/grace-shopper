@@ -107,7 +107,8 @@ const createApp = () => {
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
-  //app.use(express.static(path.join(__dirname, './assets/images')))
+  app.use(express.static(path.join(__dirname, './assets/images')))
+
   app.use('/assets', express.static(path.join(__dirname, './assets')))
   app.use(express.static('public'))
   // any remaining requests with an extension (.js, .css, etc.) send 404
@@ -117,6 +118,7 @@ const createApp = () => {
       const err = new Error('Not found')
       err.status = 404
       next(err)
+      console.log('erererererer', err)
     } else {
       next()
     }
@@ -129,7 +131,7 @@ const createApp = () => {
 
   // error handling endware
   app.use((err, req, res, next) => {
-    console.error(err)
+    console.error('iririririririri', err)
     console.error(err.stack)
     res.status(err.status || 500).send(err.message || 'Internal server error.')
   })

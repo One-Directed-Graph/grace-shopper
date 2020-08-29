@@ -40,6 +40,7 @@ export const getItems = () => {
   }
 }
 export const combineItem = (orderitemId, orderId) => {
+  console.log('store combine item called?')
   return async (dispatch) => {
     const newItem = await axios.put(`/api/items/${orderitemId}`, {
       orderId: orderId,

@@ -45,7 +45,8 @@ export const getSessionCart = () => {
     console.log('response from the getssesioncart', res)
     if (res === null) {
       //console.log('create create create create', id)
-      // createSessionCart()
+      dispatch(createSessionCart())
+      dispatch(_getSessionCart(res.data))
     } else {
       //console.log('in getOrder thunk', res.data)
       dispatch(_getSessionCart(res.data))
