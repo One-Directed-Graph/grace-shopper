@@ -52,7 +52,9 @@ app.get('*', function (req, res, next) {
     res.redirect('https://' + req.hostname + req.url)
   else next() /* Continue to other routes if we're not redirecting */
 })
-
+app.get('/', function (req, res) {
+  res.redirect('./server/index.html')
+})
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
