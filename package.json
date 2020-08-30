@@ -13,7 +13,7 @@
     "build-client-watch": "webpack -w",
     "deploy": "script/deploy",
     "heroku-token": "script/encrypt-heroku-auth-token.js",
-    "lint": "eslint ./ --ignore-path .gitignore",
+    "lint": "eslint ./ --ignore-path .gitignore ./public/js",
     "lint-fix": "npm run lint -- --fix",
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
     "postinstall": "touch secrets.js",
@@ -130,6 +130,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/username/repository.git"
+    "url": "git://github.com/One-Directed-Graph/grace-shopper.git"
   }
 }
