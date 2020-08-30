@@ -104,7 +104,9 @@ const createApp = () => {
       next(ex)
     }
   })
-
+  // app.get('/', function (req, res) {
+  //   res.redirect('./server/index.html')
+  // })
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
   app.use(express.static(path.join(__dirname, './assets/images')))
