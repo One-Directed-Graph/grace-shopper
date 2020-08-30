@@ -52,9 +52,9 @@ app.get('*', function (req, res, next) {
     res.redirect('https://' + req.hostname + req.url)
   else next() /* Continue to other routes if we're not redirecting */
 })
-app.get('/', function (req, res) {
-  res.redirect('./index.js')
-})
+// app.get('/', function (req, res) {
+//   res.redirect('./index.js')
+// })
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
@@ -116,7 +116,7 @@ const createApp = () => {
     }
   })
   // app.get('/', function (req, res) {
-  //   res.redirect('./server/index.html')
+  //   res.redirect('./public/index.html')
   // })
   // static file-serving middleware
   app.use(express.static('public'))
