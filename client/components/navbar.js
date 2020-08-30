@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
-import {logout, getProducts, loadPage, combineItem} from '../store'
+import {logout, getProducts, loadPage, combineItem, destroyItem} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -118,16 +118,27 @@ class Navbarclass extends Component {
                   <div className="text-center text-md-right">
                     <ul className="header_list">
                       {isLoggedIn ? (
-                        <li
-                          onClick={() => {
-                            handleClick()
-                          }}
+                        <div
+                          style={{alignItems: 'inline'}}
+                          className="header_list"
                         >
-                          <Link to="/logout">
-                            <i className="ti-user"></i>
-                            <span>logout</span>
-                          </Link>
-                        </li>
+                          <li>
+                            <Link to="/account">
+                              {/* <i className="ti-user"></i> */}
+                              <span>account</span>
+                            </Link>
+                          </li>
+                          <li
+                            onClick={() => {
+                              handleClick()
+                            }}
+                          >
+                            <Link to="/logout">
+                              <i className="ti-user"></i>
+                              <span>logout</span>
+                            </Link>
+                          </li>
+                        </div>
                       ) : (
                         <li>
                           <Link to="/login">
@@ -214,7 +225,15 @@ class Navbarclass extends Component {
                               return (
                                 <li>
                                   <a href="#" className="item_remove">
-                                    <i className="ion-close"></i>
+                                    <i
+                                      className="ion-close"
+                                      onClick={() => {
+                                        this.props.destroyItems(
+                                          user.id,
+                                          item.id
+                                        )
+                                      }}
+                                    ></i>
                                   </a>
                                   <a href="#">
                                     <img
@@ -307,6 +326,10 @@ const mapDispatch = (dispatch) => {
     },
     editItem: (orderitemId, orderId) => {
       dispatch(combineItem(orderitemId, orderId))
+    },
+    destroyItems: (userId, id) => {
+      dispatch(getOrder(userId))
+      dispatch(destroyItem(id))
     },
   }
 }

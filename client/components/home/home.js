@@ -1,7 +1,9 @@
 import React from 'react'
 import {HomeCarousel} from './HomeCarousel'
 import WhyUs from './whyUs'
-// import {HomeFooter} from './HomeFooter'
+import {CategoryBar} from './categoryBar'
+import {ShopInfo} from './ShopInfo'
+import {Footer} from './Footer'
 
 export function Home() {
   return (
@@ -15,6 +17,9 @@ export function Home() {
       </div>
       <HomeCarousel />
       <WhyUs />
+      <CategoryBar />
+      <ShopInfo />
+      <Footer />
     </div>
   )
 }

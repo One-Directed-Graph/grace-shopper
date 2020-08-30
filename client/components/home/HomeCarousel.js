@@ -48,7 +48,7 @@ export const HomeCarousel = () => {
                         </h2>
                         <Link
                           className="btn btn-fill-out rounded-0 staggered-animation text-uppercase"
-                          to="/products/1/?sortBy=AtoZ"
+                          to="/category/medical/1"
                           data-animation="slideInLeft"
                           data-animation-delay="1.5s"
                         >
@@ -86,7 +86,7 @@ export const HomeCarousel = () => {
                         </h2>
                         <Link
                           className="btn btn-fill-out rounded-0 staggered-animation text-uppercase"
-                          to="/products/1/?sortBy=AtoZ"
+                          to="/category/handmade/1"
                           data-animation="slideInLeft"
                           data-animation-delay="1.5s"
                         >
@@ -125,7 +125,7 @@ export const HomeCarousel = () => {
                         </h2>
                         <Link
                           className="btn btn-fill-out rounded-0 staggered-animation text-uppercase"
-                          to="/products/1/?sortBy=AtoZ"
+                          to="/category/fashion/1"
                           data-animation="slideInLeft"
                           data-animation-delay="1.5s"
                         >

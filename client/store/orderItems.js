@@ -75,7 +75,7 @@ export const addItems = (userId, orderId, productId, price, qv, push) => {
     dispatch(_addItems(newItem.data))
     dispatch(_addToOrder(newItem.data))
     //dispatch(getOrder())
-    // push(`/orders/cart/${userId}`)
+    //push(`products/1?sortBy=AtoZ`)
   }
 }
 /**
