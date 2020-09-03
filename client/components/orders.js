@@ -47,7 +47,10 @@ class Orders extends Component {
     let totalObj = {
       tax: (total * 0.0825).toFixed(2),
       total: total.toFixed(2),
-      totalTax: (total * 0.0825).toFixed(2) * 1 + total.toFixed(2) * 1,
+      totalTax: (
+        (total * 0.0825).toFixed(2) * 1 +
+        total.toFixed(2) * 1
+      ).toFixed(2),
     }
     return totalObj
   }
@@ -107,98 +110,91 @@ class Orders extends Component {
                   <tbody>
                     {order.orderitems ? (
                       order.orderitems.map((item, idx) => {
-                        if (item.product) {
-                          return (
-                            <tr>
-                              <td class="product-thumbnail">
-                                <a href="#">
-                                  <img
-                                    src={
-                                      item.product
-                                        ? item.product.img
-                                        : 'No Image'
-                                    }
-                                    alt="product1"
-                                  />
-                                </a>
-                              </td>
-                              <td class="product-name" data-title="Product">
-                                <a href="#">{item.product.title}</a>
-                              </td>
-                              <td class="product-price" data-title="Price">
-                                {item.product.price}
-                              </td>
-                              <td
-                                class="product-quantity"
-                                data-title="Quantity"
-                              >
-                                <div class="quantity">
-                                  <input
-                                    type="button"
-                                    value="-"
-                                    class="minus"
-                                    onClick={(e) => {
-                                      console.log('quantity', quantity)
-                                      if (quantity * 1 > 0) {
-                                        this.setState({
-                                          quantity: item.quantity * 1 - 1,
-                                        })
-                                        this.props.change(
-                                          userId,
-                                          item.id,
-                                          item.quantity * 1 - 1
-                                        )
-                                        //this.setState({quantity: 1})
-                                      }
-                                      if (quantity * 1 <= 0) {
-                                        return this.props.destroyItems(
-                                          userId,
-                                          item.id
-                                        )
-                                      }
-                                    }}
-                                  />
-                                  <input
-                                    type="text"
-                                    name="quantity"
-                                    value={item.quantity}
-                                    title="Qty"
-                                    class="qty"
-                                    size="4"
-                                  />
-                                  <input
-                                    type="button"
-                                    value="+"
-                                    class="plus"
-                                    onClick={(e) => {
+                        return (
+                          <tr>
+                            <td class="product-thumbnail">
+                              <a href="#">
+                                <img
+                                  src={
+                                    item.product ? item.product.img : 'No Image'
+                                  }
+                                  alt="product1"
+                                />
+                              </a>
+                            </td>
+                            <td class="product-name" data-title="Product">
+                              <a href="#">
+                                {item.product ? item.product.title : 'loading'}
+                              </a>
+                            </td>
+                            <td class="product-price" data-title="Price">
+                              {item.product ? item.product.price : 'loading'}
+                            </td>
+                            <td class="product-quantity" data-title="Quantity">
+                              <div class="quantity">
+                                <input
+                                  type="button"
+                                  value="-"
+                                  class="minus"
+                                  onClick={(e) => {
+                                    console.log('quantity', quantity)
+                                    if (quantity * 1 > 0) {
+                                      this.setState({
+                                        quantity: item.quantity * 1 - 1,
+                                      })
                                       this.props.change(
                                         userId,
                                         item.id,
-                                        item.quantity * 1 + 1
+                                        item.quantity * 1 - 1
                                       )
                                       //this.setState({quantity: 1})
-                                    }}
-                                  />
-                                </div>
-                              </td>
-                              <td class="product-subtotal" data-title="Total">
-                                {(item.price * 1 * item.quantity * 1).toFixed(
-                                  2
-                                )}
-                              </td>
-                              <td class="product-remove" data-title="Remove">
-                                <a href="#">
-                                  <i
-                                    class="ti-close"
-                                    onClick={() => {
-                                      this.props.destroyItems(userId, item.id)
-                                    }}
-                                  ></i>
-                                </a>
-                              </td>
-                            </tr>
-                          )
-                        }
+                                    }
+                                    if (quantity * 1 <= 0) {
+                                      return this.props.destroyItems(
+                                        userId,
+                                        item.id
+                                      )
+                                    }
+                                  }}
+                                />
+                                <input
+                                  type="text"
+                                  name="quantity"
+                                  value={item.quantity}
+                                  title="Qty"
+                                  class="qty"
+                                  size="4"
+                                />
+                                <input
+                                  type="button"
+                                  value="+"
+                                  class="plus"
+                                  onClick={(e) => {
+                                    this.props.change(
+                                      userId,
+                                      item.id,
+                                      item.quantity * 1 + 1
+                                    )
+                                    //this.setState({quantity: 1})
+                                  }}
+                                />
+                              </div>
+                            </td>
+                            <td class="product-subtotal" data-title="Total">
+                              {(item.price * 1 * item.quantity * 1).toFixed(2)}
+                            </td>
+                            <td class="product-remove" data-title="Remove">
+                              <a href="#">
+                                <i
+                                  class="ti-close"
+                                  onClick={() => {
+                                    this.props.destroyItems(userId, item.id)
+                                  }}
+                                ></i>
+                              </a>
+                            </td>
+                          </tr>
+                        )
                       })
                     ) : (
                       <spam>loading</spam>

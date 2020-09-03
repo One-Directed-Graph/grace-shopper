@@ -238,7 +238,7 @@ const mapDispatch = (dispatch) => {
   return {
     load: (str, sortBy = 'AtoZ', page = 1, userId, push) => {
       dispatch(getProducts(str, sortBy, page, push))
-      //dispatch(getOrder(userId))
+      dispatch(getOrder(userId))
     },
     loadPages: (page, push) => {
       //dispatch(loadPage(page, push))
