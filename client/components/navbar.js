@@ -146,12 +146,22 @@ class Navbarclass extends Component {
                           </li>
                         </div>
                       ) : (
-                        <li>
-                          <Link to="/login">
-                            <i className="ti-user"></i>
-                            <span>Login</span>
-                          </Link>
-                        </li>
+                        <div
+                          style={{alignItems: 'inline'}}
+                          className="header_list"
+                        >
+                          <li>
+                            <Link to="/signup">
+                              <span>Sign Up</span>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to="/login">
+                              <i className="ti-user"></i>
+                              <span>Login</span>
+                            </Link>
+                          </li>
+                        </div>
                       )}
                     </ul>
                   </div>

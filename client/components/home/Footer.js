@@ -11,7 +11,10 @@ export const Footer = () => {
                 <div className="widget">
                   <div className="footer_logo">
                     <a href="#">
-                      <img src="assets/images/logo_light.png" alt="logo" />
+                      <img
+                        src="/images/imageSite/maskerade_logo_white.png"
+                        alt="logo"
+                      />
                     </a>
                   </div>
                   <p>
