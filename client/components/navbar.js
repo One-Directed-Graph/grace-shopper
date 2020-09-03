@@ -248,39 +248,43 @@ class Navbarclass extends Component {
                       <ul className="cart_list">
                         {order.orderitems
                           ? order.orderitems.map((item, idx) => {
-                              // console.log('order from nabar', item)
-                              return (
-                                <li>
-                                  <a href="#" className="item_remove">
-                                    <i
-                                      className="ion-close"
-                                      onClick={() => {
-                                        this.props.destroyItems(
-                                          user.id,
-                                          item.id
-                                        )
-                                      }}
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <img
-                                      src={item.product ? item.product.img : ''}
-                                      alt="cart_thumb1"
-                                    />
-                                    {item.product ? item.product.title : ''}
-                                  </a>
-                                  <span className="cart_quantity">
-                                    {' '}
-                                    {item.quantity}
-                                    {'x '}
-                                    <span className="cart_amount">
+                              if (item.product) {
+                                // console.log('order from nabar', item)
+                                return (
+                                  <li>
+                                    <a href="#" className="item_remove">
+                                      <i
+                                        className="ion-close"
+                                        onClick={() => {
+                                          this.props.destroyItems(
+                                            user.id,
+                                            item.id
+                                          )
+                                        }}
+                                      ></i>
+                                    </a>
+                                    <a href="#">
+                                      <img
+                                        src={
+                                          item.product ? item.product.img : ''
+                                        }
+                                        alt="cart_thumb1"
+                                      />
+                                      {item.product ? item.product.title : ''}
+                                    </a>
+                                    <span className="cart_quantity">
                                       {' '}
-                                      <span className="price_symbole">$</span>
+                                      {item.quantity}
+                                      {'x '}
+                                      <span className="cart_amount">
+                                        {' '}
+                                        <span className="price_symbole">$</span>
+                                      </span>
+                                      {item.price}
                                     </span>
-                                    {item.price}
-                                  </span>
-                                </li>
-                              )
+                                  </li>
+                                )
+                              }
                             })
                           : ''}
                       </ul>

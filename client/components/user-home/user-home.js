@@ -28,6 +28,25 @@ export class UserHome extends Component {
   constructor() {
     super()
     this.chooseLoad = this.chooseLoad.bind(this)
+    this.combineCarts = this.combineCarts.bind(this)
+  }
+  async combineCarts() {
+    const {order, isLoggedIn, isOrderIn, user} = this.props
+    if (isLoggedIn === true && isOrderIn === true) {
+      const res = await axios.get('/api/orders/session')
+      console.log('res', res)
+      if (res.data) {
+        console.log('combine carts from nav bar', res.data)
+        if (res.data.orderitems.length > 0) {
+          const orderId = order.orderitems[0].orderId
+          res.data.orderitems.map((orderitem) => {
+            console.log('combine carts from nav bar')
+            this.props.editItem(orderitem.id, orderId)
+          })
+        }
+      }
+      // this.props.load(user.id)
+    }
   }
   componentDidMount() {
     const {admin, id} = this.props.user
@@ -68,7 +87,7 @@ export class UserHome extends Component {
       {path: 'orders', name: 'Orders', component: Orders},
     ]
     const linkToList = admin ? adminLinkTo : userLinkTo
-
+    this.combineCarts()
     return (
       <div id="user-home">
         <h4>Account Info</h4>
@@ -107,8 +126,19 @@ export class UserHome extends Component {
 /**
  * CONTAINER
  */
-const mapState = ({user}) => ({user})
+//const mapState = ({user}) => ({user})
+const mapState = (state) => {
+  const {products} = state
+  const {user, order} = state
 
+  return {
+    products,
+    user,
+    order,
+    isLoggedIn: !!state.user.id,
+    isOrderIn: !!order.orderitems,
+  }
+}
 const mapDispatch = (dispatch) => {
   return {
     loadUser: (id) => {
