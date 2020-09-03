@@ -198,7 +198,6 @@ const mapDispatch = (dispatch) => {
       //console.log('from dispatch from dispatch', id)
       dispatch(createCart(id, productid, productprice, qv, push, product))
       //dispatch(addItems(orderid, productid, productprice, qv))
-      dispatch(getOrder(userId))
     },
     addToItem: (userId, orderId, productId, price, qv, push) => {
       dispatch(addItems(userId, orderId, productId, price, qv, push))
@@ -207,12 +206,12 @@ const mapDispatch = (dispatch) => {
     load: (id, productId, push) => {
       dispatch(getProduct(productId, push))
 
-      dispatch(getSessionCart())
-      dispatch(getOrder(id))
+      //dispatch(getSessionCart())
+      //dispatch(getOrder(id))
     },
     addSessionCart: (userId, productId, price, qv, push) => {
       dispatch(createSessionCart(userId, productId, price, qv, push))
-      dispatch(getSessionCart())
+      //dispatch(getSessionCart())
     },
   }
 }

@@ -283,7 +283,7 @@ async function seed() {
       description: 'hand made with nice texture design, light colors',
       price: 15,
       quantity: 10000,
-      img: '/images/Zebra.jpeg',
+      img: '/images/Zebra.jpg',
       categoryId: handMade.id,
     }),
   ])

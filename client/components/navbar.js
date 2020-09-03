@@ -10,6 +10,7 @@ import Image from 'react-bootstrap/Image'
 import {CategoryBar} from './'
 import order, {getSessionCart, getOrder} from '../store/order'
 import axios from 'axios'
+import queryString from 'query-string'
 function NavLinkCart({order}) {
   console.log('i am the link cart function ', order)
   return (
@@ -90,16 +91,21 @@ class Navbarclass extends Component {
     //console.log('documenta cookie', document.cookie)
     const {handleClick, isLoggedIn, user, order} = this.props
     this.combineCarts()
-
+    console.log(
+      'from nav url',
+      this.props.match.url,
+      queryString.parse(this.props.location.search).sortBy
+    )
+    let sortBY = queryString.parse(this.props.location.search).sortBy
     return (
       <div>
-        <div className="preloader">
+        {/* <div className="preloader">
           <div className="lds-ellipsis">
             <span></span>
             <span></span>
             <span></span>
           </div>
-        </div>
+        </div> */}
         <header className="header_wrap fixed-top header_with_topbar">
           <div className="top-header">
             <div className="container">
@@ -183,13 +189,24 @@ class Navbarclass extends Component {
                 >
                   <ul className="navbar-nav">
                     <li>
-                      <a className="nav-link nav_item active" href="/">
+                      <Link
+                        className={
+                          !sortBY
+                            ? 'nav-link nav_item active'
+                            : 'nav-link nav_item'
+                        }
+                        to="/"
+                      >
                         Home
-                      </a>
+                      </Link>
                     </li>
                     <li>
                       <Link
-                        className="nav-link nav_item"
+                        className={
+                          sortBY == 'AtoZ'
+                            ? 'nav-link nav_item active'
+                            : 'nav-link nav_item'
+                        }
                         to="/products/1?sortBy=AtoZ"
                       >
                         Products

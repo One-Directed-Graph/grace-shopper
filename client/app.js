@@ -2,6 +2,7 @@ import React from 'react'
 import {Navbarclass, Checkout} from './components'
 import {HomeFooter} from './components/home/HomeFooter'
 import Routes from './routes'
+import {Footer} from './components/home/Footer'
 // import '../public/js/bootstrap.min.js'
 // import '../public/js/popper.min.js'
 // import '../public/js/owl.carousel.min.js'
@@ -22,6 +23,7 @@ const App = () => {
     <div>
       <Navbarclass />
       <Routes />
+      <Footer />
       {/* <HomeFooter /> */}
     </div>
   )

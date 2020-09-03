@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link, withRouter} from 'react-router-dom'
 // import {loadPage} from '../store/divided'
 // import {getProducts} from '../store/products'
 import {getProduct} from '../store/product'
@@ -11,41 +12,78 @@ import {ratingStars} from './helpers'
 const ProductCard = ({product, loadProduct, history}) => {
   const {push} = history
   return (
-    <Card
-      key={product.id}
-      className="text-center"
-      style={{width: '18rem', margin: '10px'}}
-    >
-      <Card.Header>
-        <div
-          className="product-image"
-          style={{
-            backgroundImage: 'url(' + product.img + ')',
-          }}
-        />
-      </Card.Header>
-      {/* <Card.Img variant="top" src={prod.img} /> */}
-      <Card.Body>
-        <Card.Title>{product.title}</Card.Title>
-        <p>
-          {product.reviews &&
-            ratingStars(product.reviews).map((star, idx) => (
-              <span key={idx} className={star}></span>
-            ))}
-        </p>
-        <Card.Text>Product Description: {product.description}</Card.Text>
-        <Card.Text>Price: ${product.price}</Card.Text>
-
-        <Button
-          variant="success"
+    <div className="col-md-4 col-6">
+      <div className="product">
+        <Link
           onClick={(e) => {
             loadProduct(product.id, push)
           }}
         >
-          Select Product
-        </Button>
-      </Card.Body>
-    </Card>
+          <div className="product_img">
+            <img src={product.img} alt="product_img1" />
+          </div>
+        </Link>
+        <div className="product_info">
+          <h6 className="product_title">
+            <Link
+              onClick={(e) => {
+                loadProduct(product.id, push)
+              }}
+            >
+              {product.title}
+            </Link>
+          </h6>
+          <div className="product_price">
+            <span className="price">{`$${product.price}`}</span>
+            <del>{`$${(product.price * 1 * 0.35 + product.price * 1).toFixed(
+              2
+            )}`}</del>
+            <div className="on_sale">
+              <span>35% Off</span>
+            </div>
+          </div>
+          <div className="rating_wrap">
+            {product.reviews
+              ? ratingStars(product.reviews).map((star, idx) => (
+                  // <div className="rating_wrap">
+                  //   <div className="rating">
+                  //     <div className="product_rate" style={{width: '80%'}}></div>
+                  //   </div>
+                  //   <span className="rating_num">(21)</span>
+                  // </div>
+                  // <span className="rating">
+
+                  <span
+                    key={idx}
+                    className={star}
+                    aria-hidden="true"
+                    style={{display: 'flex', flexDirection: 'row'}}
+                  ></span>
+
+                  // </span>
+                  // <span className="rating_num">(21)</span>
+                ))
+              : 'review'}
+          </div>
+          {/* <div className="product_rate" style={{width: '80%'}}></div> */}
+
+          {/* <p className="cart_buttons">
+            <Link
+              // to={`/orders/cart/${user.id || 'session'}`}
+              className="btn btn-fill-line rounded-0 view-cart"
+            >
+              View Product
+            </Link>
+          </p> */}
+          <div className="pr_desc">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              blandit massa enim. Nullam id varius nunc id varius nunc.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

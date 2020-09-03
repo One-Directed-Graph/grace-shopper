@@ -55,6 +55,9 @@ app.get('*', function (req, res, next) {
 // app.get('/', function (req, res) {
 //   res.redirect('./index.js')
 // })
+// app.get('/', function (req, res) {
+//   res.redirect('./index.js')
+// })
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
@@ -119,12 +122,12 @@ const createApp = () => {
   //   res.redirect('./public/index.html')
   // })
   // static file-serving middleware
-  app.use(express.static('public'))
+
   app.use(express.static(path.join(__dirname, '..', 'public')))
-  app.use(express.static(path.join(__dirname, './assets/images')))
+  //app.use(express.static(path.join(__dirname, './assets/images')))
 
   app.use('/assets', express.static(path.join(__dirname, './assets')))
-
+  app.use(express.static('public'))
   // any remaining requests with an extension (.js, .css, etc.) send 404
 
   app.use((req, res, next) => {

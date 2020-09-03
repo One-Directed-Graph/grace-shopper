@@ -5,13 +5,13 @@ import {Carousel, Nav} from 'react-bootstrap'
 export const HomeCarousel = () => {
   return (
     <div>
-      <div className="preloader">
+      {/* <div className="preloader">
         <div className="lds-ellipsis">
           <span></span>
           <span></span>
           <span></span>
         </div>
-      </div>
+      </div> */}
       <div className="banner_section slide_medium shop_banner_slider staggered-animation-wrap">
         <div
           id="carouselExampleControls"
@@ -21,7 +21,7 @@ export const HomeCarousel = () => {
           <div className="carousel-inner">
             <div
               className="carousel-item active background_bg"
-              data-img-src="images/banner1.jpg"
+              data-img-src="/images/banner1.jpg"
             >
               {/* <img
               src="images/banner1.jpg"
@@ -62,7 +62,7 @@ export const HomeCarousel = () => {
             </div>
             <div
               className="carousel-item background_bg"
-              data-img-src="images/banner2.jpg"
+              data-img-src="/images/banner2.jpg"
             >
               <div className="banner_slide_content">
                 <div className="container">

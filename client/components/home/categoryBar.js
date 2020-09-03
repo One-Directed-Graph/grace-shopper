@@ -4,13 +4,13 @@ import {Link} from 'react-router-dom'
 export const CategoryBar = () => {
   return (
     <div>
-      <div className="preloader">
+      {/* <div className="preloader">
         <div className="lds-ellipsis">
           <span></span>
           <span></span>
           <span></span>
         </div>
-      </div>
+      </div> */}
       <div className="section pb_20">
         <div className="container">
           <div className="row">

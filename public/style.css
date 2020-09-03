@@ -57,7 +57,12 @@ label {
   justify-content: space-around;
   flex-wrap: wrap;
 } */
-
+.fa-star:before {
+  content: '\f005';
+}
+.fa-star-o:before {
+  content: '\f006';
+}
 .colpic {
   display: inline-flex;
   flex-flow: row;
@@ -227,9 +232,9 @@ span {
   margin: 0.25rem;
 }
 
-/* .checked {
+.checked {
   color: #c28867;
-} */
+}
 
 .footer.nav {
   background: #38495e;
@@ -362,6 +367,45 @@ span {
   flex-direction: row;
 }
 
+/*=========================================================
+Author       : Bestwebcreator.
+Template Name: Shopwise - eCommerce Bootstrap 4 HTML Template
+Version      : 1.0
+==============================================================*/
+
+/*=============================================================
+    CSS INDEX
+    =============================
+    01.GENERAL STYLE (body, link color, section-title, buttons, overlay, section-padding etc...)
+    02.START HEADER STYLE
+	03.START BANNER,SLIDER STYLE
+	04.START SHOP BANNER STYLE
+	05.START CATEGORIES STYLE
+	06.START ICON BOX STYLE
+	07.START PORTFOLIO STYLE
+	08.START TESTIMONIAL STYLE
+	09.START BLOG STYLE
+	10.START NEWLETTER STYLE
+	11.START FOOTER STYLE
+	12.START MAP STYLE
+	13.START TEAM STYLE
+	14.START CLIENT LOGO STYLE
+	15.START BREADCRUMB STYLE
+	16.START CONTACT STYLE
+	17.START DIVIDER STYLE
+	18.START ACCORDION STYLE
+	19.START 404 ERROR STYLE
+	20.START LOGIN REGISTER STYLE
+	21.START COMMING SOON STYLE
+	22.START DEAL OF THE DAY STYLE
+	23.START SHOP DESIGN
+	24.START ELEMENT DESIGN
+		
+*=============================================================*/
+
+/*===================================*
+  01.GENERAL STYLE
+*===================================*/
 /*=========================================================
 Author       : Bestwebcreator.
 Template Name: Shopwise - eCommerce Bootstrap 4 HTML Template
@@ -4651,7 +4695,8 @@ footer .widget_title {
   width: 100%;
 }
 .breadcrumb_section.page-title-mini {
-  padding: 70px 0;
+  padding: 30px 0;
+  margin-top: 10px;
 }
 .page-title-mini .page-title h1 {
   font-size: 28px;
@@ -4836,7 +4881,7 @@ footer .widget_title {
   top: 0;
   bottom: 0;
   background-color: #ff324d;
-  /* z-index: ; */
+  z-index: 0;
   transition: all 0.5s ease-in-out;
   -moz-transform: scale(0);
   -webkit-transform: scale(0);
@@ -7771,6 +7816,7 @@ blockquote p:last-child {
   border: 0;
   padding-top: 0;
   font-weight: 600;
+  font-size: 14px;
 }
 .dashboard_content .table tbody tr:last-child td {
   padding-bottom: 0;
@@ -7788,5 +7834,3 @@ blockquote p:last-child {
 /*===================================*
 24.END ELEMENT DESIGN
 *===================================*/
-
-/* old classes */

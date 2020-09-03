@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {loadPage} from '../store/divided'
 import {getProducts} from '../store/products'
@@ -77,80 +78,149 @@ class Products extends Component {
     getPages(page, products)
     //console.log('hello hello', productsToDisplay, 'sortby:', sortBy, products)
     return (
-      <div className="outsideOfContainer">
-        <Container fluid>
-          <div className="sortBlock">
-            <select
-              onChange={(ev) => {
-                this.props.load(
-                  'no results',
-                  ev.target.value,
-                  page,
-                  user.id,
-                  push
-                )
-                //push(`/products/${page}/?sortBy=${ev.target.value}`)
-              }}
-            >
-              <option>Sort By</option>
-              <option>Categories</option>
-              <option>LowToHigh</option>
-              <option>HighToLow</option>
-              <option>AtoZ</option>
-              <option>ZtoA</option>
-            </select>
+      <div className="section">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-9">
+              <div className="row align-items-center mb-4 pb-1">
+                <div className="col-12">
+                  <div className="product_header">
+                    <div className="product_header_left"></div>
+                    <div className="product_header_right">
+                      <div className="products_view">
+                        <Link
+                          href="javascript:Void(0);"
+                          className="shorting_icon grid active"
+                        >
+                          <i className="ti-view-grid"></i>
+                        </Link>
+                        <Link
+                          href="javascript:Void(0);"
+                          className="shorting_icon list"
+                        >
+                          <i className="ti-layout-list-thumb"></i>
+                        </Link>
+                      </div>
+                      <div className="custom_select">
+                        <select
+                          className="form-control form-control-sm"
+                          onChange={(ev) => {
+                            this.props.load(
+                              'no results',
+                              ev.target.value,
+                              page,
+                              user.id,
+                              push
+                            )
+                            //push(`/products/${page}/?sortBy=${ev.target.value}`)
+                          }}
+                        >
+                          <option value="Categories">Categories</option>
+                          <option value="LowToHigh">LowToHigh</option>
+                          <option value="HighToLow">HighToLow</option>
+                          <option value="AtoZ">AtoZ</option>
+                          <option value="ZtoA">ZtoA</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row shop_container">
+                {getPages(page, products).map((prod) => {
+                  return (
+                    <ProductCard
+                      key={prod.id}
+                      product={prod}
+                      history={this.props.history}
+                    />
+                  )
+                })}
+              </div>
+              <div className="row">
+                <div className="col-12">
+                  <ul className="pagination mt-3 justify-content-center pagination_style1">
+                    <li className="page-item">
+                      <a className="page-link" href="#">
+                        <i className="linearicons-arrow-left"></i>
+                      </a>
+                    </li>
+                    {[...Array(Math.floor(products.length / 5))].map(
+                      (pageNumber, ind) => {
+                        return (
+                          <li
+                            className={
+                              ind + 1 == this.props.match.params.page
+                                ? 'page-item active'
+                                : 'page-item'
+                            }
+                            key={ind}
+                          >
+                            <Link
+                              className="page-link"
+                              onClick={() => {
+                                urlProducer(ind + 1)
+                              }}
+                            >
+                              {ind + 1}
+                            </Link>
+                          </li>
+                        )
+                      }
+                    )}
+                    {/* <li className="page-item active">
+                      <a className="page-link" href="#">
+                        1
+                      </a>
+                    </li>
+                    <li className="page-item">
+                      <a className="page-link" href="#">
+                        2
+                      </a>
+                    </li>
+                    <li className="page-item">
+                      <a className="page-link" href="#">
+                        3
+                      </a>
+                    </li> */}
+                    <li className="page-item">
+                      <a className="page-link" href="#">
+                        <i className="linearicons-arrow-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-3 order-lg-first mt-4 pt-2 mt-lg-0 pt-lg-0">
+              <div className="sidebar">
+                <div className="widget">
+                  <h5 className="widget_title">Mask Categories</h5>
+                  <ul className="widget_categories">
+                    <li>
+                      <a href="#">
+                        <span className="categories_name">Medical</span>
+                        <span className="categories_num">(9)</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <span className="categories_name">Handmade</span>
+                        <span className="categories_num">(6)</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <span className="categories_name">Fashion</span>
+                        <span className="categories_num">(4)</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="container">
-            {getPages(page, products).map((prod) => {
-              return (
-                <ProductCard
-                  key={prod.id}
-                  product={prod}
-                  history={this.props.history}
-                />
-              )
-            })}
-            <br />
-          </div>
-          <Pagination>
-            <Pagination.First
-              onClick={() => {
-                urlProducer(1)
-              }}
-            />
-            <Pagination.Prev
-              onClick={(e) => {
-                urlProducer(page * 1 - 1)
-              }}
-            />
-
-            {[...Array(Math.floor(products.length / 5))].map(
-              (pageNumber, ind) => {
-                return (
-                  <Pagination.Item
-                    key={ind}
-                    onClick={() => {
-                      urlProducer(ind + 1)
-                    }}
-                  >
-                    {ind + 1}
-                  </Pagination.Item>
-                )
-              }
-            )}
-
-            <Pagination.Next
-              onClick={(e) => {
-                urlProducer(page * 1 + 1)
-              }}
-            />
-            <Pagination.Last
-              onClick={(e) => {
-                urlProducer(Math.floor(products.length / 5))
-              }}
-            />
-          </Pagination>
-        </Container>
+        </div>
       </div>
     )
   }

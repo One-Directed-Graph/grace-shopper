@@ -8,18 +8,17 @@ import {Footer} from './Footer'
 export function Home() {
   return (
     <div>
-      <div className="preloader">
+      {/* <div className="preloader">
         <div className="lds-ellipsis">
           <span></span>
           <span></span>
           <span></span>
         </div>
-      </div>
+      </div> */}
       <HomeCarousel />
       <WhyUs />
       <CategoryBar />
       <ShopInfo />
-      <Footer />
     </div>
   )
 }

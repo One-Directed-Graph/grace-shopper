@@ -41,9 +41,10 @@ const ProductList = ({products, history, handleDelete}) => {
                 <Card.Title>{product.title}</Card.Title>
                 <p>
                   {product.reviews &&
-                    ratingStars(product.reviews).map((star, idx) => (
-                      <span key={idx} className={star}></span>
-                    ))}
+                    ratingStars(product.reviews).map((star, idx) => {
+                      console.log(star)
+                      return <span key={idx} className={star}></span>
+                    })}
                 </p>
                 <Button
                   variant="primary"
