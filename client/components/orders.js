@@ -10,6 +10,7 @@ import {me, editProduct, editCart} from '../store'
 import axios from 'axios'
 import {withRouter, Link} from 'react-router-dom'
 import OrderSummary from './OrderSummary'
+import {getProduct} from '../store/product'
 
 class Orders extends Component {
   constructor(props) {
@@ -113,19 +114,33 @@ class Orders extends Component {
                         return (
                           <tr>
                             <td class="product-thumbnail">
-                              <a href="#">
+                              <Link
+                                onClick={(e) => {
+                                  this.props.loadProduct(
+                                    item.product.id,
+                                    this.props.history.push
+                                  )
+                                }}
+                              >
                                 <img
                                   src={
                                     item.product ? item.product.img : 'No Image'
                                   }
                                   alt="product1"
                                 />
-                              </a>
+                              </Link>
                             </td>
                             <td class="product-name" data-title="Product">
-                              <a href="#">
+                              <Link
+                                onClick={(e) => {
+                                  this.props.loadProduct(
+                                    item.product.id,
+                                    this.props.history.push
+                                  )
+                                }}
+                              >
                                 {item.product ? item.product.title : 'loading'}
-                              </a>
+                              </Link>
                             </td>
                             <td class="product-price" data-title="Price">
                               {item.product ? item.product.price : 'loading'}
@@ -205,9 +220,9 @@ class Orders extends Component {
                       <td colspan="6" class="px-0">
                         <div class="row no-gutters align-items-center">
                           <div class="col-lg-12 col-md-12 text-left text-md-left">
-                            <button class="btn btn-fill-line" type="submit">
+                            {/* <button class="btn btn-fill-line" type="submit">
                               Update Cart
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                       </td>
@@ -600,6 +615,9 @@ const mapDispatch = (dispatch) => {
     },
     editCart: (orderId, total, status, push) => {
       dispatch(editCart(orderId, total, status, push))
+    },
+    loadProduct: (id, push) => {
+      dispatch(getProduct(id, push))
     },
   }
 }
