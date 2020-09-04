@@ -172,7 +172,7 @@ class Navbarclass extends Component {
           <div className="bottom_header dark_skin main_menu_uppercase">
             <div className="container">
               <nav className="navbar navbar-expand-lg">
-                <a className="navbar-brand" href="index.html">
+                <Link className="navbar-brand" to="/">
                   <img
                     className="logo_light"
                     src="/images/imageSite/logo_light.png"
@@ -183,7 +183,7 @@ class Navbarclass extends Component {
                     src="/images/imageSite/maskerade_logo_white.png"
                     alt="logo"
                   />
-                </a>
+                </Link>
                 <button
                   className="navbar-toggler"
                   type="button"
