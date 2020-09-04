@@ -46,6 +46,11 @@ class Products extends Component {
   }
 
   componentDidMount() {
+    const script = document.createElement('script')
+    script.src = '/js/scripts.js'
+    script.async = true
+    document.body.appendChild(script)
+
     const {user, isLogedIn} = this.props
     console.log('user from productssssss', user, isLogedIn)
     const sortBy =
@@ -89,18 +94,18 @@ class Products extends Component {
                     <div className="product_header_left"></div>
                     <div className="product_header_right">
                       <div className="products_view">
-                        <Link
+                        <a
                           href="javascript:Void(0);"
                           className="shorting_icon grid active"
                         >
                           <i className="ti-view-grid"></i>
-                        </Link>
-                        <Link
+                        </a>
+                        <a
                           href="javascript:Void(0);"
                           className="shorting_icon list"
                         >
                           <i className="ti-layout-list-thumb"></i>
-                        </Link>
+                        </a>
                       </div>
                       <div className="custom_select">
                         <select
@@ -150,6 +155,9 @@ class Products extends Component {
                           if (page * 1 > 1) {
                             urlProducer(page * 1 - 1)
                           }
+                          if (page == 1) {
+                            urlProducer(5)
+                          }
                         }}
                       >
                         <i className="linearicons-arrow-left"></i>
@@ -186,6 +194,9 @@ class Products extends Component {
                         onClick={(e) => {
                           if (page * 1 < Math.floor(products.length / 5)) {
                             urlProducer(page * 1 + 1)
+                          }
+                          if (page == Math.floor(products.length / 5)) {
+                            urlProducer(1)
                           }
                         }}
                       >

@@ -46,6 +46,10 @@ class Navbarclass extends Component {
     }
   }
   componentDidMount() {
+    const script = document.createElement('script')
+    script.src = '/js/scripts.js'
+    script.async = true
+    document.body.appendChild(script)
     const {user} = this.props
     console.log('userisdididididididid', user.id)
     const {isLoggedIn} = this.props
