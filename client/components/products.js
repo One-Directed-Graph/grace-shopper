@@ -10,6 +10,7 @@ import {getOrder, getSessionCart} from '../store'
 import {getPages} from './paginationFunction'
 import {withRouter} from 'react-router-dom'
 import {ProductCard} from '.'
+import categories from '../store/categories'
 //ASSIGNED TO: Aleks
 
 class Products extends Component {
@@ -71,7 +72,7 @@ class Products extends Component {
 
   render() {
     const {urlProducer} = this
-    const {products, divided, user} = this.props
+    const {products, divided, user, categories} = this.props
     const push = this.props.history.push
     const page = this.props.match.params.page
     const sortBy = queryString.parse(this.props.location.search).sortBy
@@ -115,6 +116,7 @@ class Products extends Component {
                             //push(`/products/${page}/?sortBy=${ev.target.value}`)
                           }}
                         >
+                          <option>Sort By</option>
                           <option value="Categories">Categories</option>
                           <option value="LowToHigh">LowToHigh</option>
                           <option value="HighToLow">HighToLow</option>
@@ -141,9 +143,17 @@ class Products extends Component {
                 <div className="col-12">
                   <ul className="pagination mt-3 justify-content-center pagination_style1">
                     <li className="page-item">
-                      <a className="page-link" href="#">
+                      <Link
+                        className="page-link"
+                        to="#"
+                        onClick={(e) => {
+                          if (page * 1 > 1) {
+                            urlProducer(page * 1 - 1)
+                          }
+                        }}
+                      >
                         <i className="linearicons-arrow-left"></i>
-                      </a>
+                      </Link>
                     </li>
                     {[...Array(Math.floor(products.length / 5))].map(
                       (pageNumber, ind) => {
@@ -157,6 +167,7 @@ class Products extends Component {
                             key={ind}
                           >
                             <Link
+                              to="#"
                               className="page-link"
                               onClick={() => {
                                 urlProducer(ind + 1)
@@ -168,25 +179,18 @@ class Products extends Component {
                         )
                       }
                     )}
-                    {/* <li className="page-item active">
-                      <a className="page-link" href="#">
-                        1
-                      </a>
-                    </li>
                     <li className="page-item">
-                      <a className="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        3
-                      </a>
-                    </li> */}
-                    <li className="page-item">
-                      <a className="page-link" href="#">
+                      <Link
+                        className="page-link"
+                        to="#"
+                        onClick={(e) => {
+                          if (page * 1 < Math.floor(products.length / 5)) {
+                            urlProducer(page * 1 + 1)
+                          }
+                        }}
+                      >
                         <i className="linearicons-arrow-right"></i>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -197,24 +201,18 @@ class Products extends Component {
                 <div className="widget">
                   <h5 className="widget_title">Mask Categories</h5>
                   <ul className="widget_categories">
-                    <li>
-                      <a href="#">
-                        <span className="categories_name">Medical</span>
-                        <span className="categories_num">(9)</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span className="categories_name">Handmade</span>
-                        <span className="categories_num">(6)</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span className="categories_name">Fashion</span>
-                        <span className="categories_num">(4)</span>
-                      </a>
-                    </li>
+                    {categories.map((cat) => {
+                      return (
+                        <li key={cat.id}>
+                          <Link to={`/category/${cat.name}/1`}>
+                            <span className="categories_name">{cat.name}</span>
+                            <span className="categories_num">
+                              {cat.products ? cat.products.length : ''}
+                            </span>
+                          </Link>
+                        </li>
+                      )
+                    })}
                   </ul>
                 </div>
               </div>
@@ -226,9 +224,10 @@ class Products extends Component {
   }
 }
 
-const mapState = ({products, divided, user}) => {
+const mapState = ({products, divided, user, categories}) => {
   return {
     products,
+    categories,
     divided,
     user,
     isLogedIn: !!user.id,
@@ -238,7 +237,7 @@ const mapDispatch = (dispatch) => {
   return {
     load: (str, sortBy = 'AtoZ', page = 1, userId, push) => {
       dispatch(getProducts(str, sortBy, page, push))
-      //dispatch(getOrder(userId))
+      dispatch(getOrder(userId))
     },
     loadPages: (page, push) => {
       //dispatch(loadPage(page, push))
