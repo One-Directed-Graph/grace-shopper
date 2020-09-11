@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
 import {getOrder, getSessionCart} from '../store/order.js'
 import {connect} from 'react-redux'
-import {Form, Modal, Button, ListGroup} from 'react-bootstrap'
+
 import {destroyItem, getItems, editItem} from '../store/orderItems'
 import Checkout from './Checkout'
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
 import {me, editProduct, editCart} from '../store'
-import axios from 'axios'
+
 import {withRouter, Link} from 'react-router-dom'
-import OrderSummary from './OrderSummary'
+
 import {getProduct} from '../store/product'
 
 class Orders extends Component {
@@ -27,11 +27,12 @@ class Orders extends Component {
   //   this.setState({modalShow: input})
   //   console.log(this.state.modalShow)
   // }
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.orderItems.length !== this.props.orderItems.length) {
-  //     const {id} = this.props.user.id
-  //     this.props.load(id)
-  //   }
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log('prevprop:', prevProps.order, 'prevstate:', this.props.order)
+  //   // if (prevProps.orderItems.length !== this.props.orderItems.length) {
+  //   //   const {id} = this.props.user.id
+  //   //   this.props.load(id)
+  //   // }
   // }
 
   total() {
@@ -73,7 +74,6 @@ class Orders extends Component {
     const orderitems = order.orderitems
     let total = this.total()
 
-    console.log('orderitem', order)
     orderitems.map((item) => {
       let totalQuan = item.product.quantity
       let minusQuan = item.quantity
@@ -84,12 +84,9 @@ class Orders extends Component {
     this.props.editCart(order.id, total, 'Processing', push)
   }
   render() {
-    const {order, user, isLoggedIn} = this.props
+    const {order} = this.props
     const {userId} = this.props.match.params
     const {quantity} = this.state
-    console.log('order order', order)
-    //const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
-    //this.total()
 
     return (
       <div class="section">

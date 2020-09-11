@@ -1790,7 +1790,7 @@ button:focus {
 }
 .search_overlay {
   content: '';
-  background-color: #000;
+  background-color: rgba(24, 22, 22, 0.5);
   height: 100%;
   top: 0;
   position: fixed;

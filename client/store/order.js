@@ -38,17 +38,13 @@ const _getSessionCart = (order) => ({type: GET_SESSION_CART, order})
  */
 
 export const getSessionCart = () => {
-  //console.log('id from getOrder idcfrom getOrder', id)
   return async (dispatch) => {
-    console.log('before going through the api')
     const res = await axios.get('/api/orders/session')
-    console.log('response from the getssesioncart', res)
+
     if (res === null) {
-      //console.log('create create create create', id)
       dispatch(createSessionCart())
       dispatch(_getSessionCart(res.data))
     } else {
-      //console.log('in getOrder thunk', res.data)
       dispatch(_getSessionCart(res.data))
     }
   }
@@ -58,10 +54,6 @@ export const createSessionCart = (userId, productId, price, qv, push) => {
   return async (dispatch) => {
     const res = await axios.post(`/api/orders/session`)
 
-    //console.log(
-    // 'create sessionpost post post post in getsesioncart thunk',
-    //res.data
-    //),
     dispatch(_createSessionCart(res.data))
     dispatch(addItems(userId, res.data.id, productId, price, qv, push))
 
@@ -69,15 +61,12 @@ export const createSessionCart = (userId, productId, price, qv, push) => {
   }
 }
 export const getOrder = (id) => {
-  console.log('id from getOrder idcfrom getOrder', id)
   return async (dispatch) => {
     const res = await axios.get(`/api/orders/cart/${id}`)
-    console.log(res)
+
     if (res.data == null) {
-      console.log('create create create create', id)
       createCart(id)
     } else {
-      //console.log('in getOrder thunk', res.data)
       dispatch(_getOrder(res.data))
     }
   }
@@ -134,7 +123,7 @@ export default function (state = defaultOrder, action) {
     case GET_SESSION_CART:
       return action.order
     case ADD_ORDER:
-      console.log(state)
+      //console.log(state)
       return {
         ...state,
         orderitems: [...state.orderitems, action.item],
@@ -152,13 +141,13 @@ export default function (state = defaultOrder, action) {
         }),
       }
     case REMOVE_FROM_ORDER:
-      console.log(state)
+      //console.log(state)
       return {
         ...state,
         orderitems: state.orderitems.filter((item) => item.id !== action.id),
       }
     case CREATE_CART:
-      console.log(state)
+      //console.log(state)
       return action.item
     case CREATE_SESSION_CART:
       return action.item

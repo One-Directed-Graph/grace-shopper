@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import DisplaySearch from './DisplaySearch'
-import {Route, Link} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {getSearchProducts} from '../store/searchItem'
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
@@ -30,8 +30,22 @@ class Search extends Component {
     this.setState({searchOutput: searchList})
     return searchList
   }
-  componentDidMount() {
-    console.log('hello grom search')
+  // componentDidMount() {
+  //   const script = document.createElement('script')
+  //   script.src = '/js/scripts.js'
+  //   script.async = true
+  //   document.body.appendChild(script)
+  //   console.log('hello grom search')
+  // }
+  componentWillUnmount() {
+    var scripts = document.getElementsByTagName('script')
+    console.log(scripts)
+    for (var i = scripts.length; i--; ) {
+      if (scripts[i].title == 'aleks') {
+        scripts[i].parentNode.removeChild(scripts[i])
+      }
+    }
+    // script.parentNode.removeChild(theScript)
   }
   render() {
     const {searchInput, searchOutput} = this.state
@@ -39,7 +53,20 @@ class Search extends Component {
 
     return (
       <div>
-        <a href="javascript:void(0);" className="nav-link search_trigger">
+        <a
+          href="javascript:void(0);"
+          className="nav-link search_trigger"
+          // onClick={() => {
+          //   //console.log('scripts,/.,.,.,.,', scripts)
+
+          //   const script = document.createElement('script')
+          //   script.title = 'aleks'
+          //   script.defer = true
+          //   script.src = '/js/scripts.js'
+          //   script.async = true
+          //   document.body.appendChild(script)
+          // }}
+        >
           <i className="linearicons-magnifier"></i>
         </a>
         <div className="search_wrap">
@@ -60,6 +87,9 @@ class Search extends Component {
               onChange={(ev) => {
                 console.log(ev.target.value)
                 this.setState({searchInput: ev.target.value})
+                let searchResults = this.search(ev)
+                this.props.sendSearch(searchResults)
+                this.props.history.push('/displaysearch')
               }}
             />
             <Link to="/displaysearch">
@@ -129,4 +159,4 @@ const mapDispatch = (dispatch) => {
     },
   }
 }
-export default connect(mapState, mapDispatch)(Search)
+export default withRouter(connect(mapState, mapDispatch)(Search))

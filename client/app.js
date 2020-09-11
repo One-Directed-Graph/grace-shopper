@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {Navbarclass, Checkout} from './components'
 import {HomeFooter} from './components/home/HomeFooter'
 import Routes from './routes'
@@ -18,15 +18,23 @@ import {Footer} from './components/home/Footer'
 // import '../public/js/jquery.dd.min.js'
 // import '../public/js/isotope.min.js'
 
-const App = () => {
-  return (
-    <div>
-      <Navbarclass />
-      <Routes />
-      <Footer />
-      {/* <HomeFooter /> */}
-    </div>
-  )
+class App extends Component {
+  // componentWillMount() {
+  //   const script = document.createElement('script')
+  //   script.src = '/js/scripts.js'
+  //   script.async = true
+  //   document.body.appendChild(script)
+  // }
+  render() {
+    return (
+      <div>
+        <Navbarclass />
+        <Routes />
+        <Footer />
+        {/* <HomeFooter /> */}
+      </div>
+    )
+  }
 }
 
 export default App
