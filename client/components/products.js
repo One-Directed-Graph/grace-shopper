@@ -37,6 +37,7 @@ class Products extends Component {
       prevProp.products[0].id,
       //products[0].id,
       push,
+      'prevstate:',
       prevState
     )
     if (sortBy !== prevProp.location.search.slice(8)) {
@@ -44,25 +45,55 @@ class Products extends Component {
       this.props.load('do nothing', sortBy, page, push)
     }
   }
-
+  // componentWillMount() {
+  //   const script = document.createElement('script')
+  //   script.src = '/js/scripts.js'
+  //   script.async = true
+  //   document.body.appendChild(script)
+  // }
+  // componentWillUnmount() {
+  //   var scripts = document.getElementsByTagName('script')
+  //   console.log(scripts)
+  //   for (var i = scripts.length; i--; ) {
+  //     if (scripts[i].title == 'aleks') {
+  //       scripts[i].parentNode.removeChild(scripts[i])
+  //     }
+  //   }
+  //   // script.parentNode.removeChild(theScript)
+  // }
   componentDidMount() {
-    const script = document.createElement('script')
-    script.src = '/js/scripts.js'
-    script.async = true
-    document.body.appendChild(script)
+    // let scriptChecker = () => {
+    //   let title = 'aleks'
+    //   var scripts = document.getElementsByTagName('script')
+    //   console.log(scripts)
+    //   for (var i = scripts.length; i--; ) {
+    //     if (scripts[i].title == title) {
+    //       return
+    //     }
+    //   }
+    // const script = document.createElement('script')
 
+    // script.async = true
+    // script.defer = true
+    // script.title = 'aleks'
+    // script.src = '/js/scripts.js'
+
+    // document.body.appendChild(script)
+    //}
+
+    //scriptChecker()
     const {user, isLogedIn} = this.props
-    console.log('user from productssssss', user, isLogedIn)
+    // console.log('user from productssssss', user, isLogedIn)
     const sortBy =
       queryString.parse(this.props.location.search).sortBy || 'AtoZ'
     const page = this.props.match.params.page
     const push = this.props.history.push
     if (isLogedIn === true) {
-      console.log('hello from true')
+      // console.log('hello from true')
       this.props.load('do nothing', sortBy, page, user.id, push)
     }
     if (isLogedIn === false) {
-      this.props.loadSession('do nothing', sortBy, page)
+      this.props.loadSession('do nothing', sortBy, page, push)
     }
   }
 
@@ -93,7 +124,7 @@ class Products extends Component {
                   <div className="product_header">
                     <div className="product_header_left"></div>
                     <div className="product_header_right">
-                      <div className="products_view">
+                      {/* <div className="products_view">
                         <a
                           href="javascript:Void(0);"
                           className="shorting_icon grid active"
@@ -101,12 +132,15 @@ class Products extends Component {
                           <i className="ti-view-grid"></i>
                         </a>
                         <a
-                          href="javascript:Void(0);"
+                          href
                           className="shorting_icon list"
+                          onClick={(e) => {
+                            e.preventDefault()
+                          }}
                         >
                           <i className="ti-layout-list-thumb"></i>
                         </a>
-                      </div>
+                      </div> */}
                       <div className="custom_select">
                         <select
                           className="form-control form-control-sm"
@@ -172,7 +206,7 @@ class Products extends Component {
                                 ? 'page-item active'
                                 : 'page-item'
                             }
-                            key={ind}
+                            key={ind * Math.random()}
                           >
                             <Link
                               to="#"
@@ -253,9 +287,9 @@ const mapDispatch = (dispatch) => {
     loadPages: (page, push) => {
       //dispatch(loadPage(page, push))
     },
-    loadSession: (sortBy, page) => {
-      dispatch(getProducts('load', sortBy, page))
+    loadSession: (sortBy, page, push) => {
       dispatch(getSessionCart())
+      dispatch(getProducts('load', sortBy, page, push))
     },
   }
 }

@@ -15,6 +15,7 @@ const ProductCard = ({product, loadProduct, history}) => {
     <div className="col-md-4 col-6">
       <div className="product">
         <Link
+          to="#"
           onClick={(e) => {
             loadProduct(product.id, push)
           }}
@@ -26,6 +27,7 @@ const ProductCard = ({product, loadProduct, history}) => {
         <div className="product_info">
           <h6 className="product_title">
             <Link
+              to="#"
               onClick={(e) => {
                 loadProduct(product.id, push)
               }}
@@ -63,7 +65,7 @@ const ProductCard = ({product, loadProduct, history}) => {
                   // </span>
                   // <span className="rating_num">(21)</span>
                 ))
-              : 'review'}
+              : ''}
           </div>
           {/* <div className="product_rate" style={{width: '80%'}}></div> */}
 

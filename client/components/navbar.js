@@ -11,15 +11,6 @@ import {CategoryBar} from './'
 import order, {getSessionCart, getOrder} from '../store/order'
 import axios from 'axios'
 import queryString from 'query-string'
-function NavLinkCart({order}) {
-  console.log('i am the link cart function ', order)
-  return (
-    <div>
-      <hr />
-      <hr />
-    </div>
-  )
-}
 
 class Navbarclass extends Component {
   constructor(props) {
@@ -31,13 +22,11 @@ class Navbarclass extends Component {
     const {order, isLoggedIn, isOrderIn, user} = this.props
     if (isLoggedIn === true && isOrderIn === true) {
       const res = await axios.get('/api/orders/session')
-      console.log('res', res)
+
       if (res.data) {
-        console.log('combine carts from nav bar', res.data)
         if (res.data.orderitems.length > 0) {
           const orderId = order.orderitems[0].orderId
           res.data.orderitems.map((orderitem) => {
-            console.log('combine carts from nav bar')
             this.props.editItem(orderitem.id, orderId)
           })
         }
@@ -45,15 +34,19 @@ class Navbarclass extends Component {
       // this.props.load(user.id)
     }
   }
+  // componentWillMount() {
+  //   const script = document.createElement('script')
+  //   script.src = '/js/scripts.js'
+  //   script.async = true
+  //   document.body.appendChild(script)
+  // }
   componentDidMount() {
-    const script = document.createElement('script')
-    script.src = '/js/scripts.js'
-    script.async = true
-    document.body.appendChild(script)
+    // const script = document.createElement('script')
+    // script.src = '/js/scripts.js'
+    // script.async = true
+    // document.body.appendChild(script)
     const {user} = this.props
-    console.log('userisdididididididid', user.id)
     const {isLoggedIn} = this.props
-    console.log('islogin from navbar', isLoggedIn)
     if (isLoggedIn === false) {
       this.props.getSession()
     } else {
@@ -95,21 +88,17 @@ class Navbarclass extends Component {
     //console.log('documenta cookie', document.cookie)
     const {handleClick, isLoggedIn, user, order} = this.props
     this.combineCarts()
-    console.log(
-      'from nav url',
-      this.props.match.url,
-      queryString.parse(this.props.location.search).sortBy
-    )
+
     let sortBY = queryString.parse(this.props.location.search).sortBy
     return (
       <div>
-        {/* <div className="preloader">
+        <div className="preloader">
           <div className="lds-ellipsis">
             <span></span>
             <span></span>
             <span></span>
           </div>
-        </div> */}
+        </div>
         <header className="header_wrap fixed-top header_with_topbar">
           <div className="top-header">
             <div className="container">
@@ -254,7 +243,7 @@ class Navbarclass extends Component {
                           ? order.orderitems.map((item, idx) => {
                               // console.log('order from nabar', item)
                               return (
-                                <li>
+                                <li key={idx}>
                                   <a href="#" className="item_remove">
                                     <i
                                       className="ion-close"

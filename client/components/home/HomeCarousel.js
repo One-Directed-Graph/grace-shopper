@@ -3,8 +3,20 @@ import {Link} from 'react-router-dom'
 import {Carousel, Nav} from 'react-bootstrap'
 
 export class HomeCarousel extends React.Component {
+  componentWillUnmount() {
+    var scripts = document.getElementsByTagName('script')
+    console.log(scripts)
+    for (var i = scripts.length; i--; ) {
+      if (scripts[i].title == 'aleks') {
+        scripts[i].parentNode.removeChild(scripts[i])
+      }
+    }
+    // script.parentNode.removeChild(theScript)
+  }
   componentDidMount() {
     const script = document.createElement('script')
+    script.defer = true
+    script.title = 'aleks'
     script.src = '/js/scripts.js'
     script.async = true
     document.body.appendChild(script)

@@ -87,7 +87,7 @@ export class UserHome extends Component {
       {path: 'orders', name: 'Orders', component: Orders},
     ]
     const linkToList = admin ? adminLinkTo : userLinkTo
-    this.combineCarts()
+    //this.combineCarts()
     return (
       <div id="user-home">
         <h4>Account Info</h4>

@@ -1,5 +1,6 @@
 import Pagination from 'react-bootstrap/Pagination'
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getPages} from './paginationFunction'
 import {withRouter} from 'react-router-dom'
@@ -43,6 +44,7 @@ class DisplayByCategory extends Component {
     const {urlProducer} = this
     const {pagedCategory, categoryToDisplay} = this.displayProducer()
     const page = this.props.match.params.page
+    const {categories, products} = this.props
     // if (categoryToDisplay) {
     //   console.log(
     //     'hello in render dispaly categories',
@@ -70,7 +72,104 @@ class DisplayByCategory extends Component {
                 })
               : ''}
           </div>
-          <Pagination>
+
+          <div className="row shop_container">
+            <div className="row">
+              <div className="col-12">
+                {categoryToDisplay ? (
+                  <ul className="pagination mt-3 justify-content-center pagination_style1">
+                    <li className="page-item">
+                      <Link
+                        className="page-link"
+                        to="#"
+                        onClick={(e) => {
+                          if (page * 1 > 1) {
+                            urlProducer(page * 1 - 1)
+                          }
+                          if (page == 1) {
+                            urlProducer(
+                              Math.ceil(categoryToDisplay.products.length / 6)
+                            )
+                          }
+                        }}
+                      >
+                        <i className="linearicons-arrow-left"></i>
+                      </Link>
+                    </li>
+                    {[
+                      ...Array(
+                        Math.ceil(categoryToDisplay.products.length / 6)
+                      ),
+                    ].map((pageNumber, ind) => {
+                      return (
+                        <li
+                          className={
+                            ind + 1 == this.props.match.params.page
+                              ? 'page-item active'
+                              : 'page-item'
+                          }
+                          key={ind}
+                        >
+                          <Link
+                            to="#"
+                            className="page-link"
+                            onClick={() => {
+                              urlProducer(ind + 1)
+                            }}
+                          >
+                            {ind + 1}
+                          </Link>
+                        </li>
+                      )
+                    })}
+                    <li className="page-item">
+                      <Link
+                        className="page-link"
+                        to="#"
+                        onClick={(e) => {
+                          if (page * 1 <= Math.ceil(products.length / 6)) {
+                            urlProducer(page * 1 + 1)
+                          }
+                          if (
+                            page ==
+                            Math.ceil(categoryToDisplay.products.length / 6)
+                          ) {
+                            urlProducer(1)
+                          }
+                        }}
+                      >
+                        <i className="linearicons-arrow-right"></i>
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ''
+                )}
+              </div>
+            </div>
+            <div className="col-lg-3 order-lg-first mt-4 pt-2 mt-lg-0 pt-lg-0">
+              <div className="sidebar">
+                <div className="widget">
+                  <h5 className="widget_title">Mask Categories</h5>
+                  <ul className="widget_categories">
+                    {categories.map((cat) => {
+                      return (
+                        <li key={cat.id}>
+                          <Link to={`/category/${cat.name}/1`}>
+                            <span className="categories_name">{cat.name}</span>
+                            <span className="categories_num">
+                              {cat.products ? cat.products.length : ''}
+                            </span>
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <Pagination>
             <Pagination.First
               onClick={() => {
                 urlProducer(1)
@@ -109,7 +208,7 @@ class DisplayByCategory extends Component {
                 urlProducer(Math.ceil(pagedCategory.length / 5))
               }}
             />
-          </Pagination>
+          </Pagination> */}
         </div>
       </div>
     )
