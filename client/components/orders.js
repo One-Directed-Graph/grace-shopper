@@ -89,20 +89,20 @@ class Orders extends Component {
     const {quantity} = this.state
 
     return (
-      <div class="section">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <div class="table-responsive shop_cart_table">
-                <table class="table">
+      <div className="section">
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="table-responsive shop_cart_table">
+                <table className="table">
                   <thead>
                     <tr>
-                      <th class="product-thumbnail">&nbsp;</th>
-                      <th class="product-name">Product</th>
-                      <th class="product-price">Price</th>
-                      <th class="product-quantity">Quantity</th>
-                      <th class="product-subtotal">Total</th>
-                      <th class="product-remove">Remove</th>
+                      <th className="product-thumbnail">&nbsp;</th>
+                      <th className="product-name">Product</th>
+                      <th className="product-price">Price</th>
+                      <th className="product-quantity">Quantity</th>
+                      <th className="product-subtotal">Total</th>
+                      <th className="product-remove">Remove</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -110,7 +110,7 @@ class Orders extends Component {
                       order.orderitems.map((item, idx) => {
                         return (
                           <tr>
-                            <td class="product-thumbnail">
+                            <td className="product-thumbnail">
                               <Link
                                 onClick={(e) => {
                                   this.props.loadProduct(
@@ -127,7 +127,7 @@ class Orders extends Component {
                                 />
                               </Link>
                             </td>
-                            <td class="product-name" data-title="Product">
+                            <td className="product-name" data-title="Product">
                               <Link
                                 onClick={(e) => {
                                   this.props.loadProduct(
@@ -139,15 +139,15 @@ class Orders extends Component {
                                 {item.product ? item.product.title : 'loading'}
                               </Link>
                             </td>
-                            <td class="product-price" data-title="Price">
+                            <td className="product-price" data-title="Price">
                               {item.product ? item.product.price : 'loading'}
                             </td>
-                            <td class="product-quantity" data-title="Quantity">
-                              <div class="quantity">
+                            <td className="product-quantity" data-title="Quantity">
+                              <div className="quantity">
                                 <input
                                   type="button"
                                   value="-"
-                                  class="minus"
+                                  className="minus"
                                   onClick={(e) => {
                                     console.log('quantity', quantity)
                                     if (quantity * 1 > 0) {
@@ -174,13 +174,13 @@ class Orders extends Component {
                                   name="quantity"
                                   value={item.quantity}
                                   title="Qty"
-                                  class="qty"
+                                  className="qty"
                                   size="4"
                                 />
                                 <input
                                   type="button"
                                   value="+"
-                                  class="plus"
+                                  className="plus"
                                   onClick={(e) => {
                                     this.props.change(
                                       userId,
@@ -192,13 +192,13 @@ class Orders extends Component {
                                 />
                               </div>
                             </td>
-                            <td class="product-subtotal" data-title="Total">
+                            <td className="product-subtotal" data-title="Total">
                               {(item.price * 1 * item.quantity * 1).toFixed(2)}
                             </td>
-                            <td class="product-remove" data-title="Remove">
+                            <td className="product-remove" data-title="Remove">
                               <a href="#">
                                 <i
-                                  class="ti-close"
+                                  className="ti-close"
                                   onClick={() => {
                                     this.props.destroyItems(userId, item.id)
                                   }}
@@ -214,9 +214,9 @@ class Orders extends Component {
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="6" class="px-0">
-                        <div class="row no-gutters align-items-center">
-                          <div class="col-lg-12 col-md-12 text-left text-md-left">
+                      <td colSpan="6" className="px-0">
+                        <div className="row no-gutters align-items-center">
+                          <div className="col-lg-12 col-md-12 text-left text-md-left">
                             {/* <button class="btn btn-fill-line" type="submit">
                               Update Cart
                             </button> */}
@@ -229,25 +229,25 @@ class Orders extends Component {
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="medium_divider"></div>
-              <div class="divider center_icon">
-                <i class="ti-shopping-cart-full"></i>
+          <div className="row">
+            <div className="col-12">
+              <div className="medium_divider"></div>
+              <div className="divider center_icon">
+                <i className="ti-shopping-cart-full"></i>
               </div>
-              <div class="medium_divider"></div>
+              <div className="medium_divider"></div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="heading_s1 mb-3">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="heading_s1 mb-3">
                 <h6>Calculate Shipping</h6>
               </div>
-              <form class="field_form shipping_calculator">
-                <div class="form-row">
-                  <div class="form-group col-lg-12">
-                    <div class="custom_select">
-                      <select class="form-control">
+              <form className="field_form shipping_calculator">
+                <div className="form-row">
+                  <div className="form-group col-lg-12">
+                    <div className="custom_select">
+                      <select className="form-control">
                         <option value="">Choose a option...</option>
                         <option value="AX">Aland Islands</option>
                         <option value="AF">Afghanistan</option>
@@ -507,58 +507,58 @@ class Orders extends Component {
                     </div>
                   </div>
                 </div>
-                <div class="form-row">
-                  <div class="form-group col-lg-6">
+                <div className="form-row">
+                  <div className="form-group col-lg-6">
                     <input
                       required="required"
                       placeholder="State / Country"
-                      class="form-control"
+                      className="form-control"
                       name="name"
                       type="text"
                     />
                   </div>
-                  <div class="form-group col-lg-6">
+                  <div className="form-group col-lg-6">
                     <input
                       required="required"
                       placeholder="PostCode / ZIP"
-                      class="form-control"
+                      className="form-control"
                       name="name"
                       type="text"
                     />
                   </div>
                 </div>
-                <div class="form-row">
-                  <div class="form-group col-lg-12">
-                    <button class="btn btn-fill-line" type="submit">
+                <div className="form-row">
+                  <div className="form-group col-lg-12">
+                    <button className="btn btn-fill-line" type="submit">
                       Update Totals
                     </button>
                   </div>
                 </div>
               </form>
             </div>
-            <div class="col-md-6">
-              <div class="border p-3 p-md-4">
-                <div class="heading_s1 mb-3">
+            <div className="col-md-6">
+              <div className="border p-3 p-md-4">
+                <div className="heading_s1 mb-3">
                   <h6>Cart Totals</h6>
                 </div>
-                <div class="table-responsive">
-                  <table class="table">
+                <div className="table-responsive">
+                  <table className="table">
                     <tbody>
                       <tr>
-                        <td class="cart_total_label">Cart Subtotal</td>
-                        <td class="cart_total_amount">{this.total().total}</td>
+                        <td className="cart_total_label">Cart Subtotal</td>
+                        <td className="cart_total_amount">{this.total().total}</td>
                       </tr>
                       <tr>
-                        <td class="cart_total_label">Shipping</td>
-                        <td class="cart_total_amount">Free Shipping</td>
+                        <td className="cart_total_label">Shipping</td>
+                        <td className="cart_total_amount">Free Shipping</td>
                       </tr>
                       <tr>
-                        <td class="cart_total_label">Tax (8.25%)</td>
-                        <td class="cart_total_amount">{this.total().tax}</td>
+                        <td className="cart_total_label">Tax (8.25%)</td>
+                        <td className="cart_total_amount">{this.total().tax}</td>
                       </tr>
                       <tr>
-                        <td class="cart_total_label">Total</td>
-                        <td class="cart_total_amount">
+                        <td className="cart_total_label">Total</td>
+                        <td className="cart_total_amount">
                           <strong>{this.total().totalTax}</strong>
                         </td>
                       </tr>

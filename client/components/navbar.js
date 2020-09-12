@@ -193,18 +193,25 @@ class Navbarclass extends Component {
                   <ul className="navbar-nav">
                     <li>
                       <Link
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-expanded="false"
                         className={
                           !sortBY
-                            ? 'nav-link nav_item active'
-                            : 'nav-link nav_item'
+                            ? 'nav-link nav_item  active'
+                            : 'nav-link nav_item '
                         }
                         to="/"
                       >
                         Home
+                        {/* <span className="ion-android-menu"></span> */}
                       </Link>
                     </li>
                     <li>
                       <Link
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-expanded="false"
                         className={
                           sortBY == 'AtoZ'
                             ? 'nav-link nav_item active'
@@ -227,16 +234,16 @@ class Navbarclass extends Component {
                     <Search />
                   </li>
                   <li className="dropdown cart_dropdown">
-                    <a
+                    <Link
                       className="nav-link cart_trigger"
-                      href="#"
+                      to="#"
                       data-toggle="dropdown"
                     >
                       <i className="linearicons-cart"></i>
                       <span className="cart_count">
                         {order.orderitems ? order.orderitems.length : 0}
                       </span>
-                    </a>
+                    </Link>
                     <div className="cart_box dropdown-menu dropdown-menu-right">
                       <ul className="cart_list">
                         {order.orderitems
