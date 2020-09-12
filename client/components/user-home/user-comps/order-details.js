@@ -16,10 +16,11 @@ const OrderDetails = ({order}) => {
     <div>
       <Button
         onClick={() => setOpen(!open)}
+        className="btn btn-fill-out btn-sm"
         aria-controls="order-details-collapse"
         aria-expanded={open}
       >
-        Details
+        View
       </Button>
       <Collapse in={open}>
         <div id="order-details-collapse">
