@@ -1,2 +1,2 @@
 public/js/*.js
-**/*.{min}.js
+**/**/*.{min}.js
