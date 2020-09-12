@@ -223,9 +223,15 @@ class Navbarclass extends Component {
                       </Link>
                     </li>
                     <li>
-                      <a className="nav-link nav_item" href="contact.html">
+                      <Link
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-expanded="false"
+                        className="nav-link nav_item"
+                        to="/contactpage"
+                      >
                         Contact Us
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
