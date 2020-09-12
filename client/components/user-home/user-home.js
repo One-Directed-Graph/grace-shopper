@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link, HashRouter, Route, Switch} from 'react-router-dom'
+import {Link, Route, Switch} from 'react-router-dom'
 import {
   Reviews,
   Orders,
@@ -18,8 +18,6 @@ import {
   getUserReviews,
 } from '../../store/'
 import Nav from 'react-bootstrap/Nav'
-
-//TODO: Load orders and reviews
 
 /**
  * COMPONENT
