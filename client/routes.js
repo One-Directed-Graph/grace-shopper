@@ -15,6 +15,7 @@ import {
 } from './components'
 import Orders from './components/orders'
 import {Home} from './components/home/home'
+import {ContactPage} from './components/ContactPage'
 // import uuid from 'react-uuid'
 // import Axios from 'axios'
 import {
@@ -81,6 +82,7 @@ class Routes extends Component {
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/contactpage" component={ContactPage} />
           <Route path="/displaysearch" component={DisplaySearch} />
           <Route exact path="/products" component={Products} />
           <Route exact path="/orders/cart/:userId" component={Orders} />
