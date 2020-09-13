@@ -120,7 +120,12 @@ export class UserHome extends Component {
         id: 'orders-tab',
         icon: 'ti-shopping-cart-full',
       },
-      {path: 'reviews', name: 'Reviews', component: Reviews},
+      {
+        path: 'reviews',
+        name: 'Reviews',
+        component: Reviews,
+        icon: 'far fa-star',
+      },
       {
         path: 'address',
         name: 'My Address',
@@ -159,7 +164,7 @@ export class UserHome extends Component {
                           aria-controls={path}
                           aria-selected="false"
                         >
-                          <i className={icon}></i>
+                          <i className={icon} aria-hidden="true"></i>
                           {name}
                         </Nav.Link>
                       </li>
