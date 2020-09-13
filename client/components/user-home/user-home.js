@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link, HashRouter, Route, Switch} from 'react-router-dom'
+import {Link, Route, Switch} from 'react-router-dom'
 import {
   Reviews,
   Orders,
@@ -18,8 +18,6 @@ import {
   getUserReviews,
 } from '../../store/'
 import Nav from 'react-bootstrap/Nav'
-
-//TODO: Load orders and reviews
 
 /**
  * COMPONENT
@@ -73,51 +71,120 @@ export class UserHome extends Component {
     const rootDir = '/account'
     const {email, admin} = this.props.user
     const adminLinkTo = [
-      {path: 'user-list', name: 'Users', component: UserList},
-      {path: 'order-list', name: 'Orders', component: OrderList},
-      {path: 'product-list', name: 'Products', component: ProductList},
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: WelcomeUser,
+        id: 'dashboard-tab',
+        icon: 'ti-layout-grid2',
+      },
+      {
+        path: 'user-list',
+        name: 'Users',
+        component: UserList,
+        id: 'users-tab',
+        icon: '',
+      },
+      {
+        path: 'order-list',
+        name: 'Orders',
+        component: OrderList,
+        id: 'orders-tab',
+        icon: 'ti-shopping-cart-full',
+      },
+      {
+        path: 'product-list',
+        name: 'Products',
+        component: ProductList,
+        id: 'products-tab',
+      },
       {
         path: 'product-create',
         name: 'Create Product',
         component: ProductCreate,
+        id: 'product-create-tab',
       },
     ]
     const userLinkTo = [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: WelcomeUser,
+        id: 'dashboard-tab',
+        icon: 'ti-layout-grid2',
+      },
+      {
+        path: 'orders',
+        name: 'Orders',
+        component: Orders,
+        id: 'orders-tab',
+        icon: 'ti-shopping-cart-full',
+      },
       {path: 'reviews', name: 'Reviews', component: Reviews},
-      {path: 'orders', name: 'Orders', component: Orders},
+      {
+        path: 'address',
+        name: 'My Address',
+        component: WelcomeUser,
+        id: 'address-tab',
+        icon: 'ti-location-pin',
+      },
+      {
+        path: 'account-detail',
+        name: 'Account Detail',
+        component: WelcomeUser,
+        id: 'account-detail-tab',
+        icon: 'ti-id-badge',
+      },
     ]
     const linkToList = admin ? adminLinkTo : userLinkTo
     //this.combineCarts()
     return (
-      <div id="user-home">
-        <h4>Account Info</h4>
-        <h6 id="user-home-email">Logged in as {email}</h6>
-        <hr />
-        <Nav variant="tabs" id="user-home-nav" defaultActiveKey="/user-list">
-          {linkToList.map((link) => {
-            const {path, name} = link
-            return (
-              <Nav.Item key={path}>
-                <Nav.Link as={Link} to={`${rootDir}/${path}`}>
-                  {name}
-                </Nav.Link>
-              </Nav.Item>
-            )
-          })}
-        </Nav>
-        <Switch>
-          {linkToList.map((link) => {
-            const {path, component} = link
-            return (
-              <Route
-                key={path}
-                path={`${rootDir}/${path}`}
-                component={component}
-              />
-            )
-          })}
-          <Route exact path={`${rootDir}`} component={WelcomeUser} />
-        </Switch>
+      <div className="section">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-3 col-md-4">
+              <div className="dashboard_menu">
+                <ul className="nav nav-tabs flex-column" role="tablist">
+                  {linkToList.map((link) => {
+                    const {path, name, id, icon} = link
+                    return (
+                      <li className="nav-item" key={path}>
+                        <Nav.Link
+                          as={Link}
+                          to={`${rootDir}/${path}`}
+                          className="nav-link"
+                          id={id}
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls={path}
+                          aria-selected="false"
+                        >
+                          <i className={icon}></i>
+                          {name}
+                        </Nav.Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            </div>
+            <div className="col-lg-9 col-md-8">
+              <Switch>
+                {linkToList.map((link) => {
+                  const {path, component} = link
+                  return (
+                    <Route
+                      key={path}
+                      path={`${rootDir}/${path}`}
+                      component={component}
+                    />
+                  )
+                })}
+                <Route exact path={`${rootDir}`} component={WelcomeUser} />
+              </Switch>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
