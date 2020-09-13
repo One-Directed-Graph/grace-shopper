@@ -61,6 +61,7 @@ class Products extends Component {
   //   }
   //   // script.parentNode.removeChild(theScript)
   // }
+  
   componentDidMount() {
     // let scriptChecker = () => {
     //   let title = 'aleks'
@@ -124,23 +125,7 @@ class Products extends Component {
                   <div className="product_header">
                     <div className="product_header_left"></div>
                     <div className="product_header_right">
-                      {/* <div className="products_view">
-                        <a
-                          href="javascript:Void(0);"
-                          className="shorting_icon grid active"
-                        >
-                          <i className="ti-view-grid"></i>
-                        </a>
-                        <a
-                          href
-                          className="shorting_icon list"
-                          onClick={(e) => {
-                            e.preventDefault()
-                          }}
-                        >
-                          <i className="ti-layout-list-thumb"></i>
-                        </a>
-                      </div> */}
+                      
                       <div className="custom_select">
                         <select
                           className="form-control form-control-sm"
