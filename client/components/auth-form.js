@@ -36,7 +36,7 @@ const AuthForm = (props) => {
                     <input
                       className="form-control"
                       required=""
-                      type="password"
+                      type="text"
                       name="password"
                       placeholder={
                         name === 'login' ? 'Enter password' : 'Make password'

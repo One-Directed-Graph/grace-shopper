@@ -43,7 +43,7 @@ class OrderSummary extends Component {
   render() {
     const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
 
-    const {order, handleSubmit} = this.props
+    const {order, handleSubmit, isLoggedIn} = this.props
     let subtotalWithoutTax = 0
     let subTotal = order.subTotal
 
@@ -53,19 +53,21 @@ class OrderSummary extends Component {
         <div className="container">
           <div className="row">
             <div className="col-lg-6">
-              <div className="toggle_info">
-                <span>
-                  <i className="fas fa-user"></i>Returning customer?{' '}
-                  <a
-                    href="#loginform"
-                    data-toggle="collapse"
-                    className="collapsed"
-                    aria-expanded="false"
-                  >
-                    Click here to login
-                  </a>
-                </span>
-              </div>
+              {!isLoggedIn && (
+                <div className="toggle_info">
+                  <span>
+                    <i className="fas fa-user"></i>Returning customer?{' '}
+                    <a
+                      href="#loginform"
+                      data-toggle="collapse"
+                      className="collapsed"
+                      aria-expanded="false"
+                    >
+                      Click here to login
+                    </a>
+                  </span>
+                </div>
+              )}
               <div
                 className="panel-collapse collapse login_form"
                 id="loginform"
@@ -77,7 +79,8 @@ class OrderSummary extends Component {
                     the Billing &amp; Shipping section.
                   </p>
                   <form
-                    method="post"
+                    // method="post"
+                    name="login"
                     onSubmit={(e) => {
                       handleSubmit(e, this.state.name, this.state.password)
                     }}
@@ -99,7 +102,7 @@ class OrderSummary extends Component {
                       <input
                         className="form-control"
                         required=""
-                        type="password"
+                        type="text"
                         name="password"
                         placeholder="Password"
                         value={this.state.password}
@@ -108,23 +111,7 @@ class OrderSummary extends Component {
                         }}
                       />
                     </div>
-                    <div className="login_footer form-group">
-                      <div className="chek-form">
-                        <div className="custome-checkbox">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            name="checkbox"
-                            id="remember"
-                            value=""
-                          />
-                          <label className="form-check-label" htmlFor="remember">
-                            <span>Remember me</span>
-                          </label>
-                        </div>
-                      </div>
-                      <a href="#">Forgot password?</a>
-                    </div>
+
                     <div className="form-group">
                       <button
                         type="submit"
@@ -1002,7 +989,10 @@ class OrderSummary extends Component {
                         value="option3"
                         checked=""
                       />
-                      <label className="form-check-label" htmlFor="exampleRadios3">
+                      <label
+                        className="form-check-label"
+                        htmlFor="exampleRadios3"
+                      >
                         Direct Bank Transfer
                       </label>
                       <p data-method="option3" className="payment-text">
@@ -1018,7 +1008,10 @@ class OrderSummary extends Component {
                         id="exampleRadios4"
                         value="option4"
                       />
-                      <label className="form-check-label" htmlFor="exampleRadios4">
+                      <label
+                        className="form-check-label"
+                        htmlFor="exampleRadios4"
+                      >
                         Check Payment
                       </label>
                       <p data-method="option4" className="payment-text">
@@ -1034,7 +1027,10 @@ class OrderSummary extends Component {
                         id="exampleRadios5"
                         value="option5"
                       />
-                      <label className="form-check-label" htmlFor="exampleRadios5">
+                      <label
+                        className="form-check-label"
+                        htmlFor="exampleRadios5"
+                      >
                         Paypal
                       </label>
                       <p data-method="option5" className="payment-text">
