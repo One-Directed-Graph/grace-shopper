@@ -154,7 +154,7 @@ class Product extends Component {
               <div className="pr_detail">
                 <div className="product_description">
                   <h4 className="product_title">
-                    <a href="#">{product.title}</a>
+                    <Link to="#">{product.title}</Link>
                   </h4>
                   <div className="product_price">
                     <span className="price">${product.price}</span>

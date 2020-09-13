@@ -74,7 +74,19 @@ class Navbarclass extends Component {
   //     }
   //   }
   // }
+  componentWillUpdate(prevProp, prevState) {
+    const {handleClick, isLoggedIn, user, orderItems, order} = this.props
 
+    if (order.orderitems && prevProp.order.orderitems) {
+      if (prevProp.order.orderitems.length != order.orderitems.length) {
+        if (isLoggedIn === false) {
+          this.props.getSession()
+        } else {
+          this.props.load(user.id)
+        }
+      }
+    }
+  }
   render() {
     const navStyle = {color: ' #38495E', fontWeight: '500', fontSize: '120%'}
     const navStyle2 = {
@@ -306,12 +318,12 @@ class Navbarclass extends Component {
                           >
                             View Cart
                           </Link>
-                          <a
-                            href="/checkout"
+                          <Link
+                            to="/checkout"
                             className="btn btn-fill-out rounded-0 checkout"
                           >
                             Checkout
-                          </a>
+                          </Link>
                         </p>
                       </div>
                     </div>
@@ -330,10 +342,11 @@ class Navbarclass extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
-  const {products} = state
+  const {products, orderItems} = state
   const {user, order} = state
 
   return {
+    orderItems,
     products,
     user,
     order,
