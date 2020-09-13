@@ -30,16 +30,16 @@ class Products extends Component {
     // } else {
     //   sortBy = 'AtoZ'
     // }
-    console.log(
-      'prevState.location.search.slice(8)',
-      prevProp.location.search.slice(8),
-      queryString.parse(this.props.location.search).sortBy,
-      prevProp.products[0].id,
-      //products[0].id,
-      push,
-      'prevstate:',
-      prevState
-    )
+    // console.log(
+    //   'prevState.location.search.slice(8)',
+    //   prevProp.location.search.slice(8),
+    //   queryString.parse(this.props.location.search).sortBy,
+    //   prevProp.products[0].id,
+    //   //products[0].id,
+    //   push,
+    //   'prevstate:',
+    //   prevState
+    // )
     if (sortBy !== prevProp.location.search.slice(8)) {
       //push(`/products/${page}?sortBy=${sortBy}`)
       this.props.load('do nothing', sortBy, page, push)
@@ -61,7 +61,7 @@ class Products extends Component {
   //   }
   //   // script.parentNode.removeChild(theScript)
   // }
-  
+
   componentDidMount() {
     // let scriptChecker = () => {
     //   let title = 'aleks'
@@ -125,7 +125,6 @@ class Products extends Component {
                   <div className="product_header">
                     <div className="product_header_left"></div>
                     <div className="product_header_right">
-                      
                       <div className="custom_select">
                         <select
                           className="form-control form-control-sm"
@@ -266,15 +265,15 @@ const mapState = ({products, divided, user, categories}) => {
 const mapDispatch = (dispatch) => {
   return {
     load: (str, sortBy = 'AtoZ', page = 1, userId, push) => {
-      dispatch(getProducts(str, sortBy, page, push))
-      dispatch(getOrder(userId))
+      //dispatch(getProducts(str, sortBy, page, push))
+      //dispatch(getOrder(userId))
     },
     loadPages: (page, push) => {
       //dispatch(loadPage(page, push))
     },
     loadSession: (sortBy, page, push) => {
-      dispatch(getSessionCart())
-      dispatch(getProducts('load', sortBy, page, push))
+      // dispatch(getSessionCart())
+      // dispatch(getProducts('load', sortBy, page, push))
     },
   }
 }

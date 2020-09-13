@@ -117,14 +117,14 @@ export const editCart = (id, total, status, push) => {
  * REDUCER
  */
 export default function (state = defaultOrder, action) {
-  console.log(state, defaultOrder)
+  //console.log(state, defaultOrder)
   switch (action.type) {
     case GET_ORDER:
       return action.order
     case GET_SESSION_CART:
       return action.order
     case ADD_ORDER:
-      console.log(state)
+      //console.log(state)
       if (!state.orderitems) {
         return {
           ...state,

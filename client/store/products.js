@@ -55,7 +55,7 @@ const _removeProduct = (id) => ({type: REMOVE_PRODUCT, id})
  * THUNK CREATORS
  */
 export const getProducts = (str, sortBy, page, push) => {
-  console.log('from getProducts', sortBy, str, page, push)
+  //console.log('from getProducts', sortBy, str, page, push)
   //page = page || 1
   return async (dispatch) => {
     if (str === 'load') {
