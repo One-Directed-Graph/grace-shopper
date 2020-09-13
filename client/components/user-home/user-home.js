@@ -26,26 +26,26 @@ export class UserHome extends Component {
   constructor() {
     super()
     this.chooseLoad = this.chooseLoad.bind(this)
-    this.combineCarts = this.combineCarts.bind(this)
+    //this.combineCarts = this.combineCarts.bind(this)
   }
-  async combineCarts() {
-    const {order, isLoggedIn, isOrderIn, user} = this.props
-    if (isLoggedIn === true && isOrderIn === true) {
-      const res = await axios.get('/api/orders/session')
-      console.log('res', res)
-      if (res.data) {
-        console.log('combine carts from nav bar', res.data)
-        if (res.data.orderitems.length > 0) {
-          const orderId = order.orderitems[0].orderId
-          res.data.orderitems.map((orderitem) => {
-            console.log('combine carts from nav bar')
-            this.props.editItem(orderitem.id, orderId)
-          })
-        }
-      }
-      // this.props.load(user.id)
-    }
-  }
+  // async combineCarts() {
+  //   const {order, isLoggedIn, isOrderIn, user} = this.props
+  //   if (isLoggedIn === true && isOrderIn === true) {
+  //     const res = await axios.get('/api/orders/session')
+  //     console.log('res', res)
+  //     if (res.data) {
+  //       console.log('combine carts from nav bar', res.data)
+  //       if (res.data.orderitems.length > 0) {
+  //         const orderId = order.orderitems[0].orderId
+  //         res.data.orderitems.map((orderitem) => {
+  //           console.log('combine carts from nav bar')
+  //           this.props.editItem(orderitem.id, orderId)
+  //         })
+  //       }
+  //     }
+  //     // this.props.load(user.id)
+  //   }
+  // }
   componentDidMount() {
     const {admin, id} = this.props.user
     this.chooseLoad(admin, id)
@@ -120,7 +120,12 @@ export class UserHome extends Component {
         id: 'orders-tab',
         icon: 'ti-shopping-cart-full',
       },
-      {path: 'reviews', name: 'Reviews', component: Reviews},
+      {
+        path: 'reviews',
+        name: 'Reviews',
+        component: Reviews,
+        icon: 'far fa-star',
+      },
       {
         path: 'address',
         name: 'My Address',
@@ -159,7 +164,7 @@ export class UserHome extends Component {
                           aria-controls={path}
                           aria-selected="false"
                         >
-                          <i className={icon}></i>
+                          <i className={icon} aria-hidden="true"></i>
                           {name}
                         </Nav.Link>
                       </li>
