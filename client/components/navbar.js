@@ -99,7 +99,7 @@ class Navbarclass extends Component {
     let total = this.total()
     //console.log('documenta cookie', document.cookie)
     const {handleClick, isLoggedIn, user, order} = this.props
-    this.combineCarts()
+    //this.combineCarts()
 
     let sortBY = queryString.parse(this.props.location.search).sortBy
     return (
@@ -365,7 +365,7 @@ const mapDispatch = (dispatch) => {
     },
     load: (userId) => {
       dispatch(getOrder(userId))
-      dispatch(getProducts('load'))
+      //dispatch(getProducts('load'))
     },
     getSession: () => {
       dispatch(getSessionCart())
@@ -374,7 +374,7 @@ const mapDispatch = (dispatch) => {
       dispatch(combineItem(orderitemId, orderId))
     },
     destroyItems: (userId, id) => {
-      dispatch(getOrder(userId))
+      //dispatch(getOrder(userId))
       dispatch(destroyItem(id))
     },
   }

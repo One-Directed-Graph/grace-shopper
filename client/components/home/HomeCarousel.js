@@ -5,7 +5,7 @@ import {Carousel, Nav} from 'react-bootstrap'
 export class HomeCarousel extends React.Component {
   componentWillUnmount() {
     var scripts = document.getElementsByTagName('script')
-    console.log(scripts)
+    //console.log(scripts)
     for (var i = scripts.length; i--; ) {
       if (scripts[i].title == 'aleks') {
         scripts[i].parentNode.removeChild(scripts[i])

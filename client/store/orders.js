@@ -43,13 +43,13 @@ export const getOrderList = () => async (dispatch) => {
 }
 
 export const updateOrderStatus = (order) => async (dispatch) => {
-  console.log('in updateOrderStatus thunk')
+  //console.log('in updateOrderStatus thunk')
   const _updatedOrder = (await axios.put(`/api/orders/order-list`, order)).data
   dispatch(_updateOrderStatus(_updatedOrder))
 }
 
 export const getUserOrders = (userId) => async (dispatch) => {
-  console.log('in getUserOrders thunk')
+  //console.log('in getUserOrders thunk')
   const orders = (await axios.get(`/api/orders/${userId}`)).data
   dispatch(_getUserOrders(orders))
 }
