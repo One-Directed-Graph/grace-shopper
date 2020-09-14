@@ -2,7 +2,14 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
-import {logout, getProducts, loadPage, combineItem, destroyItem} from '../store'
+import {
+  logout,
+  getProducts,
+  loadPage,
+  combineItem,
+  destroyItem,
+  getProduct,
+} from '../store'
 import Search from './Search'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -266,10 +273,11 @@ class Navbarclass extends Component {
                       <ul className="cart_list">
                         {order.orderitems
                           ? order.orderitems.map((item, idx) => {
+                              console.log('item:', item)
                               // console.log('order from nabar', item)
                               return (
                                 <li key={idx}>
-                                  <a href="#" className="item_remove">
+                                  <Link to="#" className="item_remove">
                                     <i
                                       className="ion-close"
                                       onClick={() => {
@@ -279,14 +287,22 @@ class Navbarclass extends Component {
                                         )
                                       }}
                                     ></i>
-                                  </a>
-                                  <a href="#">
+                                  </Link>
+                                  <Link
+                                    to="#"
+                                    onClick={(e) => {
+                                      this.props.loadProduct(
+                                        item.product.id,
+                                        this.props.history.push
+                                      )
+                                    }}
+                                  >
                                     <img
                                       src={item.product ? item.product.img : ''}
                                       alt="cart_thumb1"
                                     />
                                     {item.product ? item.product.title : ''}
-                                  </a>
+                                  </Link>
                                   <span className="cart_quantity">
                                     {' '}
                                     {item.quantity}
@@ -376,6 +392,9 @@ const mapDispatch = (dispatch) => {
     destroyItems: (userId, id) => {
       //dispatch(getOrder(userId))
       dispatch(destroyItem(id))
+    },
+    loadProduct: (id, push) => {
+      dispatch(getProduct(id, push))
     },
   }
 }
