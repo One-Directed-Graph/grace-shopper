@@ -1,6 +1,8 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
-export const Footer = () => {
+const Footer = ({user, isLoggedIn}) => {
   return (
     <div>
       <footer className="footer_dark">
@@ -10,12 +12,12 @@ export const Footer = () => {
               <div className="col-lg-3 col-md-6 col-sm-12">
                 <div className="widget">
                   <div className="footer_logo">
-                    <a href="#">
+                    <Link to="/">
                       <img
                         src="/images/imageSite/maskerade_logo_black.png"
                         alt="logo"
                       />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -24,10 +26,10 @@ export const Footer = () => {
                   <h6 className="widget_title">Useful Links</h6>
                   <ul className="widget_links">
                     <li>
-                      <a href="#">Products</a>
+                      <Link to="/products/1?sortBy=AtoZ">Products</Link>
                     </li>
                     <li>
-                      <a href="#">Contact Us</a>
+                      <Link to="/contactpage">Contact Us</Link>
                     </li>
                   </ul>
                 </div>
@@ -37,39 +39,36 @@ export const Footer = () => {
                   <h6 className="widget_title">Category</h6>
                   <ul className="widget_links">
                     <li>
-                      <a href="#">Handmade</a>
+                      <Link to="/category/handmade/1">Handmade</Link>
                     </li>
                     <li>
-                      <a href="#">Fashion</a>
+                      <Link to="/category/fashion/1">Fashion</Link>
                     </li>
                     <li>
-                      <a href="#">Medical</a>
+                      <Link to="/category/medical/1">Medical</Link>
                     </li>
                   </ul>
                 </div>
               </div>
-              <div className="col-lg-2 col-md-6 col-sm-6">
-                <div className="widget">
-                  <h6 className="widget_title">My Account</h6>
-                  <ul className="widget_links">
-                    <li>
-                      <a href="#">My Account</a>
-                    </li>
-                    <li>
-                      <a href="#">Discount</a>
-                    </li>
-                    <li>
-                      <a href="#">Returns</a>
-                    </li>
-                    <li>
-                      <a href="#">Orders History</a>
-                    </li>
-                    <li>
-                      <a href="#">Order Tracking</a>
-                    </li>
-                  </ul>
+              {isLoggedIn && (
+                <div className="col-lg-2 col-md-6 col-sm-6">
+                  <div className="widget">
+                    <h6 className="widget_title">My Account</h6>
+                    <ul className="widget_links">
+                      <li>
+                        <Link to="/account">My Account</Link>
+                      </li>
+
+                      <li>
+                        <Link to="/account/orders">Orders History</Link>
+                      </li>
+                      <li>
+                        <Link to="#">Order Tracking</Link>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
+              )}
               <div className="col-lg-3 col-md-4 col-sm-6">
                 <div className="widget">
                   <h6 className="widget_title">Contact Info</h6>
@@ -110,3 +109,10 @@ export const Footer = () => {
     </div>
   )
 }
+const mapState = ({user}) => {
+  return {
+    user,
+    isLoggedIn: !!user.id,
+  }
+}
+export default connect(mapState)(Footer)
