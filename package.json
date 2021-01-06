@@ -43,7 +43,7 @@
   "dependencies": {
     "@popperjs/core": "^2.4.4",
     "@stripe/react-stripe-js": "^1.1.2",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "bootstrap-icons": "^1.0.0-alpha5",
     "compression": "^1.7.3",
