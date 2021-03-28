@@ -12,6 +12,8 @@ const app = express()
 const socketio = require('socket.io')
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
 
+app.set("port",PORT)
+
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
