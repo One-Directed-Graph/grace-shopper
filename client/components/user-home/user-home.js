@@ -88,7 +88,7 @@ export class UserHome extends Component {
         name: 'Users',
         component: UserList,
         id: 'users-tab',
-        icon: '',
+        icon: 'ti-user',
       },
       {
         path: 'order-list',
@@ -102,12 +102,14 @@ export class UserHome extends Component {
         name: 'Products',
         component: ProductList,
         id: 'products-tab',
+        icon: 'ti-gallery',
       },
       {
         path: 'product-create',
         name: 'Create Product',
         component: ProductCreate,
         id: 'product-create-tab',
+        icon: 'ti-plus',
       },
     ]
     const userLinkTo = [
@@ -129,7 +131,7 @@ export class UserHome extends Component {
         path: 'reviews',
         name: 'Reviews',
         component: Reviews,
-        icon: 'far fa-star',
+        icon: 'ti-star',
       },
       {
         path: 'address',
