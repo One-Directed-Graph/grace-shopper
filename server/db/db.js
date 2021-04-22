@@ -8,7 +8,9 @@ const db = new Sequelize(
   {
     logging: false,
     dialectOptions: {
-      ssl: true,
+      ssl: process.env.DB_ENABLE_SSL && {
+        require: true,
+      },
     },
   }
 )
