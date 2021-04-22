@@ -12,7 +12,7 @@ const app = express()
 const socketio = require('socket.io')
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
 
-app.set("port",PORT)
+app.set('port', PORT)
 
 module.exports = app
 
@@ -22,7 +22,13 @@ if (process.env.NODE_ENV === 'test') {
   after('close the session store', () => sessionStore.stopExpiringSessions())
 }
 //app.use(cookieParser())
-app.use(session({secret: 'Shh, its a secret!'}))
+app.use(
+  session({
+    secret: 'Shh, its a secret!',
+    resave: true,
+    saveUninitialized: true,
+  })
+)
 //console.log(sessionStore.create())
 /**
  * In your development environment, you can keep all of your
