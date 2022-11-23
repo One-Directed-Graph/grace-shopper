@@ -81,7 +81,7 @@
     "redux-thunk": "^2.3.0",
     "save-dev": "0.0.1-security",
     "sequelize": "^5.22.4",
-    "socket.io": "^2.4.1",
+    "socket.io": "^2.5.0",
     "stripe": "^8.140.0",
     "waypoints": "^4.0.1"
   },
